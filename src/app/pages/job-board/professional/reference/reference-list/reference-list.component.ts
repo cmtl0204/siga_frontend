@@ -30,7 +30,7 @@ export class ReferenceListComponent implements OnInit {
     dialogViewFiles: boolean;
     files: File[];
     paginatorFiles: Paginator;
-    colsCourse: Col[];
+    colsReference: Col[];
 
     constructor(private messageService: MessageService,
         private spinnerService: NgxSpinnerService,

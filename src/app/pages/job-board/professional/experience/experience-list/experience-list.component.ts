@@ -31,31 +31,26 @@ export class ExperienceListComponent implements OnInit {
     files: File[];
     paginatorFiles: Paginator;
     colsExperience: Col[];
-    isWorking: boolean;
-  
 
     constructor(private messageService: MessageService,
         private spinnerService: NgxSpinnerService,
         private jobBoardHttpService: JobBoardHttpService) {
         this.resetPaginatorExperiences();
-        this.resetPaginatorFiles();
-    }
-
-    ngOnInit(): void {
-        this.loadColsExperience();
+        // this.resetPaginatorFiles();
     }
     resetPaginator() {
+        this.paginatorFiles = { current_page: 1, per_page: 5 };
+    }
 
+    resetPaginatorExperiences() {
+        this.paginatorIn = { current_page: 1, per_page: 5 };
     }
-    loadColsExperience() {
-        this.colsExperience = [
-            { field: 'type', header: 'Tipo' },
-            { field: 'description', header: 'Descripción' },
-        ];
-    }
-    pageChange(event) {
-        this.paginatorIn.current_page = event.page + 1;
-        this.paginatorOut.emit(this.paginatorIn);
+
+    // resetPaginatorFiles() {
+    //     this.paginatorFiles = {current_page: 1, per_page: 5};
+    //  }
+
+    ngOnInit(): void {
     }
 
     // Search experiences in backend
@@ -80,9 +75,13 @@ export class ExperienceListComponent implements OnInit {
     }
 
     openEditFormExperience(experience: Experience) {
-        this.formExperienceIn.patchValue(experience);
+       this.formExperienceIn.patchValue(experience);
         this.formExperienceOut.emit(this.formExperienceIn);
         this.displayOut.emit(true);
+    }
+
+    openUploadFilesExperience() {
+        this.dialogUploadFiles = true;
     }
 
     selectExperience(experience: Experience) {
@@ -90,7 +89,7 @@ export class ExperienceListComponent implements OnInit {
     }
 
     openViewFilesExperience() {
-        this.getFiles();
+        this.getFiles(this.paginatorFiles);
     }
 
     getFiles(paginator: Paginator = null) {
@@ -113,10 +112,13 @@ export class ExperienceListComponent implements OnInit {
         });
     }
 
-    paginateExperience(event) {
+
+    pageChange(event) {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
     }
+
+
 
     deleteExperiences(experience = null) {
         this.messageService.questionDelete({})
@@ -148,13 +150,13 @@ export class ExperienceListComponent implements OnInit {
         for (const id of ids) {
             this.experiencesIn = this.experiencesIn.filter(element => element.id !== id);
         }
-        this.paginatorIn.total = this.experiencesIn?.length;
         this.experiencesOut.emit(this.experiencesIn);
     }
 
-    upload(files, id) {
+    upload(event, id) {
+        console.log(event);
         const formData = new FormData();
-        for (const file of files) {
+        for (const file of event) {
             formData.append('files[]', file);
         }
         formData.append('id', id.toString());
@@ -169,21 +171,12 @@ export class ExperienceListComponent implements OnInit {
         });
     }
 
-    resetPaginatorExperiences() {
-        this.paginatorIn = { current_page: 1, per_page: 5 };
-    }
-
-    resetPaginatorFiles() {
-        this.paginatorFiles = { current_page: 1, per_page: 5 };
-    }
-
     searchFiles(search) {
         let params = new HttpParams().append('id', this.selectedExperience.id.toString());
         params = search.length > 0 ? params.append('search', search) : params;
         this.spinnerService.show();
         this.jobBoardHttpService.get('experience/file', params).subscribe(response => {
             this.files = response['data'];
-            this.paginatorFiles = response as Paginator;
             this.spinnerService.hide();
         }, error => {
             this.spinnerService.hide();

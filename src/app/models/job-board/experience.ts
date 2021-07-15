@@ -1,9 +1,9 @@
-//import { Professional } from './professional';
+import { Professional } from './professional';
 import { Catalogue } from '../app/catalogue';
 
 export interface Experience {
     id?: number;
-  //  professional?: Professional;
+  professional?: Professional;
     area?: Catalogue;
     employer?: string;
     position?: string;
