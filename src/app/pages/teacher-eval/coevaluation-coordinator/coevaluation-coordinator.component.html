@@ -1,0 +1,32 @@
+<div class="p-shadow-24">
+    <div style="background-color:white;" class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col">
+        <h1>COEVALUACIÓN - COORDINADORES DE CARRERA - 2021-1</h1>
+        <P>INSTRUCCIONES:  Lea detenidamente cada uno de las preguntas que se mostrarán a 
+            continuación y seleccione su respuesta según el rango de ponderación del 1 al 4, 
+            tomando en cuenta que el rango mínimo es 1 y el máximo 4; en lo posible responda a 
+            las preguntas de esta encuesta con base a las evidencias que le proporcionen las 
+            instancias correspondientes, a fin de garantizar una evaluación objetiva.</P>
+      </div>
+    </div>
+  </div>
+  
+  <p></p>
+  <form [formGroup]="questions">
+    <div class="form-group" style="background-color:white;">
+      <ul>
+        <li *ngFor="let question of pregunta; let i = index">
+          <p></p>
+          {{ question.name }}
+          <div *ngFor="let category of evaluacion" class="p-field-checkbox">
+            <p-radioButton name="category" [value]= "category.name" [(ngModel)]="modelo[i].valor"
+              [disabled]="category.key === 'R'"></p-radioButton>
+            <label [for]="category.key">{{category.name}}</label>
+          </div>
+        </li>
+       </ul>
+       <button (click)="getCheckSelect()" pButton type="button" label="Click" >Guardar</button>
+    </div>
+  </form>
+  
+  

@@ -5,7 +5,10 @@ import { QuestionComponent } from './question/question.component';
 import { TeacherEvalComponent } from './teacher-eval.component';
 import { TeacherListComponent } from './teacher-list/teacher-list.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
-import { TypeEvaluationComponent } from './type-evaluation/type-evaluation.component';
+import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.component';
+import { CoevaluationCoordinatorAreaComponent} from './coevaluation-coordinator-area/coevaluation-coordinator-area.component'
+import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
+import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
 
 const routes: Routes = [];
 export const TeacherEvalRouting: Routes = [
@@ -38,11 +41,31 @@ export const TeacherEvalRouting: Routes = [
         //canActivate:[AuthGuard] 
     },
     {
-      path: 'type-evaluation',
-      component:TypeEvaluationComponent
+      path: 'heteroevaluation',
+      component:HeteroevaluationComponent
       //loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
       //canActivate:[AuthGuard] 
   },
+    
+  {
+     path: 'coevaluation-coordinator-area',
+     component:CoevaluationCoordinatorAreaComponent
+  //loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
+  //canActivate:[AuthGuard] 
+},
+{
+  path: 'coevaluation-coordinator',
+  component:CoevaluationCoordinatorComponent
+//loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
+//canActivate:[AuthGuard] 
+},
+{
+path: 'evaluation-teacher',
+component:EvaluationTeacherComponent
+//loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
+//canActivate:[AuthGuard] 
+}
+
       ]
   }
 ];
