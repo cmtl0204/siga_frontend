@@ -57,7 +57,6 @@ export class OfferFormComponent implements OnInit {
         this.getExperienceTime();
         this.getTrainingHours();
         this.getStatus();
-        console.log(this.formOfferIn);
     }
 
     // Fields of Form
@@ -205,7 +204,6 @@ export class OfferFormComponent implements OnInit {
     // Save in backend
     storeOffer(offer: Offer, flag = false) {
         this.spinnerService.show();
-
         this.jobBoardHttpService.store('offers', {offer}).subscribe(response => {
             this.spinnerService.hide();
             this.messageService.success(response);
@@ -220,6 +218,7 @@ export class OfferFormComponent implements OnInit {
             this.spinnerService.hide();
             this.messageService.error(error);
         });
+        this.offersOut.emit(this.offersIn);
     }
 
     // Save in backend

@@ -36,6 +36,7 @@ export class OfferListComponent implements OnInit {
                 private jobBoardHttpService: JobBoardHttpService,
                 private formBuilder: FormBuilder,) {
         this.resetPaginatorOffers();
+        this.offersOut.emit(this.offersIn);
         this.paginator = { current_page: 1, per_page: 10 };
     }
 
@@ -139,8 +140,8 @@ export class OfferListComponent implements OnInit {
             .then((result) => {
                 if (result.isConfirmed) {
                     const ids = this.selectedOffers.map(element => element.id);
-                    this.spinnerService.show();
                     console.log(ids);
+                    this.spinnerService.show();
                     this.jobBoardHttpService.delete('offer/delete', {ids})
                         .subscribe(response => {
                             this.spinnerService.hide();

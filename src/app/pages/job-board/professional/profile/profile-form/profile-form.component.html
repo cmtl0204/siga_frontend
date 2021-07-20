@@ -173,12 +173,12 @@
                             </label>
                             <textarea pInputTextarea id="about_me" name="type" formControlName="about_me"
                                 rows="5"></textarea>
-                            <div *ngIf="aboutMeField.errors && (aboutMeField.touched || aboutMeField.dirty)">
-                                <small *ngIf="aboutMeField.hasError('required')" id="about_me-help-1" class="p-error">
+                            <div *ngIf="aboutMeField.invalid && (aboutMeField.touched || aboutMeField.dirty)">
+                                <small *ngIf="aboutMeField.errors?.required" id="about-me-help-1" class="p-error">
                                     {{messageService.fieldRequired}}
                                 </small>
-                                <small *ngIf="aboutMeField.hasError('minlength')" id="about_me-help-2" class="p-error">
-                                    Mínimo de caracteres es {{aboutMeField.errors.minlength.requiredLength}}.
+                                <small *ngIf="aboutMeField.errors?.minlength" id="about-me-help-2" class="p-error">
+                                    {{messageService.fieldMinLength(aboutMeField)}}
                                 </small>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
             </div>
         </div>
         <div class="p-field p-xl-11 p-lg-11 p-md-11 p-sm-12">
-            <button type="submit" pButton pRipple label="Guardar y Salir" icon="pi pi-save"
+            <button type="submit" pButton pRipple label="Guardar" icon="pi pi-save"
                 class="p-button-success p-button-raised"
                 style="display:inline-block;margin-left:40%;width:25%;"></button>
         </div>
