@@ -1,13 +1,13 @@
 import { Catalogue } from "../app/catalogue";
 import { Status } from "../app/status";
-import { EVALUATION_TYPES } from "src/environments/catalogues";
+import { EvaluationType } from "./evaluation-type";
 
 
 
 export interface Question{
     id: number;
-    type_id?: Catalogue; 
-    //evaluation_type?: Evaluation_Types;
+    type_id?: Catalogue;     
+    evaluationType? : EvaluationType;
     status_id?: Status;
     code: string;
     order: number;
