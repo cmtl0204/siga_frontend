@@ -6,7 +6,7 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
 import { Research } from 'src/app/models/teacher-eval/research';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
-
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-investigation',
   templateUrl: './investigation.component.html',
@@ -33,6 +33,7 @@ export class InvestigationComponent implements OnInit {
   constructor(
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
+    private confirmationService: ConfirmationService,
 
   ) {
     this.teachers = [];
@@ -55,6 +56,14 @@ export class InvestigationComponent implements OnInit {
       },
         () => console.log('error')
       );
+  }
+
+
+  
+  selectInvestigation(id: string) {
+    this.router.navigate(['teacher-eval/edit-investigation', id]);
+    console.log(id);
+
   }
 
   getResearchs() {
@@ -98,14 +107,22 @@ export class InvestigationComponent implements OnInit {
   }
 
   deleteResearch(id : string){
-    this.teacherEval.deleteResearch(id)
-      .subscribe(response => {
-        console.log(response)
-        alert("Eliminado con Exito")
-        window.location.reload();
-      }), error => {
-        console.log(error);
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de guardar la evaluación?',
+      accept: () => {
+        this.teacherEval.deleteResearch(id)
+        .subscribe(response => {
+          console.log(response)
+          alert("Eliminado con Exito")
+          window.location.reload();
+        }), error => {
+          console.log(error);
+        }
+
+        
       }
+  });
+  
 
   }
 

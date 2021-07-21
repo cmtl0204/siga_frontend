@@ -5,6 +5,7 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { MessageService as MessagePnService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { MessageService as MessagePnService } from 'primeng/api';
   styleUrls: ['./extracredits.component.scss']
 })
 export class ExtracreditsComponent implements OnInit {
-
+  
   teachers: Teacher[];
   teacher: Teacher;
   extraCredits: ExtraCredit[];
@@ -34,9 +35,18 @@ export class ExtracreditsComponent implements OnInit {
     this.displayModal = true;
   }
 
+
+
+  selectUpdate(id: string) {
+    this.router.navigate(['teacher-eval/edit-credit', id]);
+    console.log(id);
+
+  }
+
   constructor(
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
+    private confirmationService: ConfirmationService,
 
   ) {
     this.teachers = [];
@@ -87,26 +97,44 @@ export class ExtracreditsComponent implements OnInit {
           "total": this.total
         }
       }
-      this.teacherEval.addExtraCredit(id, data)
-        .subscribe(response => {
-          console.log(data)
-          alert("Creado Con Exito ")
-          window.location.reload();
-        }
-        ), error => {
-          console.log(error);
-        }
+   
+          
+          this.teacherEval.addExtraCredit(id, data)
+          .subscribe(response => {
+            console.log(data)
+            alert("Creado Con Exito ")
+            window.location.reload();
+          }
+          ), error => {
+            console.log(error);
+          }
+          
+     
+ 
+     
   }
 
   deleteCredit(id : string){
-    this.teacherEval.deleteCredit(id).
-    subscribe(response => {
-      console.log(response)
-      alert("Eliminado Con Exito ")
-      window.location.reload();
-    }), error => {
-      console.log(error);
-    }
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar ?',
+      accept: () => {
+        
+        this.teacherEval.deleteCredit(id).
+        subscribe(response => {
+          console.log(response)
+         alert("Eliminado con Exito")
+          window.location.reload();
+          
+        }), error => {
+          console.log(error);
+        }
+        
+      }
+      
+      
+      
+  });
+
   
   }
 

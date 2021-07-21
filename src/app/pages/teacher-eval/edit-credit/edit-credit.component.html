@@ -1,0 +1,78 @@
+<div class="p-fluid p-grid" >
+    <div class="p-field p-col-12 p-md-4">
+
+    </div>
+    <div class="p-field p-col-12 p-md-4">
+        
+        <p-card  style="position: relative; margin-top: 40px; top: 20px;">
+        <form   >
+        <div class="p-fluid  p-grid">
+            <h4>Actualizacion Creditos Extra</h4>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>DIPLOMA YAVIRAC (3)</label>
+                    <input pInputText id="diploYav." type="number" [value]="extraCredit.diploma_yavirac"
+                        placeholder="Del 1 a 5 puntos" #diploma_yavirac>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>TÍTULO DE CUARTO NIVEL (2)</label>
+                    <input pInputText id="cuarto" type="number" required [value]="extraCredit.title_fourth_level"
+                        placeholder="De 1 a 2 puntos" #title_fourth_level>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>MIEMBRO DE OCS (3)</label>
+                    <input pInputText id="ocs" type="number" required [value]="extraCredit.OCS_member"
+                        placeholder="De 1 a 3 puntos" #OCS_member>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>PROCESOS GOBERNANTES (coord. academica, coord, administrativa) [5]</label>
+                    <input pInputText id="proGob" type="number" required [value]="extraCredit.governing_processes"
+                        placeholder="De 1 a 5 puntos" #governing_processes>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>PROCESO SUSTANTIVOS (coordinadores ) [4]</label>
+                    <input pInputText id="sustantivos" type="number" required [value]="extraCredit.process_nouns"
+                        placeholder="De 1 a 4 puntos" #process_nouns>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label>PROCESOS DE APOYO(unidades) [3]</label>
+                    <input pInputText id="apoyo" type="number" [value]="extraCredit.support_processes"
+                        placeholder="De 1 a 3 puntos" #support_processes>
+                </div>
+    
+                <div class="p-field  p-md-12">
+    
+                    <h2 class="p-text-center"> Total de Puntos : {{total}} </h2>
+                </div>
+         
+               
+                  
+                   <div class="p-field p-col-12 ">
+                    <p-button 
+                    (click)="actualizar(diploma_yavirac, title_fourth_level, OCS_member, governing_processes, process_nouns, support_processes, total )"  style="position: relative; right: 4px"
+                    icon="pi pi-user-edit" label="Total" class="p-m-2 p-button-warning"></p-button>
+                </div>
+           
+              
+          
+                
+           
+        </div>
+    </form>
+</p-card>
+    
+    </div>
+    <div class="p-field p-col-12 p-md-4">
+
+    </div>
+</div>
+
+
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+        <h3>Confirmar Accion</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
+    </ng-template>
+</p-confirmDialog>

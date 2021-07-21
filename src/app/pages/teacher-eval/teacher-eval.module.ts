@@ -16,6 +16,10 @@ import { ExtracreditsComponent } from './extracredits/extracredits.component';
 import {CardModule} from 'primeng/card';
 import {ScrollTopModule} from 'primeng/scrolltop';
 import { InvestigationComponent } from './investigation/investigation.component';
+import { EditCreditComponent } from './edit-credit/edit-credit.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import { EditInvestigationComponent } from './edit-investigation/edit-investigation.component';
 
 
 @NgModule({
@@ -24,6 +28,8 @@ import { InvestigationComponent } from './investigation/investigation.component'
     GeneratePDFComponent,
     ExtracreditsComponent,
     InvestigationComponent,
+    EditCreditComponent,
+    EditInvestigationComponent,
   
   ],
   imports: [
@@ -39,8 +45,11 @@ import { InvestigationComponent } from './investigation/investigation.component'
     CheckboxModule,
     CardModule,
     ScrollTopModule, 
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    ConfirmDialogModule
+    
+  ],
+  providers: [ ConfirmationService]
 })
 export class TeacherEvalModule { }
 // hola

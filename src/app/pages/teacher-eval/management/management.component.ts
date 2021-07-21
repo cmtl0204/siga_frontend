@@ -82,6 +82,7 @@ export class ManagementComponent implements OnInit {
   limpiar() {
     window.location.reload();
   }
+  
 
   getEvaluations(id : string){
     this.teacherEval.getEvaluation(id).subscribe(

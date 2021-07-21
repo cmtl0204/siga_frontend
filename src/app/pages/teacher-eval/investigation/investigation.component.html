@@ -86,7 +86,7 @@
     <td title="{{items.name}}" > {{items.total  | number }} </td>
     <td title="{{items.name}}">
      
-        <!--<a pButton  style="margin-left: 5px;" class="p-button-warning" icon="pi pi-user-edit"></a>-->
+        <a pButton  style="margin-left: 5px;" class="p-button-warning"  (click)="selectInvestigation(items.id)"  icon="pi pi-user-edit"></a>
         <a pButton title="eliminar" (click)="deleteResearch(items.id)" style="margin-left: 5px;"  class="p-button-danger" icon="pi pi-trash"></a>
    
       
@@ -97,3 +97,13 @@
 <p-scrollTop target="parent"></p-scrollTop> 
 </div>
 
+
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+  <ng-template pTemplate="header">
+      <h3>Confirmar Accion</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
+  </ng-template>
+</p-confirmDialog>
