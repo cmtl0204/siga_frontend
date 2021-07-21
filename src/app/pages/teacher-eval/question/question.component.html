@@ -20,14 +20,25 @@
         <p></p>
         {{ question.name }}
         <div *ngFor="let category of evaluacion" class="p-field-checkbox">
-          <p-radioButton name="category" [value]= "category.name" [(ngModel)]="modelo[i].valor"
-            [disabled]="category.key === 'R'"></p-radioButton>
-          <label [for]="category.key">{{category.name}}</label>
+          <p-radioButton required name="category" [value]="category.name" [(ngModel)]="modelo[i].valor"></p-radioButton>
+          <label>{{category.name}}</label>
         </div>
       </li>
-     </ul>
-     <button (click)="getCheckSelect()" pButton type="button" label="Click" >Guardar</button>
-    <a routerLink="/teacher-list" class="button"> Regresar </a>
+    </ul>
   </div>
 </form>
 
+<center>
+<button pButton type="button" routerLink="/teacher-list" style="margin-left: 10px" label="Regresar"
+  icon="pi pi-times"></button>
+<button (click)="confirm()" pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
+</center>
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+  <ng-template pTemplate="header">
+    <h3>Confirmar Guardado</h3>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
+  </ng-template>
+</p-confirmDialog>

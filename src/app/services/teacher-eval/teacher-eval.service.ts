@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
+import { URL_API } from '../../../environments/environment';
 
 
 @Injectable({
@@ -18,29 +18,20 @@ export class TeacherEvalService {
 
 
   // urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/show/";
-  urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/index?evaluation_type_id=4&per_page=3&page=3";
+  //urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/index?evaluation_type_id=4&per_page=3&page=3";
 
 
-  getInit(param: any): Observable<any> {
-    let httpHeaders = new HttpHeaders();
-    httpHeaders.append('Content-Type', 'application/json');
-    httpHeaders.append("Authorization", "Basic " + btoa("username:password"));
+  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=6&per_page=4&page=1";
+  urlguardar: string = URL_API + "teacher-eval/evaluation/create";
 
-    const httpOptions = {
-      headers: httpHeaders
-    };
-    return this.http.get(this.urlvs.concat(param), httpOptions);
+  getInit(param: any): Observable<any> {   
+    return this.http.get(this.urlvs.concat(param));
+  }
+  
+
+  postEvaluationAdd(param: any): Observable<any> {
+   return this.http.post(this.urlguardar, param);   
 
   }
 
-
-
-
-
-  /*    getQuestion(): Category {
-       return localStorage.getItem('category') ? JSON.parse(localStorage.getItem('category')) : null;
-   }
-     setCategory(category) {
-       localStorage.setItem('category', JSON.stringify(category));
-   } */
 }
