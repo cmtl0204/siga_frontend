@@ -17,6 +17,7 @@ import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.c
 import { CoevaluationCoordinatorAreaComponent } from './coevaluation-coordinator-area/coevaluation-coordinator-area.component';
 import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
 import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
+import { ResultEvaluationComponent } from './result-evaluation/result-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teac
     HeteroevaluationComponent,
     CoevaluationCoordinatorAreaComponent,
     CoevaluationCoordinatorComponent,
-    EvaluationTeacherComponent
+    EvaluationTeacherComponent,
+    ResultEvaluationComponent
     
 ],
   imports: [

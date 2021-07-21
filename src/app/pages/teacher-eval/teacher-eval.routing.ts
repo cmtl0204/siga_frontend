@@ -9,6 +9,8 @@ import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.c
 import { CoevaluationCoordinatorAreaComponent} from './coevaluation-coordinator-area/coevaluation-coordinator-area.component'
 import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
 import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
+import { ResultEvaluationComponent } from './result-evaluation/result-evaluation.component';
+
 
 const routes: Routes = [];
 export const TeacherEvalRouting: Routes = [
@@ -64,7 +66,14 @@ path: 'evaluation-teacher',
 component:EvaluationTeacherComponent
 //loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
 //canActivate:[AuthGuard] 
+},
+{
+path: 'result-evaluation',
+component:ResultEvaluationComponent
+//loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
+//canActivate:[AuthGuard] 
 }
+
 
       ]
   }

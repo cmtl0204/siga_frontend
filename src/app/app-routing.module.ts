@@ -12,7 +12,7 @@ import { HeteroevaluationComponent } from './pages/teacher-eval/heteroevaluation
 import { CoevaluationCoordinatorAreaComponent } from './pages/teacher-eval/coevaluation-coordinator-area/coevaluation-coordinator-area.component';
 import { CoevaluationCoordinatorComponent } from './pages/teacher-eval/coevaluation-coordinator/coevaluation-coordinator.component';
 import { EvaluationTeacherComponent } from './pages/teacher-eval/evaluation-teacher/evaluation-teacher.component';
-
+import { ResultEvaluationComponent } from './pages/teacher-eval/result-evaluation/result-evaluation.component';
 
 // Application Guards
 import {AuthGuard} from './shared/guards/auth.guard';
@@ -23,7 +23,8 @@ const routes: Routes = [
     { path: 'app-heteroevaluation', component: HeteroevaluationComponent },
     { path: 'app-coevaluation-coordinator-area', component: CoevaluationCoordinatorAreaComponent },
     { path: 'app-coevaluation-coordinator', component: CoevaluationCoordinatorComponent },
-    { path: 'app-evaluation-teacher', component: EvaluationTeacherComponent }
+    { path: 'app-evaluation-teacher', component: EvaluationTeacherComponent },
+    { path: 'app-result-evaluation', component: ResultEvaluationComponent }
     
   ];
 
@@ -86,6 +87,13 @@ const routes: Routes = [
                     {
                         path: 'evaluation-teacher',
                         loadChildren: () => import('./pages/teacher-eval/evaluation-teacher/evaluation-teacher.module').then(m => m.EvaluationTeacherModule),
+                       canActivate: [AuthGuard]
+                    },
+
+                    // ruta de resultados de evaluacion
+                    {
+                        path: 'result-evaluation',
+                        loadChildren: () => import('./pages/teacher-eval/result-evaluation/result-evaluation.module').then(m => m.ResultEvaluationModule),
                        canActivate: [AuthGuard]
                     }
 

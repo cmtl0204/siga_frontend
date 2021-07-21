@@ -46,7 +46,7 @@ export class QuestionComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 2 };
+    this.paginator = { current_page: 1, per_page: 48 };
     this.questions = [];
 
   }
@@ -200,33 +200,6 @@ export class QuestionComponent implements OnInit {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'src/app/services/app/message.service';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { HttpParams } from '@angular/common/http';
 import { Paginator } from 'src/app/models/setting/paginator';
-import { Question } from 'src/app/models/teacher-eval/question';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TeacherEvalService } from 'src/app/services/teacher-eval/teacher-eval.service';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { Preguntas } from 'src/app/models/teacher-eval/preguntas';
+import { Question } from 'src/app/models/teacher-eval/question';
+import { Evaluation } from 'src/app/models/teacher-eval/evaluation';
+import { Teacher } from 'src/app/models/app/teacher';
+import { EvaluationType } from 'src/app/models/teacher-eval/evaluation-type';
+import { SchoolPeriod } from 'src/app/models/app/school-period';
+import { Status } from 'src/app/models/app/status';
+import { ConfirmationService } from 'primeng/api';
+
+
 
 @Component({
   selector: 'app-evaluation-teacher',
@@ -22,6 +27,12 @@ export class EvaluationTeacherComponent implements OnInit {
   formQuestion: FormGroup;
   paginator: Paginator;
   questions: Question[];
+  evaluations: Evaluation;
+  docente: Teacher;
+  evaluationType: EvaluationType;
+  schoolPeriod: SchoolPeriod;
+  status: Status;
+
 
   selectedValue: string = 'val1';
 
@@ -29,19 +40,20 @@ export class EvaluationTeacherComponent implements OnInit {
     private formBuilder: FormBuilder,
     private teacherEvalService: TeacherEvalService,
     private teacherEvalHttpService: TeacherEvalHttpService,
-    private radioButtonModule: RadioButtonModule) {
-    this.paginator = { current_page: 3, per_page: 3 };
+    private confirmationService: ConfirmationService,
+
+  ) {
+    this.paginator = { current_page: 1, per_page: 48 };
     this.questions = [];
 
   }
   city: string;
-
   selectedCategory: any = null;
-
   evaluacion: any[] = [{ name: '1', key: this.getRandom() }, { name: '2', key: this.getRandom() }, { name: '3', key: this.getRandom() }, { name: '4', key: this.getRandom() }];
   pregunta: any[];
 
   modelo: Preguntas[] = [];
+
 
   buildFormQuestion() {
     this.formQuestion = this.formBuilder.group({
@@ -74,7 +86,7 @@ export class EvaluationTeacherComponent implements OnInit {
   }
 
 
-  getQuestion(paginator: Paginator) {
+  getQuestions(paginator: Paginator) {
     const params = new HttpParams()
       .append('page', paginator.current_page.toString())
       .append('per_page', paginator.per_page.toString());
@@ -92,23 +104,17 @@ export class EvaluationTeacherComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("init");
-
     this.buildFormQuestion();
     this.onTestWebService();
-
-
     this.selectedCategory = this.evaluacion[1];
   }
 
 
   //para traer las preguntas
   onTestWebService() {
-
-    this.teacherEvalService.getInit(1).subscribe(result => {
+    this.teacherEvalService.getEvaluation(1).subscribe(result => {
       this.pregunta = result.data;
       this.getInicializarModelo();
-
     });
   }
 
@@ -116,39 +122,87 @@ export class EvaluationTeacherComponent implements OnInit {
     return Math.random();
   }
 
-
+  //para que el radio button sea equivalente a las preguntas que haya
   getInicializarModelo() {
-    let i:number = 0;
-    console.log(this.pregunta);
-
+    let i: number = 0;
     while (this.pregunta.length > i) {
       let inicializador: Preguntas = new Preguntas();
-
       // inicializador.valor=1;
       this.modelo.push(inicializador);
       i++;
-      console.log(i);
-
     }
-    console.log(this.modelo);
-    console.log(this.modelo[0]);
   }
 
-  getCheckSelect(){
-    console.log(this.modelo);
-    let int:number =0; 
+  //para que el radiobutton sea dinamico y no se marque todos al mism tiempo se gun la pregunta
+  getCheckSelect() {
+    let numeroDePreguntas: number = 25;
+    let porcentajeEvaluacion: number = 0;
+    console.log(this.pregunta.length);
+
     for (const iterator of this.modelo) {
-      int += +iterator.valor;
-      
-      
+      porcentajeEvaluacion += +iterator.valor * 100 / numeroDePreguntas;
     }
-    console.log(int);
+    console.log("resultado de la regla de 3 =", porcentajeEvaluacion);
+
+
+    this.docente = {
+      id: 1,
+      name: "Profe Edu"
+    }
+
+    this.evaluationType = {
+      id: 6
+    }
+
+    this.schoolPeriod = {
+      id: 1
+    }
+
+    this.status = {
+      id: 1
+    }
+
+    this.evaluations = {
+      id: 1,
+      result: porcentajeEvaluacion,
+      percentage: 0.35,
+    }
+
+    let dataSave = {
+      teacher: this.docente,
+      evaluation_type: this.evaluationType,
+      shoolPeriod: this.schoolPeriod,
+      status: this.status,
+      evaluation: this.evaluations
+    }
+    console.log(dataSave);
+    this.teacherEvalService.postEvaluation(dataSave).subscribe(result => {
+      console.log(result);
+
+    }, error => {
+      console.log(error);
+
+    }
+    );
+
   }
 
+  confirm() {
+    this.confirmationService.confirm({
+        message: '¿Estas seguro de guardar la evaluación?',
+        accept: () => {
+          
 
-
+          
+        }
+    });
+}
 
 }
+
+
+
+
 
 
 
