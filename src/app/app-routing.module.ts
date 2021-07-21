@@ -33,7 +33,7 @@ const routes: Routes = [
             {
                 path: '', component: AppMainComponent,
                 children: [
-                    {path: '', redirectTo: '/', pathMatch: 'full'},
+                    {path: '', redirectTo: '/teacher-eval', pathMatch: 'full'},
                    
                      // ruta para mostrar el formulario
                     {

@@ -30,7 +30,7 @@ export class EvaluationTeacherComponent implements OnInit {
     private teacherEvalService: TeacherEvalService,
     private teacherEvalHttpService: TeacherEvalHttpService,
     private radioButtonModule: RadioButtonModule) {
-    this.paginator = { current_page: 1, per_page: 2 };
+    this.paginator = { current_page: 3, per_page: 3 };
     this.questions = [];
 
   }
@@ -74,7 +74,7 @@ export class EvaluationTeacherComponent implements OnInit {
   }
 
 
-  getQuestions(paginator: Paginator) {
+  getQuestion(paginator: Paginator) {
     const params = new HttpParams()
       .append('page', paginator.current_page.toString())
       .append('per_page', paginator.per_page.toString());
@@ -92,7 +92,7 @@ export class EvaluationTeacherComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("initttttttttttttt");
+    console.log("init");
 
     this.buildFormQuestion();
     this.onTestWebService();
