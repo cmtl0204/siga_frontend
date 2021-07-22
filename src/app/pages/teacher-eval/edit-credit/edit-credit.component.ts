@@ -50,7 +50,7 @@ export class EditCreditComponent implements OnInit {
 
   actualizar(diploma_yavirac: HTMLInputElement, title_fourth_level: HTMLInputElement, OCS_member: HTMLInputElement, governing_processes: HTMLInputElement, process_nouns: HTMLInputElement, support_processes: HTMLInputElement) {
 
-    this.diploma_yavirac = diploma_yavirac.value
+    this.diploma_yavirac = diploma_yavirac.value,
     this.title_fourth_level = title_fourth_level.value,
       this.OCS_member = OCS_member.value,
       this.governing_processes = governing_processes.value,

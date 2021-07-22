@@ -9,6 +9,7 @@ import { InvestigationComponent } from './investigation/investigation.component'
 import { ManagementComponent } from './management/management.component';
 
 const routes: Routes = [
+  
   {
     path: 'matrix',
     component: ManagementComponent

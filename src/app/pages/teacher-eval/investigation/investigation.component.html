@@ -6,23 +6,27 @@
     <label for="state">Docentes</label>
     <p-dropdown inputId="state" [options]="teachers" [(ngModel)]="teacher" placeholder="Docentes"
       optionLabel="name"></p-dropdown>
+      <small *ngIf="(teacher == null ) " class="p-error">Campo Requerido.</small>
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación-Autoevaluación </label>
-    <input id="diploYav." type="number" required [(ngModel)]="inv_auto_eval" placeholder="Del 1 a 5 puntos" pInputText>
+    <input id="diploYav." type="number" required [(ngModel)]="inv_auto_eval" placeholder="Ingrese un valor " pInputText>
+    <small *ngIf="(inv_auto_eval == null ) " class="p-error">Campo Requerido.</small>
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación - Pares</label>
-    <input id="cuarto" type="number" required [(ngModel)]="inv_pares" placeholder="De 1 a 2 puntos" pInputText>
+    <input id="cuarto" type="number" required [(ngModel)]="inv_pares" placeholder="Ingrese un valor " pInputText>
+    <small *ngIf="(inv_pares == null ) " class="p-error">Campo Requerido.</small>
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación - Coodinador</label>
-    <input id="ocs" type="number" required [(ngModel)]="inv_coodinador" placeholder="De 1 a 3 puntos" pInputText>
+    <input id="ocs" type="number" required [(ngModel)]="inv_coodinador" placeholder="Ingrese un valor " pInputText>
+    <small *ngIf="(inv_coodinador == null ) " class="p-error">Campo Requerido.</small>
   </div>
   <div class="p-field p-col-12 p-md-6">
  
     <h2 class="p-text-center" style="margin-top: 5px;"   > 
-        Total de Puntos : 
+        Total Equivalencia : 
     </h2>
     <h2 class="p-text-center" style="margin-top: 5px;" [(ngModel)]="total"   > 
          {{total}} 

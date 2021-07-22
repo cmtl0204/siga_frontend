@@ -273,7 +273,7 @@ extraCredits : any;
     
     }
     
-        pdf.save(`${new Date().toISOString()}_docente.pdf`);
+        pdf.save(`${new Date().toISOString()}_DOCENTE.pdf`);
            });
     };
    
