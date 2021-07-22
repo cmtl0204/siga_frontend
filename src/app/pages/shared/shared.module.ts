@@ -17,6 +17,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {FieldsetModule} from "primeng/fieldset";
 import {TooltipModule} from "primeng/tooltip";
+import { SkeletonModule } from 'primeng/skeleton';
+import { SkeletonComponent } from './components/skeleton/skeleton.component';
 
 // My Components
 @NgModule({
@@ -32,14 +34,16 @@ import {TooltipModule} from "primeng/tooltip";
         ButtonModule,
         FieldsetModule,
         TooltipModule,
+        SkeletonModule
     ],
     declarations: [
         DateComponent,
         LocationAddressComponent,
         LocationComponent,
+        SkeletonComponent,
         MonthsPipe
     ],
-    exports: [DateComponent, LocationComponent, LocationAddressComponent],
+    exports: [DateComponent, LocationComponent, LocationAddressComponent, SkeletonComponent],
     providers: []
 })
 export class SharedModule {

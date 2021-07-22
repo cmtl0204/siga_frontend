@@ -1,4 +1,4 @@
-<div class="layout-topbar">
+<div class="layout-topbar" >
     <div class="layout-topbar-wrapper">
         <div class="layout-topbar-left">
             <div class="layout-topbar-logo-wrapper">
@@ -23,7 +23,7 @@
             <div class="layout-megamenu-wrapper">
                 <a class="layout-megamenu-button" href="#" (click)="appMain.onMegaMenuButtonClick($event)">
                     <i class="pi pi-comment"></i>
-                    Mega Menu
+                    CECY Menu
                 </a>
                 <ul class="layout-megamenu" [ngClass]="{'layout-megamenu-active fadeInDown': appMain.megaMenuActive}"
                     (click)="appMain.onMegaMenuClick($event)">
@@ -199,7 +199,6 @@
                     [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === profile}">
                     <a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
                             <span class="profile-image-wrapper">
-                                <img [src]="authService.urlAvatar" alt="avatar" style="border-radius: 50%;"/>
                             </span>
                         <span class="profile-info-wrapper">
                                 <h3>{{auth?.partial_name}}</h3>

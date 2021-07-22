@@ -10,6 +10,8 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
 import {AppCodeModule} from './shared/components/code/app.code.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import { ToastrModule } from 'ngx-toastr';
+
 
 // Primeng Modules
 import {CalendarModule} from 'primeng/calendar';
@@ -52,6 +54,7 @@ import {PasswordModule} from 'primeng/password';
         RadioButtonModule,
         InputSwitchModule,
         PasswordModule,
+        ToastrModule
     ],
     declarations: [
         AppBlankComponent,
@@ -64,6 +67,7 @@ import {PasswordModule} from 'primeng/password';
         AppMenuitemComponent,
         AppRightPanelComponent,
         AppTopBarComponent,
+        
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},

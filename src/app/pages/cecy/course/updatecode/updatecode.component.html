@@ -1,0 +1,50 @@
+<div class="p-fluid">
+    <form [formGroup]="updateCourseFormIn" (submit)="updateCode()">
+
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="codigo">Código:</label>
+                <input id="codigo" type="text" formControlName="code" pInputText>
+                <div *ngIf="codeField.errors && nameField.touched">
+                    <small *ngIf="codeField.hasError('required')" id="name-help-1" class="p-error">
+                      Código requerido
+                    </small>
+                  </div>
+
+            </div>
+            <div class="p-field p-col">
+                <label for="horas">Horas:</label>
+                <input id="horas" type="number" formControlName="hours_duration" pInputText>
+                <div *ngIf="hourField.errors && nameField.touched">
+                    <small *ngIf="hourField.hasError('required')" id="name-help-1" class="p-error">
+                      Hora requerida
+                    </small>
+                  </div>
+            </div>
+        </div>
+
+        <div class="p-field">
+            <label for="nombre">Nombre de Curso:</label>
+            <input id="nombre" type="text" formControlName="name" pInputText>
+            <div *ngIf="nameField.errors && nameField.touched">
+                <small *ngIf="name.hasError('required')" id="name-help-1" class="p-error">
+                  Nombre requerida
+                </small>
+              </div>
+        </div>
+        <div class="p-field">
+            <label for="docente">Docente:</label>
+            <input id="docente" type="text" formControlName="setec_name" pInputText>
+            <div *ngIf="tutorField.errors && nameField.touched">
+                <small *ngIf="tutorField.hasError('required')" id="name-help-1" class="p-error">
+                  Campo requerido
+                </small>
+              </div>
+        </div>
+
+        <div class="p-buttonset">
+            <button pButton type="submit" label="Guardar y Salir" class="p-button-success" icon="pi pi-save"
+                (click)="closeModal()"></button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,68 @@
+<div class="p-fluid">
+    <form [formGroup]="formCreate" (submit)="crearCursos()">
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="codigo">Código de Curso:</label>
+                <input id="codigo" type="text" formControlName="code"  pInputText>
+                <div *ngIf="codeField.errors && nameField.touched">
+                    <small *ngIf="codeField.hasError('required')" id="name-help-1" class="p-error">
+                      Código requerido
+                    </small>
+                  </div>
+            </div>
+            <div class="p-field p-col">
+                <label for="name">Nombre del Curso:</label>
+                <input id="name" type="text" formControlName="name" pInputText>
+                <div *ngIf="nameField.errors && nameField.touched">
+                    <small *ngIf="nameField.hasError('required')" id="name-help-1" class="p-error">
+                      Nombre requerido
+                    </small>
+                  </div>
+            </div>
+        </div>
+
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="horas">Horas Duración:</label>
+                <input id="horas" type="number" formControlName="hours_duration"  pInputText>
+                <div *ngIf="hourField.errors && nameField.touched">
+                    <small *ngIf="hourField.hasError('required')" id="name-help-1" class="p-error">
+                      Hora requerida
+                    </small>
+                  </div>
+            </div>
+        <div class="p-field p-col">
+            <label for="course">Estado:</label>
+            <p-dropdown [options]="status"  type="text" formControlName="status" optionLabel="name">
+            </p-dropdown>
+        </div>
+    </div>
+    <div class="p-field">
+        <label for="carrera">Carrera:</label>
+        <p-dropdown [options]="career"  type="text" formControlName="career" optionLabel="name" editable="true">
+        </p-dropdown>
+        <div *ngIf="careerField.errors && nameField.touched">
+            <small *ngIf="careerField.hasError('required')" id="name-help-1" class="p-error">
+              Carrera requerida
+            </small>
+          </div>
+    </div>
+        <!-- <div class="p-field">
+            <label for="docente">Docente asignado:</label>
+            <p-dropdown [options]="docentes"  type="text" formControlName="tutor" optionLabel="nombre" editable="true">
+            </p-dropdown>
+        </div>
+        -->
+    <div class="p-field">
+        <label for="name">Docente:</label>
+        <input id="name" type="text" formControlName="setec_name" pInputText>
+       
+    </div>
+        
+        <div class="p-buttonset">
+            <button pButton type="submit" label="Crear" class="p-button-success" icon="pi pi-save"></button>
+            <button pButton type="button" label="Cancelar" class="p-button-danger" icon="pi pi-sign-in" (click)="closeModal()"></button>
+        </div>
+      
+    </form>
+</div>

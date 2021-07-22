@@ -7,14 +7,14 @@
             <i class="pi pi-lock-open" *ngIf="!appMain.staticMenuActive"></i>
         </a>
         <a routerLink="/">
-            <img [src]="STORAGE_URL+institution.logo" alt="logo"/>
-            <span class="app-name">{{institution.short_name}}</span>
+            <!-- <img [src]="STORAGE_URL+institution.logo" alt="logo"/> -->
+            <!-- <span class="app-name">{{institution.short_name}}</span> -->
         </a>
     </div>
 
     <div class="layout-menu-container" (click)="onMenuClick()">
-        <ul class="layout-menu">
+        <!-- <ul class="layout-menu">
             <li app-menuitem *ngFor="let item of menus; let i = index;" [item]="item" [index]="i" [root]="true"></li>
-        </ul>
+        </ul> -->
     </div>
 </div>

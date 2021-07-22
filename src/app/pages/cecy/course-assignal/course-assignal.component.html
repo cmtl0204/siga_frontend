@@ -1,0 +1,85 @@
+<p-dialog header="Modificar" [(visible)]="display" [modal]="true" [draggable]="false" [resizable]="false"
+    [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '25vw', height:'auto'}">
+    <app-updatecode (showModal)="display=$event" [updateCourseFormIn]="updateCourseForm"></app-updatecode>
+
+</p-dialog>
+
+<app-skeleton *ngIf="flagCourses" [type]="'table'"></app-skeleton>
+<div class="card" [hidden]="flagCourses">
+
+    <p-table #dt [value]="coursesIn" [columns]="colsCourse" [paginator]="false" [(selection)]="selectedCourses"
+        [rowHover]="true" [responsive]="true" dataKey="id" styleClass="p-datatable-customers"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="header">
+            <br>
+            <br>
+            <tr>
+                <th pSortableColumn="codigo">
+                    Código de curso
+                    <p-sortIcon field="codigo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">
+                    Docente Asignado
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name">
+                    Curso Asignado
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="status">
+                    Carrera Asignada
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-course>
+            <tr>
+                <div *ngIf="course.code!=null">
+                    {{course.code}}
+                </div>
+                <div *ngIf="course.code==null">
+                    ESTE CURSO NO CUENTA CON UN CODIGO
+                </div>
+                <td>
+                    {{course.setec_name}}
+                </td>
+                <td>
+                    {{course.name}}
+                </td>
+
+                <td>
+                    <div *ngIf="course.career!=null">
+                        {{course.career.name}}
+                    </div>
+                    <div *ngIf="course.career==null">
+                        ESTE CURSO NO CUENTA CON UNA CARRERA ASIGNADA
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <button pButton type="button" icon="pi pi-check-square" (click)="openCourseForm(course,status)"
+                        label="Edit" class="p-button-rounded p-button-success"></button>
+                </td>
+
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                En total hay {{paginatorIn ? paginatorIn.total : 0 }} cursos.
+            </div>
+            <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total"
+                (onPageChange)="pageChange($event)">
+            </p-paginator>
+            <br>
+
+            <button pButton pRipple label="Actualizar" icon="pi pi-refresh" class="p-button-info  p-button-danger"
+                (click)="paginatorOut.emit(paginatorIn)"></button>
+        </ng-template>
+
+    </p-table>
+</div>
