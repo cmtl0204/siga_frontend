@@ -43,7 +43,7 @@ export class EvaluationTeacherComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 48 };
+    this.paginator = { current_page: 1, per_page: 79 };
     this.questions = [];
 
   }

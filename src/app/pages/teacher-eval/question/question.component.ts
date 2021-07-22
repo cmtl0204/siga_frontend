@@ -46,7 +46,7 @@ export class QuestionComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 48 };
+    this.paginator = { current_page: 1, per_page: 33 };
     this.questions = [];
 
   }

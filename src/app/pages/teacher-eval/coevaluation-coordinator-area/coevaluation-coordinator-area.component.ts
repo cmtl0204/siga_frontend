@@ -44,7 +44,7 @@ export class CoevaluationCoordinatorAreaComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 1 };
+    this.paginator = { current_page: 1, per_page: 13 };
     this.questions = [];
 
   }

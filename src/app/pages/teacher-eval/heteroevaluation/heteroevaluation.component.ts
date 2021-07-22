@@ -41,7 +41,7 @@ export class HeteroevaluationComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 12 };
+    this.paginator = { current_page: 1, per_page: 16 };
     this.questions = [];
 
   }
