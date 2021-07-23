@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { Teacher } from 'src/app/models/app/teacher';
@@ -17,6 +17,7 @@ export class InvestigationComponent implements OnInit {
 
   teachers: Teacher[];
   teacher: Teacher;
+  investigation : FormGroup;
   researchs : Research[];
   research : Research;
   inv_auto_eval : any;
@@ -32,6 +33,7 @@ export class InvestigationComponent implements OnInit {
 
 
   constructor(
+    private formBuilder: FormBuilder, 
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -39,6 +41,7 @@ export class InvestigationComponent implements OnInit {
   ) {
     this.teachers = [];
     this.researchs = [];
+    this._form();
     
   }
 
@@ -47,6 +50,16 @@ export class InvestigationComponent implements OnInit {
     this.getResearchs();
   }
 
+
+  _form = () => {
+    this.investigation = this.formBuilder.group({
+      inv_auto_eval: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(3)]],
+      inv_pares: ['',[Validators.required, Validators.minLength(0), Validators.maxLength(2)]],
+      inv_coodinador : ['',[Validators.required, Validators.minLength(0), Validators.maxLength(3)]],
+   
+    })
+  
+  }
 
   getTeachers() {
     this.teacherEval.getTeacher('evaluation/teachers')
@@ -79,36 +92,50 @@ export class InvestigationComponent implements OnInit {
 
 
   addResearchs(id : string){
-    const autoEva = (this.inv_auto_eval * 0.20)
-    console.log(autoEva)
-    const cordinador = (this.inv_coodinador * 0.50)
-    console.log(cordinador)
-    const pares = (this.inv_pares * 0.30)
-    console.log(pares)
-    this.total = (autoEva + cordinador + pares)
-    console.log(this.total)
-   let data = {
-      "research" : {
-        "inv_auto_eval" : this.inv_auto_eval,
-        "inv_coodinador" : this.inv_coodinador,
-        "inv_pares" : this.inv_pares,
-        "total" : this.total
+
+    if(!this.investigation.invalid)
+    {
+      let data = {
+        "research" : {
+          inv_auto_eval : this.investigation.get('inv_auto_eval').value,
+          inv_coodinador : this.investigation.get('inv_coodinador').value,
+          inv_pares : this.investigation.get('inv_pares').value,
+          total :  this.total
+        }
       }
-    }
+      const autoEva = ( data.research.inv_auto_eval * 0.20)
+      console.log(autoEva)
+      const cordinador = (data.research.inv_coodinador * 0.50)
+      console.log(cordinador)
+      const pares = (data.research.inv_pares * 0.30)
+      console.log(pares)
+      this.total = (autoEva + cordinador + pares)
+      console.log(this.total)
+       
     this.teacherEval.addResearch(id, data)
-      .subscribe(response => {
-        this.messageService.add({
-          severity: 'success',
-          summary:'Investigacion Creada',
-          detail: 'Investigacion Creada con Exito'
-        })
-        console.log(data)
-       // alert("Creado con Exito")
-        window.location.reload();
-      }
-      ), error => {
-        console.log(error);
-      }
+    .subscribe(response => {
+      this.messageService.add({
+        severity: 'success',
+        summary:'Investigacion Creada',
+        detail: 'Investigacion Creada con Exito'
+      })
+      console.log(data)
+     // alert("Creado con Exito")
+      window.location.reload();
+    }
+    ), error => {
+      console.log(error);
+    }
+    }else {
+      this.messageService.add({
+        severity: 'error',
+        summary:'Llene todos los Campos',
+        detail: 'Llene todos los Campos'
+      })
+    }
+
+  
+
     
   }
 

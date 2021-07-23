@@ -8,32 +8,34 @@
       optionLabel="name"></p-dropdown>
       <small *ngIf="(teacher == null ) " class="p-error">Campo Requerido.</small>
   </div>
+  <form [formGroup]="investigation">
+    <div class="p-fluid p-formgrid p-grid">
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación-Autoevaluación </label>
-    <input id="diploYav." type="number" required [(ngModel)]="inv_auto_eval" placeholder="Ingrese un valor " pInputText>
-    <small *ngIf="(inv_auto_eval == null ) " class="p-error">Campo Requerido.</small>
+    <input id="diploYav." type="number" required formControlName="inv_auto_eval" placeholder="Ingrese un valor " pInputText>
+   <!-- <small *ngIf="(inv_auto_eval == null ) " class="p-error">Campo Requerido.</small>-->
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación - Pares</label>
-    <input id="cuarto" type="number" required [(ngModel)]="inv_pares" placeholder="Ingrese un valor " pInputText>
-    <small *ngIf="(inv_pares == null ) " class="p-error">Campo Requerido.</small>
+    <input id="cuarto" type="number" required formControlName="inv_pares" placeholder="Ingrese un valor " pInputText>
+    <!--<small *ngIf="(inv_pares == null ) " class="p-error">Campo Requerido.</small>-->
   </div>
   <div class="p-field p-col-12 p-md-6">
     <label >Investigación - Coodinador</label>
-    <input id="ocs" type="number" required [(ngModel)]="inv_coodinador" placeholder="Ingrese un valor " pInputText>
-    <small *ngIf="(inv_coodinador == null ) " class="p-error">Campo Requerido.</small>
+    <input id="ocs" type="number" required formControlName="inv_coodinador" placeholder="Ingrese un valor " pInputText>
+    <!--<small *ngIf="(inv_coodinador == null ) " class="p-error">Campo Requerido.</small>-->
   </div>
   <div class="p-field p-col-12 p-md-6">
  
     <h2 class="p-text-center" style="margin-top: 5px;"   > 
         Total Equivalencia : 
     </h2>
-    <h2 class="p-text-center" style="margin-top: 5px;" [(ngModel)]="total"   > 
+    <h2 class="p-text-center" style="margin-top: 5px;" formControlName="total"   > 
          {{total}} 
     </h2>
   </div>
-  
-  
+</div>
+</form>
 </div>
 
 <p-messages></p-messages>

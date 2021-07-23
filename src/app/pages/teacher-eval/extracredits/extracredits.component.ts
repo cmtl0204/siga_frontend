@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormGroupName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Teacher } from 'src/app/models/app/teacher';
 import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
@@ -19,13 +19,14 @@ export class ExtracreditsComponent implements OnInit {
   teacher: Teacher;
   extraCredits: ExtraCredit[];
   extraCredit : ExtraCredit;
+  credits : FormGroup;
   diploma_yavirac: any;
   title_fourth_level: any;
   OCS_member: any;
   governing_processes: any;
   process_nouns: any;
   support_processes: any
-  total: any;
+  total: 0;
 
   // credits : FormGroup;
 
@@ -35,7 +36,17 @@ export class ExtracreditsComponent implements OnInit {
     this.displayModal = true;
   }
 
-
+  _form = () => {
+    this.credits = this.formBuilder.group({
+      diploma_yavirac: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(3)]],
+      title_fourth_level: ['',[Validators.required, Validators.minLength(0), Validators.maxLength(2)]],
+      OCS_member : ['',[Validators.required, Validators.minLength(0), Validators.maxLength(3)]],
+      governing_processes : ['',[Validators.required, Validators.minLength(0), Validators.maxLength(5)]] ,
+      process_nouns: ['',[Validators.required, Validators.minLength(0), Validators.maxLength(4)]],
+      support_processes : ['',[Validators.required, Validators.minLength(0), Validators.maxLength(3)]] 
+    })
+  
+  }
 
   selectUpdate(id: string) {
     this.router.navigate(['teacher-eval/edit-credit', id]);
@@ -44,6 +55,7 @@ export class ExtracreditsComponent implements OnInit {
   }
 
   constructor(
+    private formBuilder: FormBuilder, 
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -52,6 +64,7 @@ export class ExtracreditsComponent implements OnInit {
   ) {
     this.teachers = [];
     this.extraCredits = [];
+    this._form();
   }
 
   ngOnInit(): void {
@@ -84,35 +97,48 @@ export class ExtracreditsComponent implements OnInit {
 
   addCredits(id: string) {
 
-      this.total = ( this.diploma_yavirac + this.title_fourth_level + this.OCS_member + this.governing_processes + this.process_nouns + this.support_processes);
-      console.log(this.total)
+    if(!this.credits.invalid)
+    {
       let data = {
         "credit": {
-          "diploma_yavirac": this.diploma_yavirac,
-          "title_fourth_level": this.title_fourth_level,
-          "OCS_member": this.OCS_member,
-          "governing_processes": this.governing_processes,
-          "process_nouns": this.process_nouns,
-          "support_processes": this.support_processes,
-          "total": this.total
+          diploma_yavirac: this.credits.get('diploma_yavirac').value,
+          title_fourth_level: this.credits.get('title_fourth_level').value,
+          OCS_member: this.credits.get('OCS_member').value,
+          governing_processes: this.credits.get('governing_processes').value,
+          process_nouns: this.credits.get('process_nouns').value,
+          support_processes: this.credits.get('support_processes').value,
+          total: this.total
         }
       }
-   
-         
-          this.teacherEval.addExtraCredit(id, data)
-          .subscribe(response => {
-            this.messageService.add({
-              severity: 'success',
-              summary:'Credito Creado',
-              detail: 'Credito Creado con Éxito'
-            })
-            console.log(data)
-         //   alert("Creado Con Exito ")
-            window.location.reload();
-          }
-          ), error => {
-            console.log(error);
-          }
+
+      this.total = ( data.credit.diploma_yavirac + data.credit.title_fourth_level + data.credit.OCS_member + data.credit.governing_processes + data.credit.process_nouns + data.credit.support_processes);
+      console.log(this.total)
+     
+      this.teacherEval.addExtraCredit(id, data)
+      .subscribe(response => {
+        this.messageService.add({
+          severity: 'success',
+          summary:'Credito Creado',
+          detail: 'Credito Creado con Éxito'
+        })
+        console.log(data)
+     //   alert("Creado Con Exito ")
+        window.location.reload();
+      }
+      ), error => {
+        console.log(error);
+      }
+    }else {
+      this.messageService.add({
+        severity: 'error',
+        summary:'Llene todos los Campos',
+        detail: 'Llene todos los Campos'
+      })
+     
+    }
+
+ 
+       
           
      
  
