@@ -10,6 +10,7 @@ import {Institution} from '../../models/app/institution';
 import {Message} from 'primeng/api';
 import {NgxSpinnerService} from 'ngx-spinner';
 import * as moment from 'moment';
+import {AuthHttpService} from "../../services/auth/auth-http.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -20,29 +21,31 @@ export class DashboardComponent implements OnInit {
     shortcuts: any[];
     editShortcuts: any[];
     role: Role;
-    user: User;
+    auth: User;
     institution: Institution;
     permissions: Permission[];
     STORAGE_URL: string;
     msgs: Message[];
     flagBirhday: boolean;
-    randomNumber: number = 0;
+    randomNumber: number;
     flagShortcuts: boolean;
 
     constructor(
-        private _breadcrumbService: BreadcrumbService,
-        private _authService: AuthService,
-        private _spinner: NgxSpinnerService
+        private breadcrumbService: BreadcrumbService,
+        private authHttpService: AuthHttpService,
+        private authService: AuthService,
+        private spinnerService: NgxSpinnerService
     ) {
-        this._breadcrumbService.setItems([
+        this.breadcrumbService.setItems([
             {label: 'Dashboard'},
         ]);
-        this.role = JSON.parse(localStorage.getItem('role')) as Role;
-        this.user = JSON.parse(localStorage.getItem('user')) as User;
-        this.institution = JSON.parse(localStorage.getItem('institution')) as Institution;
-        this.permissions = JSON.parse(localStorage.getItem('permissions')) as Permission[];
+        this.role = this.authService.getRole();
+        this.auth = this.authService.getAuth();
+        this.institution = this.authService.getInstitution();
+        this.permissions = this.authService.getPermissions();
         this.shortcuts = [];
         this.editShortcuts = [];
+        this.randomNumber = 0;
         this.STORAGE_URL = environment.STORAGE_URL;
     }
 
@@ -52,21 +55,21 @@ export class DashboardComponent implements OnInit {
     }
 
     getShortcuts() {
-        this._spinner.show();
-        this._authService.get('shortcuts').subscribe(response => {
-            this._spinner.hide();
+        this.spinnerService.show();
+        this.authHttpService.get('shortcuts').subscribe(response => {
+            this.spinnerService.hide();
             if (response) {
-                this._spinner.hide();
+                this.spinnerService.hide();
                 this.shortcuts = [];
                 response['data'].forEach(shortcut => {
                     this.shortcuts.push({
-                        id: shortcut.id,
-                        permission_id: shortcut.permission.id,
-                        image: shortcut.image,
-                        title: shortcut.permission.route.name,
-                        name: shortcut.permission.route.name,
-                        uri: shortcut.permission.route.uri,
-                        toolTip: shortcut.permission.route.description,
+                        id: shortcut?.id,
+                        permission_id: shortcut?.permission?.id,
+                        image: shortcut?.image,
+                        title: shortcut?.permission?.route?.name,
+                        name: shortcut?.permission?.route?.name,
+                        uri: shortcut?.permission?.route?.uri,
+                        toolTip: shortcut?.permission?.route?.description,
                     });
                 });
                 this.shortcuts.sort(
@@ -85,19 +88,19 @@ export class DashboardComponent implements OnInit {
                         {
                             severity: 'info',
                             summary: 'No tiene accesos directos disponibles',
-                            detail: 'Haga click aquí para agregar'
+                            detail: 'Haga click en Activar Edición'
                         },
                     ];
                 }
             }
         }, error => {
-            this._spinner.hide();
+            this.spinnerService.hide();
         });
     }
 
     showBirthdate() {
         if (!localStorage.getItem('birthdate')) {
-            if (this.user && this.user.birthdate && this.user.birthdate.toString().substr(5, 5) === moment().format('MM-DD')) {
+            if (this.auth && this.auth.birthdate && this.auth.birthdate.toString().substr(5, 5) === moment().format('MM-DD')) {
                 this.randomNumber = Math.floor(Math.random() * (5 - 1) + 1);
                 localStorage.setItem('birthdate', 'true');
                 this.flagBirhday = true;
@@ -119,20 +122,20 @@ export class DashboardComponent implements OnInit {
                 });
             }
 
-        })
+        });
         this.flagShortcuts = true;
     }
 
     showShortcut(shortcut) {
-        this._spinner.show();
-        this._authService.post('shortcuts', {shortcut}).subscribe(
+        this.spinnerService.show();
+        this.authHttpService.post('shortcuts', {shortcut}).subscribe(
             response => {
-                this._spinner.hide();
+                this.spinnerService.hide();
                 this.editShortcuts = this.editShortcuts.filter(element => element.uri !== shortcut.uri);
                 shortcut.id = response['data']['id'];
                 this.shortcuts.unshift(shortcut);
             }, error => {
-                this._spinner.hide();
+                this.spinnerService.hide();
                 if (error.status === 400) {
                     this.editShortcuts = this.editShortcuts.filter(element => element.uri !== shortcut.uri);
                     this.getShortcuts();
@@ -141,13 +144,13 @@ export class DashboardComponent implements OnInit {
     }
 
     hideShortcut(shortcut) {
-        this._spinner.show();
-        this._authService.delete('shortcuts/' + shortcut.id).subscribe(response => {
-            this._spinner.hide();
+        this.spinnerService.show();
+        this.authHttpService.delete('shortcuts/' + shortcut.id).subscribe(response => {
+            this.spinnerService.hide();
             this.shortcuts = this.shortcuts.filter(element => element.id !== shortcut.id);
             this.editShortcuts.push(shortcut);
         }, error => {
-            this._spinner.hide();
+            this.spinnerService.hide();
             if (error.status === 400) {
                 this.shortcuts = this.shortcuts.filter(element => element.id !== shortcut.id);
                 this.editShortcuts.push(shortcut);

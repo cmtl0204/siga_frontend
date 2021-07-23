@@ -3,8 +3,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {environment} from '../../../../environments/environment';
-import swal from 'sweetalert2';
-import {AuthService} from '../../../services/auth/auth.service';
+import {AuthHttpService} from '../../../services/auth/auth-http.service';
+import {MessageService} from '../../../services/app/message.service';
 
 @Component({
     selector: 'app-password-forgot',
@@ -18,10 +18,12 @@ export class PasswordForgotComponent implements OnInit {
     flagPasswordReset: boolean;
     SITE_KEY: string;
 
-    constructor(private authService: AuthService,
-                private spinner: NgxSpinnerService,
-                private router: Router,
-                private formBuilder: FormBuilder) {
+    constructor(
+        private authHttpService: AuthHttpService,
+        private spinnerService: NgxSpinnerService,
+        private messageService: MessageService,
+        private router: Router,
+        private formBuilder: FormBuilder) {
         this.SITE_KEY = environment.SITE_KEY;
     }
 
@@ -45,25 +47,17 @@ export class PasswordForgotComponent implements OnInit {
     }
 
     forgotPassword(grecaptcha) {
-        this.spinner.show();
-        this.authService.passwordForgot(this.formPasswordReset.controls['username'].value).subscribe(response => {
-            this.spinner.hide();
+        this.spinnerService.show();
+        this.authHttpService.passwordForgot(this.formPasswordReset.controls['username'].value).subscribe(response => {
+            this.spinnerService.hide();
             this.flagPasswordReset = false;
             grecaptcha.reset();
-            swal.fire({
-                title: response['msg']['summary'],
-                text: response['msg']['detail'],
-                icon: 'info'
-            });
+            this.messageService.success(response);
         }, error => {
-            this.spinner.hide();
+            this.spinnerService.hide();
             this.flagPasswordReset = false;
             grecaptcha.reset();
-            swal.fire({
-                title: error.error.msg.summary,
-                text: error.error.msg.detail,
-                icon: 'error'
-            });
+            this.messageService.error(error);
         });
     }
 

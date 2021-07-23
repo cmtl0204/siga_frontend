@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Subscription} from 'rxjs';
@@ -9,6 +9,7 @@ import {Institution} from '../../../models/app/institution';
 import swal from 'sweetalert2';
 import {environment} from '../../../../environments/environment';
 import {MessageService} from '../../../services/app/message.service';
+import {AuthHttpService} from '../../../services/auth/auth-http.service';
 
 @Component({
     selector: 'app-login',
@@ -28,25 +29,38 @@ export class AppLoginComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     constructor(private authService: AuthService,
+                private authHttpService: AuthHttpService,
                 private messageService: MessageService,
-                private spinner: NgxSpinnerService,
+                private spinnerService: NgxSpinnerService,
                 private router: Router,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private activatedRoute: ActivatedRoute) {
+        if (!this.activatedRoute.snapshot.queryParams.token) {
+            this.flagLogin = 'login';
+        }
+        this.authService.verifySession();
         this.subscription = new Subscription();
-        this.flagLogin = 'login';
         this.roles = [];
         this.institutions = [];
         this.auth = {};
-        this.verifySession();
     }
 
     ngOnInit(): void {
         this.buildFormLogin();
         this.getSystem();
+        this.verifySessionGoogle();
+    }
+
+    verifySessionGoogle() {
+        if (this.activatedRoute.snapshot.queryParams.token) {
+            this.usernameField.setValue(this.activatedRoute.snapshot.queryParams.username);
+            this.authService.setToken({access_token: this.activatedRoute.snapshot.queryParams.token});
+            this.getUser();
+        }
     }
 
     getSystem() {
-        this.authService.get('systems/' + environment.SYSTEM_ID).subscribe(response => {
+        this.authHttpService.get('systems/' + environment.SYSTEM_ID).subscribe(response => {
             this.system = response['data'];
         });
     }
@@ -64,23 +78,23 @@ export class AppLoginComponent implements OnInit, OnDestroy {
     }
 
     login() {
-        this.spinner.show();
+        this.spinnerService.show();
         this.subscription.add(
-            this.authService.login(this.formLogin.value).subscribe(
+            this.authHttpService.login(this.formLogin.value).subscribe(
                 response => {
                     this.authService.setToken(response);
                     this.authService.setKeepSession(this.keepSessionField.value);
-                    this.authService.resetAttempts().subscribe(response => {
+                    this.authHttpService.resetAttempts().subscribe(response => {
                         this.getUser();
                     }, error => {
-                        this.spinner.hide();
+                        this.spinnerService.hide();
                         this.messageService.error(error);
                     });
                 }, error => {
-                    this.spinner.hide();
+                    this.spinnerService.hide();
                     this.authService.removeLogin();
                     if (error.status === 401) {
-                        this.authService.validateAttempts(this.usernameField.value).subscribe(response => {
+                        this.authHttpService.incorrectPassword(this.usernameField.value).subscribe(response => {
                         }, error => {
                             this.messageService.error(error);
                         });
@@ -90,36 +104,38 @@ export class AppLoginComponent implements OnInit, OnDestroy {
                 }));
     }
 
-    getUser() {
-        this.subscription.add(
-            this.authService.getUser(this.formLogin.controls['username'].value)
-                .subscribe(
-                    response => {
-                        this.spinner.hide();
-                        this.auth = response['data'];
-                        this.authService.auth = response['data'];
-                        this.institutions = response['data']['institutions'];
-                        this.authService.institutions = response['data']['institutions'];
+    loginGoogle() {
+        this.authHttpService.loginGoogle();
+    }
 
-                        // Error cuando no tiene asiganda una institucion
-                        if (this.institutions?.length === 0) {
-                            swal.fire({
-                                title: 'No tiene una institucion asignada!',
-                                text: 'Comuníquese con el administrador!',
-                                icon: 'warning'
-                            });
-                            return;
-                        }
-                        this.flagLogin = this.auth['is_changed_password'] ? 'selectInstitutionRole' : 'changePassword';
-                    },
-                    error => {
-                        this.spinner.hide();
+    getUser() {
+        this.spinnerService.show();
+        this.authHttpService.getUser(this.usernameField.value)
+            .subscribe(
+                response => {
+                    this.spinnerService.hide();
+                    this.auth = response['data'];
+                    this.authService.auth = response['data'];
+                    this.institutions = response['data']['institutions'];
+                    this.authService.institutions = response['data']['institutions'];
+
+                    // Error cuando no tiene asiganda una institucion
+                    if (this.institutions?.length === 0) {
                         swal.fire({
-                            title: error.error.msg.summary,
-                            text: error.error.msg.detail,
-                            icon: 'error'
+                            title: 'No tiene una institucion asignada!',
+                            text: 'Comuníquese con el administrador!',
+                            icon: 'warning'
                         });
-                    }));
+                        this.flagLogin = 'login';
+                        return;
+                    }
+                    this.flagLogin = this.auth['is_changed_password'] ? 'selectInstitutionRole' : 'changePassword';
+                },
+                error => {
+                    this.spinnerService.hide();
+                    this.messageService.error(error);
+                    this.flagLogin = 'login';
+                });
     }
 
     onSubmitLogin(event: Event) {
@@ -128,12 +144,6 @@ export class AppLoginComponent implements OnInit, OnDestroy {
             this.login();
         } else {
             this.formLogin.markAllAsTouched();
-        }
-    }
-
-    verifySession() {
-        if (localStorage.getItem('keepSession') === 'true') {
-            this.router.navigate(['/dashboard']);
         }
     }
 

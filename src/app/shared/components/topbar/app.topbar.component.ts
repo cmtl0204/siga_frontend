@@ -6,6 +6,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {environment} from '../../../../environments/environment';
 import {Institution} from '../../../models/app/institution';
+import {AuthHttpService} from '../../../services/auth/auth-http.service';
 
 
 @Component({
@@ -21,22 +22,19 @@ export class AppTopBarComponent {
     megaMenus: any[];
     permissions: Permission[];
     langs: string[];
-    STORAGE_URL: string;
     urlAvatar: string;
-
+    STORAGE_URL: string;
     constructor(public appMain: AppMainComponent,
+                public authHttpService: AuthHttpService,
                 public authService: AuthService,
                 private router: Router,
-                private spinner: NgxSpinnerService) {
-        this.role = JSON.parse(localStorage.getItem('role'));
-        this.auth = JSON.parse(localStorage.getItem('user'));
-        this.institution = JSON.parse(localStorage.getItem('institution'));
-        if (!this.role) {
-            this.role = {code: 'SN'};
-        }
+                private spinnerService: NgxSpinnerService) {
+        this.role = this.authService.getRole();
+        this.auth = this.authService.getAuth();
+        this.institution = this.authService.getInstitution();
         this.getMegaMenus();
-        this.STORAGE_URL = environment.STORAGE_URL;
         this.getUrlAvatar();
+        this.STORAGE_URL = environment.STORAGE_URL;
     }
 
     getMegaMenus() {
@@ -104,13 +102,13 @@ export class AppTopBarComponent {
     }
 
     logOut() {
-        this.spinner.show();
-        this.authService.logout().subscribe(response => {
-            this.spinner.hide();
+        this.spinnerService.show();
+        this.authHttpService.logout().subscribe(response => {
+            this.spinnerService.hide();
             this.authService.removeLogin();
             this.router.navigate(['/auth/login']);
         }, error => {
-            this.spinner.hide();
+            this.spinnerService.hide();
             this.authService.removeLogin();
             this.router.navigate(['/auth/login']);
         });

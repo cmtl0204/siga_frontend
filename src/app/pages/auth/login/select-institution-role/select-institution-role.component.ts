@@ -10,7 +10,8 @@ import {AuthService} from '../../../../services/auth/auth.service';
 import {User} from '../../../../models/auth/user';
 import {HttpParams} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
-import swal from "sweetalert2";
+import {AuthHttpService} from '../../../../services/auth/auth-http.service';
+import {MessageService} from '../../../../services/app/message.service';
 
 @Component({
     selector: 'app-select-institution-role',
@@ -29,8 +30,11 @@ export class SelectInstitutionRoleComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
-                private spinner: NgxSpinnerService,
-                private authService: AuthService) {
+                private authHttpService: AuthHttpService,
+                private spinnerService: NgxSpinnerService,
+                private messageService: MessageService,
+                private authService: AuthService
+    ) {
         this.subscription = new Subscription();
         this.auth = authService.auth;
         this.institutions = authService.institutions;
@@ -66,49 +70,39 @@ export class SelectInstitutionRoleComponent implements OnInit {
 
     getRoles() {
         const params = new HttpParams().append('institution', this.institutionField.value['id']);
-        this.spinner.show();
+        this.spinnerService.show();
         this.subscription.add(
-            this.authService.get('auth/roles', params).subscribe(response => {
-                this.spinner.hide();
+            this.authHttpService.get('auth/roles', params).subscribe(response => {
+                this.spinnerService.hide();
                 this.roles = response['data'];
                 if (this.roles?.length === 0) {
-                    swal.fire({
-                        title: 'No tiene un rol asignado para esta Institución!',
-                        text: 'Comuníquese con el administrador!',
-                        icon: 'warning'
-                    });
+                    this.messageService.success(response);
                 }
             }, error => {
-                this.spinner.hide();
+                this.spinnerService.hide();
                 this.roles = [];
-                swal.fire({
-                    title: 'No tiene un rol asignado para esta Institución!',
-                    text: 'Comuníquese con el administrador!',
-                    icon: 'warning'
-                });
+                this.messageService.error(error);
             }));
     }
 
     getPermissions() {
-        const params = new HttpParams().append('role', this.roleField.value['id']);
-        this.spinner.show();
+        const params = new HttpParams()
+            .append('role', this.roleField.value['id'])
+            .append('institution', this.institutionField.value['id']);
+        this.spinnerService.show();
         this.subscription.add(
-            this.authService.get('auth/permissions', params).subscribe(response => {
-                this.spinner.hide();
+            this.authHttpService.get('auth/permissions', params).subscribe(response => {
+                this.spinnerService.hide();
                 const permissions = response['data'];
 
                 if (!permissions) {
-                    swal.fire({
-                        title: 'No tiene permisos asignados!',
-                        text: 'Comuníquese con el administrador!',
-                        icon: 'warning'
-                    });
+                    this.messageService.success(response);
                 } else {
                     localStorage.setItem('permissions', JSON.stringify(permissions));
                     this.continueLogin();
                 }
             }, error => {
-                this.spinner.hide();
+                this.spinnerService.hide();
             }));
     }
 

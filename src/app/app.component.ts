@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PrimeNGConfig} from 'primeng/api';
-import {AuthService} from './services/auth/auth.service';
 import {environment} from '../environments/environment';
+import {AuthHttpService} from './services/auth/auth-http.service';
 
 @Component({
     selector: 'app-root',
@@ -25,16 +25,18 @@ export class AppComponent implements OnInit {
 
     inputStyle = 'outlined';
 
-    constructor(private primengConfig: PrimeNGConfig, private authService: AuthService) {
+    constructor(private primengConfig: PrimeNGConfig, private authHttpService: AuthHttpService) {
     }
 
     ngOnInit() {
         this.primengConfig.ripple = true;
-        this.getSystem();
+        if (!localStorage.getItem('system')) {
+            this.getSystem();
+        }
     }
 
     getSystem() {
-        this.authService.get('systems/' + environment.SYSTEM_ID).subscribe(response => {
+        this.authHttpService.get('systems/' + environment.SYSTEM_ID).subscribe(response => {
             localStorage.setItem('system', JSON.stringify(response['data']));
         });
     }

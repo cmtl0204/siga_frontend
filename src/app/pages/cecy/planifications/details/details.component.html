@@ -1,0 +1,34 @@
+<div class="landing-body">
+  <div *ngIf="planification" id="meet-mirage" class="section">
+    <div class="section-title">
+      <h1>Centro de Educación Continua "Yavirac"</h1>
+      <h2>{{planification.course.setec_name}}</h2>
+    </div>
+    <div class="section-title">
+      <div class="p-grid">
+        <div class="p-col-6">
+          <img alt="logo" src="https://cdn.shopify.com/s/files/1/0264/3207/7929/t/100/assets/courselist-hero.png?v=16620927999259581968" style="width: 20em; height: 20em"/>
+        </div>
+        <div class="p-col-6">
+          <h3>Detalles</h3>
+          <p-accordion>
+            <p-accordionTab header="Resumen" [selected]="true">
+              {{planification.course.summary}}
+            </p-accordionTab>
+            <p-accordionTab header="Objetivo">
+              {{planification.course.objective}}
+            </p-accordionTab>
+            <p-accordionTab header="Observaciones">
+              {{planification.course.observation}}
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </div>
+      <p-button
+        label="Matricularme"
+        [routerLink]="['/cecy/planifications/registration', planification.id]"
+        icon="pi pi-sign-in"
+      ></p-button>
+    </div>
+  </div>
+</div>

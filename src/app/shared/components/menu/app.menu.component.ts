@@ -3,7 +3,9 @@ import {AppMainComponent} from '../main/app.main.component';
 import {Permission, System} from '../../../models/auth/models.index';
 import {AuthService} from '../../../services/auth/auth.service';
 import {environment} from '../../../../environments/environment';
-import {Institution} from "../../../models/app/institution";
+import {Institution} from '../../../models/app/institution';
+import {AuthHttpService} from '../../../services/auth/auth-http.service';
+import {MessageService} from '../../../services/app/message.service';
 
 
 @Component({
@@ -17,10 +19,14 @@ export class AppMenuComponent implements OnInit {
     STORAGE_URL: string;
     system: System;
 
-    constructor(public appMain: AppMainComponent, private _authService: AuthService) {
-        this.institution = JSON.parse(localStorage.getItem('institution'));
+    constructor(public appMain: AppMainComponent,
+                private authHttpService: AuthHttpService,
+                private authService: AuthService,
+                private messageService: MessageService,
+    ) {
+        this.institution = this.authService.getInstitution();
         this.STORAGE_URL = environment.STORAGE_URL;
-        this.system = JSON.parse(localStorage.getItem('system'));
+        this.system = this.authService.getSystem();
     }
 
     ngOnInit() {
@@ -28,33 +34,35 @@ export class AppMenuComponent implements OnInit {
     }
 
     getMenus() {
-        this.permissions = JSON.parse(localStorage.getItem('permissions'));
-        this.menus = [{module: 0, label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard']}];
-        if (this.permissions) {
-            this.permissions.forEach(permission => {
-                const moduleIndex = this.menus.findIndex(menu => menu.module === permission.route.module.id);
-                // if (permission.route.type.code === TYPE_MENUS.MENU) {
-                if (permission.route.type.code === 'NORMAL') {
-                    if (moduleIndex === -1) {
-                        this.menus.push(
+        this.authHttpService.getMenus().subscribe(response => {
+            this.permissions = response['data'];
+            this.menus = [];
+            let i = 0;
+            for (const module of this.permissions) {
+                this.menus.push(
+                    {
+                        module: module['id'],
+                        label: module['name'],
+                        icon: module['icon']
+                    }
+                );
+                this.menus[i]['items'] = [];
+                for (const route of module['routes']) {
+                    if (route.type.code === 'NORMAL') {
+                        this.menus[i]['items'].push(
                             {
-                                module: permission.route.module.id,
-                                label: permission.route.module.name,
-                                icon: permission.route.module.icon,
-                                items: [
-                                    {label: permission.route.name, icon: permission.route.icon, routerLink: [permission.route.uri]},
-                                ]
-                            }
+                                label: route.name,
+                                icon: route.icon,
+                                routerLink: [route.uri]
+                            },
                         );
-                    } else {
-                        this.menus[moduleIndex]['items'].push(
-                            {label: permission.route.name, icon: permission.route.icon, routerLink: [permission.route.uri]},
-                        );
-
                     }
                 }
-            });
-        }
+                i++;
+            }
+        }, error => {
+            this.messageService.error(error);
+        });
     }
 
     onMenuClick() {

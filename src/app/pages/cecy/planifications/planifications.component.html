@@ -1,0 +1,33 @@
+<div class="landing-body">
+  <div id="meet-mirage" class="section">
+    <div class="section-title">
+      <h1>Cursos</h1>
+    </div>
+    <div class="p-grid">
+      <h4 class="p-col-1">Filtrar por</h4>
+      <p-dropdown
+              class="p-col-1 p-col-align-center"
+              [options]="coursesTypes"
+              [(ngModel)]="selectedFilter"
+      ></p-dropdown>
+    </div>
+    <div class="feature-cards">
+      <!-- ngFor de PLANIFICATION COURSES -->
+      <div *ngFor="let item of coursesList" class="feature-card">
+        <p-button styleClass="p-button-link" [routerLink]="['/cecy/planifications', item.id]">
+          <ng-template pTemplate="content">
+            <img alt="logo" src="https://cdn.shopify.com/s/files/1/0264/3207/7929/t/100/assets/courselist-hero.png?v=16620927999259581968" style="width: 18em; height: 13em"/>
+          </ng-template>
+        </p-button>
+        <div class="feature-card-title">{{ item.course.name }}</div>
+        <div class="feature-card-content">
+          Cupos disponibles: {{ item.capacity }}<br><br>
+          <!-- (verde: disponibles, rojo: sin cupos) -->
+        </div>
+        <div class="p-grid" style="flex: auto; margin-left: 10px; justify-content: space-between">
+          Empieza: {{ item.need_date }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
