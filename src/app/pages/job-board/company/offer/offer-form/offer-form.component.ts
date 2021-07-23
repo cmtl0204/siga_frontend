@@ -36,7 +36,7 @@ export class OfferFormComponent implements OnInit {
     filteredTrainingHours: any[];
     trainingHours: Catalogue[];
     filteredStatus: any[];
-    status: Status[];
+    states: Status[];
 
     // BORRAR 
     ofertaEjemplo: Offer;
@@ -195,7 +195,8 @@ export class OfferFormComponent implements OnInit {
         const params = new HttpParams()
             .append('uri', '/job-board/company');
         this.jobBoardHttpService.get('offer/status', params).subscribe(response => {
-            this.status = response['data'];
+            this.states = response['data'];
+            console.log(this.states);
         }, error => {
             this.messageService.error(error);
         });
@@ -218,6 +219,7 @@ export class OfferFormComponent implements OnInit {
             this.spinnerService.hide();
             this.messageService.error(error);
         });
+        this.offersOut.emit(this.offersIn);
     }
 
     // Save in backend

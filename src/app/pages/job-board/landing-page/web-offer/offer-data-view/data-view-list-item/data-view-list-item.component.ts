@@ -1,15 +1,13 @@
-import {Component, EventEmitter, Host, Input, OnInit, Output} from '@angular/core';
-import {Inplace} from 'primeng/inplace';
-import {Offer} from '../../../../../../models/job-board/offer';
-import {HttpParams} from '@angular/common/http';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {MessageService} from '../../../../../shared/services/message.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
+// services
 import {AuthService} from '../../../../../../services/auth/auth.service';
-import {JobBoardHttpService} from '../../../../../../services/job-board/job-board-http.service';
-import {OfferDataViewComponent} from '../offer-data-view.component';
-import {User} from '../../../../../../models/auth/user';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
+
+// models
+import {Offer} from '../../../../../../models/job-board/offer';
+import {User} from '../../../../../../models/auth/user';
 
 @Component({
     selector: 'app-data-view-list-item',
@@ -26,12 +24,25 @@ export class DataViewListItemComponent implements OnInit {
 
     constructor(private authService: AuthService,
                 private router: Router) {
-        this.auth = authService.getAuth();
+        this.auth = this.getRol(authService.getAuth());
         this.auth ? this.displayButtonApply = true : this.displayButtonApply = false;
     }
 
     ngOnInit(): void {
 
+    }
+
+    getRol(user): User {
+        if (user != null) {
+            for (const rol of user.roles) {
+                if (rol.code === 'PROFESSIONAL') {
+                    return user;
+                }
+            }
+        }
+        if (user === null || undefined) {
+            return user;
+        }
     }
 
     sendIdOffer(id: number) {
