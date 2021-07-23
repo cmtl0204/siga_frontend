@@ -11,36 +11,42 @@
     <div class="p-field p-col-12 p-md-6">
       <label>DIPLOMA YAVIRAC (3)</label>
       <input type="number" class="p-invalid" [(ngModel)]="diploma_yavirac" placeholder="Del 0 a 3 puntos" pInputText>
-      <small *ngIf="(diploma_yavirac >=4 || diploma_yavirac == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(diploma_yavirac == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(diploma_yavirac >=4  ) " class="p-error">Valor menor o igual a 3.</small>
     </div>
 
     <div class="p-field p-col-12 p-md-6">
       <label>TÍTULO DE CUARTO NIVEL (2)</label>
       <input id="cuarto" type="number" required [(ngModel)]="title_fourth_level" placeholder="De 0 a 2 puntos"
         pInputText>
-      <small *ngIf="(title_fourth_level >=3 || title_fourth_level == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(title_fourth_level == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(title_fourth_level >=3  ) " class="p-error">Valor menor o igual a 2.</small>
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label>MIEMBRO DE OCS (3)</label>
       <input id="ocs" type="number" required [(ngModel)]="OCS_member" placeholder="De 0 a 3 puntos" pInputText>
-      <small *ngIf="(OCS_member >=3 || OCS_member == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="( OCS_member == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(OCS_member >=3 ) " class="p-error">Valor menor o igual a 3.</small>
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label>PROCESOS GOBERNANTES (coord. academica, coord, administrativa) [5]</label>
       <input id="proGob" type="number" required [(ngModel)]="governing_processes" placeholder="De 0 a 5 puntos"
         pInputText>
-      <small *ngIf="(governing_processes >=6 || governing_processes == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="( governing_processes == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(governing_processes >=6 ) " class="p-error">Valor menor o igual a 5.</small>
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label>PROCESO SUSTANTIVOS (coordinadores ) [4]</label>
       <input id="sustantivos" type="number" required [(ngModel)]="process_nouns" placeholder="De 0 a 4 puntos"
         pInputText>
-      <small *ngIf="(process_nouns >=5 || process_nouns == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="( process_nouns == null ) " class="p-error">Campo Requerido.</small>
+      <small *ngIf="(process_nouns >=5  ) " class="p-error">Valor menor o igual a 4.</small>
     </div>
     <div class="p-field p-col-12 p-md-6">
       <label>PROCESOS DE APOYO(unidades) [3]</label>
       <input id="apoyo" type="number" [(ngModel)]="support_processes" placeholder="De 1 a 3 puntos" pInputText>
-      <small *ngIf="(support_processes >=4 || support_processes == null ) " class="p-error">Campo Requerido. </small>
+      <small *ngIf="(support_processes == null ) " class="p-error">Campo Requerido. </small>
+      <small *ngIf="(support_processes >=4) " class="p-error">Valor menor o igual a 3 </small>
     </div>
 
     <div class="p-field  p-md-12">
