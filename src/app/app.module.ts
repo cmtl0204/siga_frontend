@@ -1,6 +1,6 @@
 // Angular Libs
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -37,6 +37,8 @@ import {SharedModule} from './pages/shared/shared.module';
 import {PasswordModule} from 'primeng/password';
 import { TeacherEvalComponent } from './pages/teacher-eval/teacher-eval.component';
 import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service';
+import {TableModule} from 'primeng/table';
+
 
 
 
@@ -58,7 +60,8 @@ import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service
         RadioButtonModule,
         InputSwitchModule,
         PasswordModule,
-       
+        TableModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         AppBlankComponent,

@@ -1,0 +1,58 @@
+<div class="p-shadow-24">
+    <div style="background-color:white;" class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col">
+        <h1>EVALUACIÓN DOCENTE 2021-2</h1>
+        <P>Instrucciones: Sr. / Srta. Estudiante, lea detenidamente cada uno de los ítems y seleccione su respuesta según
+          el
+          rango de ponderación establecida en la matriz, tomando en cuenta que el rango mínimo es 1 (menor nota) y el
+          máximo
+          4 (mayor nota); recuerde que la evaluación docente es una reflexión sincera sobre las actividades de su profesor
+          desarrolladas en aula.</P>
+      </div>
+    </div>
+  </div>
+  <p-toast></p-toast>
+  <p-toast position="top-left" key="tl"></p-toast>
+  <p-toast position="top-center" key="tc"></p-toast>
+  <p-toast position="bottom-center" key="bc"></p-toast>
+  
+  <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+
+  </p-toast>
+
+  <form [formGroup]="questions2" (ngSubmit)="submitForm()">
+    <div class="form-group" style="background-color:white;">
+      <ul>
+        <li *ngFor="let question of pregunta; let i = index">
+          <p></p>
+          <div [hidden]="validateModal(i)">
+            <span>
+              <b style="color: rgb(231, 28, 28);">Este campo es requerido *</b>
+            </span>
+          </div>
+          <hr>
+          {{ question.name }}
+          <div *ngFor="let category of evaluacion" class="p-field-checkbox">
+            <p-radioButton required="required" [checked]="false"   name="category" [value]="category.name" [(ngModel)]="modelo[i].valor"></p-radioButton>
+            <label>{{category.name}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </form>
+  
+  <center>
+    <button pButton type="button" routerLink="/teacher-eval/teacher-list" style="margin-left: 10px" label="Regresar"
+      icon="pi pi-times"></button>
+    <button (click)="confirm()" type="submit"  pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
+    </center>
+  <p-confirmDialog #cd [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+      <h3>Confirmar Guardado</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+ <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
+    </ng-template>
+  </p-confirmDialog>
