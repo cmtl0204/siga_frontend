@@ -8,6 +8,4 @@ export const CourseRouting: Routes = [
       component: CourseComponent,
       canActivate: [AuthGuard]
   },
- 
-];
-
+]
