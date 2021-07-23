@@ -18,6 +18,7 @@ import { GeneratePDFComponent } from './generate-pdf/generate-pdf.component';
 import { TeacherListComponent } from './teacher-list/teacher-list.component';
 
 
+
 @NgModule({
   declarations: [
     QuestionComponent,
@@ -37,7 +38,9 @@ import { TeacherListComponent } from './teacher-list/teacher-list.component';
     InputTextModule,
     DropdownModule,
     InputSwitchModule,
-    CheckboxModule
+    CheckboxModule,
+
+
 
   ]
 })

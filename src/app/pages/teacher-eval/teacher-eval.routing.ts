@@ -18,7 +18,7 @@ export const TeacherEvalRouting: Routes = [
             
           },
           {
-            path: 'question',
+            path: 'eval-studen-teacher',
             component:QuestionComponent
             //loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule),
             //canActivate:[AuthGuard] 

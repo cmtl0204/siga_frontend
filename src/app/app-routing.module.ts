@@ -26,7 +26,7 @@ const routes: Routes = [
                    
                      // ruta para mostrar el formulario
                     {
-                        path: 'teacher-eval',
+                        path: 'eval-student-teacher',
                         loadChildren: () => import('./pages/teacher-eval/question/question.module').then(m => m.QuestionModule),
                        // canActivate: [AuthGuard]
                     },

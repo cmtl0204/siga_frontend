@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'src/app/services/app/message.service';
+
+
+import { MessageService } from 'primeng/api';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { HttpParams } from '@angular/common/http';
 import { Paginator } from 'src/app/models/setting/paginator';
@@ -13,10 +15,6 @@ import { EvaluationType } from 'src/app/models/teacher-eval/evaluation-type';
 import { SchoolPeriod } from 'src/app/models/app/school-period';
 import { Status } from 'src/app/models/app/status';
 import { ConfirmationService } from 'primeng/api';
-
-
-
-
 
 
 
@@ -39,7 +37,7 @@ export class QuestionComponent implements OnInit {
 
   selectedValue: string = 'val1';
 
-  constructor(public messageService: MessageService,
+  constructor(private messageService: MessageService,
     private formBuilder: FormBuilder,
     private teacherEvalService: TeacherEvalService,
     private teacherEvalHttpService: TeacherEvalHttpService,
@@ -52,7 +50,13 @@ export class QuestionComponent implements OnInit {
   }
   city: string;
   selectedCategory: any = null;
-  evaluacion: any[] = [{ name: '1', key: this.getRandom() }, { name: '2', key: this.getRandom() }, { name: '3', key: this.getRandom() }, { name: '4', key: this.getRandom() }];
+  evaluacion: any[] = [
+    { name: '1', key: this.getRandom(), checked: true },
+    { name: '2', key: this.getRandom(), checked: false },
+    { name: '3', key: this.getRandom(), checked: false },
+    { name: '4', key: this.getRandom(), checked: false }];
+
+
   pregunta: any[];
 
   modelo: Preguntas[] = [];
@@ -98,9 +102,9 @@ export class QuestionComponent implements OnInit {
       response => {
         this.questions = response['data'];
         this.paginator = response as Paginator;
-        this.messageService.success(response);
+
       }, error => {
-        this.messageService.error(error);
+
       }
     )
   }
@@ -117,7 +121,12 @@ export class QuestionComponent implements OnInit {
   onTestWebService() {
     this.teacherEvalService.getInit(1).subscribe(result => {
       this.pregunta = result.data;
+      console.log(result);
+      console.log(this.pregunta);
+
       this.getInicializarModelo();
+      console.log(this.modelo);
+
     });
   }
 
@@ -136,14 +145,23 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  //para que el radiobutton sea dinamico y no se marque todos al mism tiempo se gun la pregunta
+  //para que el radiobutton sea dinamico y no se marque todos al mismo tiempo segun la pregunta
   getCheckSelect() {
-    let numeroDePreguntas: number = 25;
+    let isValidateRadio = true;
+    let puntajeMaximo: number = 100;
     let porcentajeEvaluacion: number = 0;
-    console.log(this.pregunta.length);
+
 
     for (const iterator of this.modelo) {
-      porcentajeEvaluacion += +iterator.valor * 100 / numeroDePreguntas;
+      if (iterator.valor) {
+        porcentajeEvaluacion += +iterator.valor * 100 / puntajeMaximo;
+        iterator.isValidate = true;
+
+      } else {
+        iterator.isValidate = false;
+        isValidateRadio = false;
+      }
+
     }
     console.log("resultado de la regla de 3 =", porcentajeEvaluacion);
 
@@ -179,27 +197,49 @@ export class QuestionComponent implements OnInit {
       evaluation: this.evaluations
     }
     console.log(dataSave);
-    this.teacherEvalService.postEvaluationAdd(dataSave).subscribe(result => {
-      console.log(result);
+    console.log(this.modelo);
 
-    }, error => {
-      console.log(error);
+    if (isValidateRadio) {
+      this.teacherEvalService.postEvaluationAdd(dataSave).subscribe(result => {
+        console.log(result);
+        this.showSuccess();
 
+      }, error => {
+        console.log(error);
+        
+
+      });
+    } else{
+      this.showError();
     }
-    );
 
   }
 
   confirm() {
     this.confirmationService.confirm({
-        message: '¿Estas seguro de guardar la evaluación?',
-        accept: () => {
-          
-
-          
-        }
+      message: '¿Estas seguro de guardar la evaluación?. Sus datos ya no podrán ser modificados',
+      accept: () => {
+      }
     });
-}
+  }
+
+  validateModal(value) {
+    for (let i = 0; i < this.modelo.length; i++) {
+      if (value == i) {
+
+        return this.modelo[i].isValidate;
+      }
+    }
+  }
+
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Datos Guardados ', detail: 'La Evaluación ha sido registrada correctamente' });
+  }
+
+  showError() {
+    this.messageService.add({ severity: 'error', summary: 'Error ', detail: 'Todos los datos son obligatorios' });
+  }
+
 
 
 

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { URL_API } from '../../../environments/environment';
 
@@ -16,13 +14,17 @@ export class TeacherEvalService {
   constructor(protected http: HttpClient) { }
 
 
-  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=6&per_page=4&page=1";
+  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=6&per_page=10&page=2";
   urlguardar: string = URL_API + "teacher-eval/evaluation/create";
 
   getInit(param: any): Observable<any> {   
-    return this.http.get(this.urlvs.concat(param));
+    const params = {
+      per_page:'25',
+      page: '1'
+    };
+    return this.http.get(this.urlvs, { params: params })     
   }
-  
+
 
   postEvaluationAdd(param: any): Observable<any> {
    return this.http.post(this.urlguardar, param);   

@@ -1,6 +1,6 @@
 // Angular Libs
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -42,6 +42,9 @@ import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service
 
 
 
+
+
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -58,6 +61,10 @@ import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service
         RadioButtonModule,
         InputSwitchModule,
         PasswordModule,
+        ReactiveFormsModule,
+      
+       
+        
        
     ],
     declarations: [
@@ -70,7 +77,9 @@ import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service
         AppMenuComponent,
         AppMenuitemComponent,
         AppRightPanelComponent,
-        AppTopBarComponent
+        AppTopBarComponent,
+        
+        
     
     ],
     providers: [

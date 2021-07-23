@@ -11,34 +11,75 @@
     </div>
   </div>
 </div>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+          <div class="p-text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="p-grid p-fluid">
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+              </div>
+              <div class="p-col-6">
+                  <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
 
 <p></p>
-<form [formGroup]="questions">
-  <div class="form-group" style="background-color:white;">
-    <ul>
-      <li *ngFor="let question of pregunta; let i = index">
-        <p></p>
-        {{ question.name }}
-        <div *ngFor="let category of evaluacion" class="p-field-checkbox">
-          <p-radioButton required name="category" [value]="category.name" [(ngModel)]="modelo[i].valor"></p-radioButton>
-          <label>{{category.name}}</label>
-        </div>
-      </li>
-    </ul>
-  </div>
-</form>
+<div id="scroll">
+  <form [formGroup]="questions" (ngSubmit)="submitForm()">
+    <div class="form-group" style="background-color:white;">
+      <ul>
+        <li *ngFor="let question of pregunta; let i = index">
+          <p></p>
 
-<center>
-<button pButton type="button" routerLink="/teacher-list" style="margin-left: 10px" label="Regresar"
-  icon="pi pi-times"></button>
-<button (click)="confirm()" pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
-</center>
-<p-confirmDialog #cd [style]="{width: '50vw'}">
-  <ng-template pTemplate="header">
-    <h3>Confirmar Guardado</h3>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-    <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
-  </ng-template>
-</p-confirmDialog>
+          <div [hidden]="validateModal(i)">
+            <span>
+              <b style="color: red;">Este campo es requerido *</b>
+            </span>
+          </div>
+          <hr>
+
+          {{ question.name }}
+          <hr>
+          <div *ngFor="let category of evaluacion" class="p-field-checkbox">
+
+            <p-radioButton required="required" name="category" [value]="category.name" [checked]="false"
+              [(ngModel)]="modelo[i].valor">
+            </p-radioButton>
+            <label>{{category.name}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </form>
+
+
+  <center>
+    <button pButton type="button" routerLink="/teacher-list" style="margin-left: 10px" label="Regresar"
+      icon="pi pi-times"></button>
+    <button (click)="confirm()" pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
+  </center>
+  <p-confirmDialog #cd [style]="{width: '50vw'}">
+    <ng-template pTemplate="header">
+      <h3>Guardar La Evaluación al Docente</h3>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect();"></button>
+     
+    </ng-template>
+  </p-confirmDialog>
+
+</div>
