@@ -1,0 +1,14 @@
+.error-msg{
+    color: rgb(228, 18, 18);
+    text-align: center;
+    background: #ffd8d8;
+    padding: 14px;
+    width: 100%;
+  }
+  
+  @media screen and (max-width: 960px) {
+    button {
+        width: 25%;
+        margin-bottom: .5rem;
+    }
+}

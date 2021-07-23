@@ -1,0 +1,38 @@
+{
+    "nombreMaestro": "Tatiana Vizcaino",
+    "maestros": [
+        {
+            "nombreMaestro": "kun Agüero",
+            "asignatura": [
+                {
+                    "nombreAsignatura": "programacion1"
+                },
+                {
+                    "nombreAsignatura": "matematicas1"
+                }
+            ]
+        },
+        {
+            "nombreMaestro": "Mauricio Prieto",
+            "asignatura": [
+                {
+                    "nombreAsignatura": "programacion2"
+                },
+                {
+                    "nombreAsignatura": "matematicas2"
+                }
+            ]
+        },
+        {
+            "nombreMaestro": "Luis Chipuxi",
+            "asignatura": [
+                {
+                    "nombreAsignatura": "programacion3"
+                },
+                {
+                    "nombreAsignatura": "matematicas3"
+                }
+            ]
+        }
+    ]
+}
