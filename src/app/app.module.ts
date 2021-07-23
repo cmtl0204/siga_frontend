@@ -37,6 +37,8 @@ import {SharedModule} from './pages/shared/shared.module';
 import {PasswordModule} from 'primeng/password';
 import { TeacherEvalComponent } from './pages/teacher-eval/teacher-eval.component';
 import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service';
+import {TableModule} from 'primeng/table';
+
 
 
 
@@ -61,11 +63,8 @@ import { TeacherEvalService } from './services/teacher-eval/teacher-eval.service
         RadioButtonModule,
         InputSwitchModule,
         PasswordModule,
+        TableModule,
         ReactiveFormsModule,
-      
-       
-        
-       
     ],
     declarations: [
         AppBlankComponent,

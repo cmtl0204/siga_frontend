@@ -14,14 +14,12 @@
         <tr>
             <th>Nombre De Docente</th>
             <th>Asignatura</th>
-            <th>Accion</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-maestro>
-        <tr>
-            <td>{{maestro.nombreMaestro}}</td>
-            <td>{{maestro.asignatura[0].nombreAsignatura}}</td>
-           <td><a routerLink="/eval-student-teacher"  class="button"> Evaluar </a></td>          
+    <ng-template pTemplate="body"  >
+        <tr  *ngFor="let maestro of teachers" ngModel=[teacher]>
+            <td>{{maestro.name}}</td>
+           <td><a (click)="seleccionar(maestro.id)"  class="button"> Evaluar </a></td>          
         </tr>
     </ng-template>
     
