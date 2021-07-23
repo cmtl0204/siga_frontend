@@ -4,7 +4,7 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { DetailEvaluation } from 'src/app/models/teacher-eval/detail-evaluation';
 import { Evaluation } from 'src/app/models/teacher-eval/evaluation';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
-
+import {Message,MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-management',
@@ -38,7 +38,8 @@ export class ManagementComponent implements OnInit {
 
   constructor(
     private teacherEval: TeacherEvalHttpService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { 
       this.teachers = [];
       this.evaluations = [];
@@ -85,6 +86,11 @@ export class ManagementComponent implements OnInit {
   
 
   getEvaluations(id : string){
+    this.messageService.add({
+      severity: 'success',
+      summary:'Evaluaciones  ',
+      detail: 'Acción Realizada con Éxito'
+    })
     this.teacherEval.getEvaluation(id).subscribe(
       response => {
         const datos =  this.evaluations = response['data'];

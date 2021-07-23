@@ -6,6 +6,7 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { Research } from 'src/app/models/teacher-eval/research';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { ConfirmationService } from 'primeng/api';
+import {Message,MessageService} from 'primeng/api';
 import { error } from 'protractor';
 
 @Component({
@@ -26,7 +27,8 @@ export class EditInvestigationComponent implements OnInit {
     private teacherEval: TeacherEvalHttpService,
     private activeRouter: ActivatedRoute,
     private router: Router,
-    private confirmationService: ConfirmationService,
+    private confirmationService: ConfirmationService,    
+    private messageService: MessageService
   ) { 
     this.researchs = [];
   }
@@ -64,14 +66,25 @@ export class EditInvestigationComponent implements OnInit {
           this.teacherEval.updateResearch(this.id, inv_auto_eval.value, inv_pares.value, inv_coodinador.value, this.total)
           .subscribe( 
             response => {
+              this.messageService.add({
+                severity: 'success',
+                summary:'Actualizado',
+                detail: 'Inventario  Actualizado'
+              })
+  
               console.log(response);
-              alert("Actualizado con Exito");
-              this.router.navigate(['teacher-eval/investigation']);
+             // alert("Actualizado con Exito");
+             
             },
             error => console.log(error)
           );
         }
       });
+  }
+
+
+  regresar(){
+    this.router.navigate(['teacher-eval/investigation']);
   }
 
 

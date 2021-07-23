@@ -6,7 +6,7 @@ import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { MessageService as MessagePnService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
-
+import {Message,MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-extracredits',
@@ -47,6 +47,7 @@ export class ExtracreditsComponent implements OnInit {
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
     private confirmationService: ConfirmationService,
+    private messageService: MessageService
 
   ) {
     this.teachers = [];
@@ -83,7 +84,6 @@ export class ExtracreditsComponent implements OnInit {
 
   addCredits(id: string) {
 
-
       this.total = ( this.diploma_yavirac + this.title_fourth_level + this.OCS_member + this.governing_processes + this.process_nouns + this.support_processes);
       console.log(this.total)
       let data = {
@@ -98,11 +98,16 @@ export class ExtracreditsComponent implements OnInit {
         }
       }
    
-          
+         
           this.teacherEval.addExtraCredit(id, data)
           .subscribe(response => {
+            this.messageService.add({
+              severity: 'success',
+              summary:'Credito Creado',
+              detail: 'Credito Creado con Éxito'
+            })
             console.log(data)
-            alert("Creado Con Exito ")
+         //   alert("Creado Con Exito ")
             window.location.reload();
           }
           ), error => {
@@ -121,8 +126,14 @@ export class ExtracreditsComponent implements OnInit {
         
         this.teacherEval.deleteCredit(id).
         subscribe(response => {
+          this.messageService.add({
+            severity: 'success',
+            summary:'Credito Eliminado',
+            detail: 'Credito Eliminad con Éxito'
+          }
+            
+          )
           console.log(response)
-         alert("Eliminado con Exito")
           window.location.reload();
           
         }), error => {

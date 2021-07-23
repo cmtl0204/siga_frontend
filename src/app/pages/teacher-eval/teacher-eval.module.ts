@@ -20,7 +20,9 @@ import { EditCreditComponent } from './edit-credit/edit-credit.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { EditInvestigationComponent } from './edit-investigation/edit-investigation.component';
-
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {Message,MessageService} from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -46,10 +48,12 @@ import { EditInvestigationComponent } from './edit-investigation/edit-investigat
     CardModule,
     ScrollTopModule, 
     ReactiveFormsModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MessagesModule,
+    MessageModule
     
   ],
-  providers: [ ConfirmationService]
+  providers: [ ConfirmationService, MessageService]
 })
 export class TeacherEvalModule { }
 // hola

@@ -12,11 +12,13 @@
       label="Investigacion"></button>
 
     <button (click)="pdf()" class="p-m-2" pButton icon="pi pi-file-pdf" type="button" label="Generar PDF"></button>
-
+    <p-messages></p-messages>
 
   </div>
 </div>
+<div class="p-col-12 p-md-6 p-lg-12">
 
+</div>
 
 <div class="p-fluid p-formgrid p-grid">
 
@@ -46,12 +48,12 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-6 ">
-                <p style="text-align: center;">{{item.result | number}}</p>
-                <p style="text-align: center;">Resultado </p>
+                <p style="text-align: center;  font-size: medium; ">{{item.result | number}}</p>
+                <p style="text-align: center;  font-size: medium;">Resultado </p>
               </div>
               <div class="p-col-6">
-                <p style="text-align: center;">{{ item.percentage | number}}</p>
-                <p style="text-align: center;">Equivalencia</p>
+                <p style="text-align: center; font-size: medium;">{{ item.percentage | number}}</p>
+                <p style="text-align: center; font-size: medium;">Equivalencia</p>
               </div>
             </div>
           </p-card>
@@ -70,8 +72,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{total1 | number}} </p>
-                <p style="text-align: center;">Resultado</p>
+                <p style="text-align: center;  font-size: medium;"> {{total1 | number}} </p>
+                <p style="text-align: center;  font-size: medium;">Resultado</p>
               </div>
             </div>
           </p-card>
@@ -84,8 +86,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{total2 | number}} </p>
-                <p style="text-align: center;">Resultado</p>
+                <p style="text-align: center;  font-size: medium;"> {{total2 | number}} </p>
+                <p style="text-align: center;  font-size: medium;">Resultado</p>
               </div>
             </div>
           </p-card>
@@ -98,8 +100,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{extraCredits | number}} </p>
-                <p style="text-align: center;">Resultado</p>
+                <p style="text-align: center;  font-size: medium;"> {{extraCredits | number}} </p>
+                <p style="text-align: center;  font-size: medium;">Resultado</p>
               </div>
             </div>
           </p-card>
@@ -112,8 +114,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{investigacion * 0.5| number}} </p>
-                <p style="text-align: center;">Equivalencia</p>
+                <p style="text-align: center;  font-size: medium;"> {{investigacion * 0.5| number}} </p>
+                <p style="text-align: center;  font-size: medium;">Equivalencia</p>
               </div>
             </div>
           </p-card>
@@ -126,8 +128,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{ totalDocencia | number}} </p>
-                <p style="text-align: center;">Equivalencia</p>
+                <p style="text-align: center;  font-size: medium;"> {{ totalDocencia | number}} </p>
+                <p style="text-align: center;  font-size: medium;">Equivalencia</p>
               </div>
             </div>
           </p-card>
@@ -140,8 +142,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{ totalGestion | number }} </p>
-                <p style="text-align: center;">Equivalencia</p>
+                <p style="text-align: center;  font-size: medium;"> {{ totalGestion | number }} </p>
+                <p style="text-align: center;  font-size: medium;">Equivalencia</p>
               </div>
             </div>
           </p-card>
@@ -155,8 +157,8 @@
 
             <div class="p-fluid p-formgrid p-grid ">
               <div class="p-col-12 ">
-                <p style="text-align: center;"> {{ total1 * 0.7  + totalGestion + extraCredits + investigacion * 0.5 | number }} </p>
-                <p style="text-align: center;">Resultado</p>
+                <p style="text-align: center;  font-size: large; font-weight: bold;"> {{ total1 * 0.7  + totalGestion + extraCredits + investigacion * 0.5 | number }} </p>
+                <p style="text-align: center;  font-size: medium; font-weight: bold;">Resultado</p>
               </div>
             </div>
           </p-card>

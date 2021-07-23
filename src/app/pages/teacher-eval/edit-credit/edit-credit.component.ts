@@ -6,6 +6,8 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { ConfirmationService } from 'primeng/api';
+import {Message,MessageService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-edit-credit',
@@ -16,6 +18,7 @@ export class EditCreditComponent implements OnInit {
   id: string;
   extraCredits: ExtraCredit[];
   extraCredit: any = [];
+  msgs1: Message[];
   diploma_yavirac: any;
   title_fourth_level: any;
   OCS_member: any;
@@ -28,6 +31,7 @@ export class EditCreditComponent implements OnInit {
     private activeRouter: ActivatedRoute,
     private router: Router,
     private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.extraCredits = [];
   }
@@ -67,10 +71,18 @@ export class EditCreditComponent implements OnInit {
         this.teacherEval.updateCredits(this.id, diploma_yavirac.value, title_fourth_level.value, OCS_member.value, governing_processes.value, process_nouns.value, support_processes.value, this.total)
           .subscribe(response => {
             console.log(response);
-             alert("Actualizado con Exito");
-              this.router.navigate(['teacher-eval/extra-credit']);
+            this.messageService.add({
+              severity: 'success',
+              summary:'Actualizado',
+              detail: 'Credito Actualizado'
+            })
+
+             // this.router.navigate(['teacher-eval/extra-credit']);
           },
-            error => console.log(error)
+            error => {
+             
+              console.log(error)
+            } 
           );
 
 
@@ -79,6 +91,10 @@ export class EditCreditComponent implements OnInit {
 
 
 
+  }
+
+  regresar(){
+    this.router.navigate(['teacher-eval/extra-credit']);
   }
 
 

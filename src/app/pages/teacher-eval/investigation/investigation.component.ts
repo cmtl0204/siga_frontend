@@ -7,6 +7,7 @@ import { ExtraCredit } from 'src/app/models/teacher-eval/extra-credit';
 import { Research } from 'src/app/models/teacher-eval/research';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
 import { ConfirmationService } from 'primeng/api';
+import {Message,MessageService} from 'primeng/api';
 @Component({
   selector: 'app-investigation',
   templateUrl: './investigation.component.html',
@@ -34,7 +35,7 @@ export class InvestigationComponent implements OnInit {
     private teacherEval: TeacherEvalHttpService,
     private router: Router,
     private confirmationService: ConfirmationService,
-
+    private messageService: MessageService
   ) {
     this.teachers = [];
     this.researchs = [];
@@ -96,8 +97,13 @@ export class InvestigationComponent implements OnInit {
     }
     this.teacherEval.addResearch(id, data)
       .subscribe(response => {
+        this.messageService.add({
+          severity: 'success',
+          summary:'Investigacion Creada',
+          detail: 'Investigacion Creada con Exito'
+        })
         console.log(data)
-        alert("Creado con Exito")
+       // alert("Creado con Exito")
         window.location.reload();
       }
       ), error => {
@@ -112,8 +118,15 @@ export class InvestigationComponent implements OnInit {
       accept: () => {
         this.teacherEval.deleteResearch(id)
         .subscribe(response => {
+          this.messageService.add({
+            severity: 'success',
+            summary:'Investigacion Eliminada',
+            detail: 'Investigacion Eliminada con Exito'
+          }
+            
+          )
           console.log(response)
-          alert("Eliminado con Exito")
+         // alert("Eliminado con Exito")
           window.location.reload();
         }), error => {
           console.log(error);

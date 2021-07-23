@@ -4,6 +4,7 @@ import { Teacher } from 'src/app/models/app/teacher';
 import { DetailEvaluation } from 'src/app/models/teacher-eval/detail-evaluation';
 import { Evaluation } from 'src/app/models/teacher-eval/evaluation';
 import { TeacherEvalHttpService } from 'src/app/services/teacher-eval/teacher-eval-http.service';
+import {Message,MessageService} from 'primeng/api';
 import * as moment from 'moment';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'
@@ -72,7 +73,8 @@ extraCredits : any;
   
   constructor(
     private teacherEval: TeacherEvalHttpService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { 
       this.teachers = [];
       this.evaluations = [];
@@ -239,7 +241,11 @@ extraCredits : any;
 
 
   getPDF(){
-
+    this.messageService.add({
+      severity: 'success',
+      summary:'PDF Creado ',
+      detail: 'PDF Creado con Éxito'
+    })
     html2canvas(document.getElementById('htmlData')).then(function(canvas) {
     canvas.getContext('2d');
      var HTML_Width = canvas.width;

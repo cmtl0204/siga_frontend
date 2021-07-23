@@ -51,13 +51,13 @@
 
   </div>
 
-
+  <p-messages></p-messages>
 
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="addCredits(teacher.id)" label="Total" class="p-m-2 p-button-success">
     </p-button>
   </ng-template>
-
+  
 
 </p-dialog>
 
@@ -71,14 +71,15 @@
   </div>
 
   <div class="p-col-12 p-md-6 p-lg-4" style="position: relative; left: auto;">
-
-
     <button class="p-m-2 p-button-success" (click)="showModalDialog()" icon="pi pi-plus" pButton type="button"
       label="Creditos Extra"></button>
-
-
-
+    
   </div>
+  
+</div>
+
+<div class="p-col-12 p-md-6 p-lg-12">
+  <p-messages></p-messages>
 </div>
 
 <div style="height: 400px; overflow-x:auto;">
