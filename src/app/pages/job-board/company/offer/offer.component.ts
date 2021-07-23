@@ -35,12 +35,12 @@ export class OfferComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getOffers(this.paginator);
         this.buildFormSkill();
     }
 
     buildFormSkill() {
         this.formOffer = this.formBuilder.group({
-            // VERIFICAR CAMPOS Y SI TODOS SON REQUERIDOS Y CON EL MINIMO
             id: [null],
             vacancies: [null, [Validators.required, Validators.min(1)]],
             code: [{value: null, disabled: true}],
