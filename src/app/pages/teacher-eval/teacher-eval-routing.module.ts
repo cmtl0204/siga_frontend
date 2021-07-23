@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CoevaluationCoordinatorAreaComponent } from './coevaluation-coordinator-area/coevaluation-coordinator-area.component';
+import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
+import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
+import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.component';
 //import { GeneratePDFComponent } from './generate-pdf/generate-pdf.component';
 
 //import { ManagementComponent } from './management/management.component';
@@ -22,7 +26,26 @@ const routes: Routes = [
   {
     path: 'pair-evaluations/:id',
     component: PairEvaluationsComponent
+  },
+  {
+    path: 'heteroevaluation/:id',
+    component: HeteroevaluationComponent
+  },
+  {
+    path: 'coevaluation-coordinator-area',
+    component: CoevaluationCoordinatorAreaComponent
+  },
+  {
+    path: 'coevaluation-coordinator',
+    component: CoevaluationCoordinatorComponent
+  },
+  {
+    path: 'evaluation-teacher',
+    component: EvaluationTeacherComponent
   }
+
+
+
 
 ];
 

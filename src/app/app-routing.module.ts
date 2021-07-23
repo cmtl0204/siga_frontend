@@ -44,50 +44,6 @@ import {AuthGuard} from './shared/guards/auth.guard';
                         //canActivate: [AuthGuard]
                     },
                     
-
-                    // ruta evaluacion//
-                    {
-                        path: 'evaluation',
-                        loadChildren: () => import('./pages/teacher-eval/evaluation/evaluation.module').then(m => m.EvaluationModule),
-                        canActivate: [AuthGuard]
-                    },
-
-
-                    //ruta tipo de hereroevaluacion
-                    {
-                        path: 'heteroevaluation',
-                        loadChildren: () => import('./pages/teacher-eval/heteroevaluation/heteroevaluation.module').then(m => m.HeteroevaluationModule),
-                       canActivate: [AuthGuard]
-                    },
-                      //ruta tipo de evaluacion coordinador de area
-                      {
-                        path: 'coevaluation-coordinator-area',
-                        loadChildren: () => import('./pages/teacher-eval/coevaluation-coordinator-area/coevaluation-coordinator-area.module').then(m => m.CoevaluationCoordinatorAreaModule),
-                       canActivate: [AuthGuard]
-                    },
-                     // ruta evaluacion coordinador 
-                     {
-                        path: 'coevaluation-coordinator',
-                        loadChildren: () => import('./pages/teacher-eval/coevaluation-coordinator/coevaluation-coordinator.module').then(m => m.CoevaluationCoordinatorModule),
-                       canActivate: [AuthGuard]
-                    },
-
-                    // ruta de evaluacion docente 
-                    {
-                        path: 'evaluation-teacher',
-                        loadChildren: () => import('./pages/teacher-eval/evaluation-teacher/evaluation-teacher.module').then(m => m.EvaluationTeacherModule),
-                       canActivate: [AuthGuard]
-                    },
-
-                    // ruta de resultados de evaluacion
-                    {
-                        path: 'result-evaluation',
-                        loadChildren: () => import('./pages/teacher-eval/result-evaluation/result-evaluation.module').then(m => m.ResultEvaluationModule),
-                       canActivate: [AuthGuard]
-                    }
-
-
-                   
                    /* {
                         path: 'user',
                         loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),

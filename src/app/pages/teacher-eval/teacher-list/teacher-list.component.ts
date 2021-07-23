@@ -49,7 +49,7 @@ export class TeacherListComponent implements OnInit {
   }
   seleccionar(id: string){
 console.log(id);
-this.router.navigate(['teacher-eval/pair-evaluations', id])
+this.router.navigate(['teacher-eval/heteroevaluation', id])
   }
 
   

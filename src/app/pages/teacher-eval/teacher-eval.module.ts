@@ -24,6 +24,10 @@ import {Message,MessageService} from 'primeng/api';
 import {RadioButtonModule} from 'primeng/radiobutton'; 
 import {Toast, ToastModule} from 'primeng/toast';
 import { toBase64String } from '@angular/compiler/src/output/source_map';
+import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.component';
+import { CoevaluationCoordinatorAreaComponent } from './coevaluation-coordinator-area/coevaluation-coordinator-area.component';
+import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
+import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
 
 
 @NgModule({
@@ -31,6 +35,10 @@ import { toBase64String } from '@angular/compiler/src/output/source_map';
     QuestionComponent,
     TeacherListComponent,
     PairEvaluationsComponent,
+    HeteroevaluationComponent,
+    CoevaluationCoordinatorAreaComponent,
+    CoevaluationCoordinatorComponent,
+    EvaluationTeacherComponent,
     
   ],
   providers:[

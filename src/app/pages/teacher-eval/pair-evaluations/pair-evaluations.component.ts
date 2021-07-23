@@ -17,11 +17,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 
-
-
-
-
-
 @Component({
   selector: 'app-pair-evaluations',
   templateUrl: './pair-evaluations.component.html',

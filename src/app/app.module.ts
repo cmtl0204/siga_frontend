@@ -5,6 +5,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { CommonModule } from "@angular/common";
 
 // Application Modules
 import {AppRoutingModule} from './app-routing.module';
@@ -62,6 +63,8 @@ import {TableModule} from 'primeng/table';
         PasswordModule,
         TableModule,
         ReactiveFormsModule,
+        CommonModule
+        
     ],
     declarations: [
         AppBlankComponent,

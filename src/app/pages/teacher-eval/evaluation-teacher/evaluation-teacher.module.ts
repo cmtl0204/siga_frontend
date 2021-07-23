@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { EvaluationTeacherComponent } from './evaluation-teacher.component';
-import { EvaluationTeacherRoutes } from './evaluation-teacher-routing';
 import {MessageService} from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
@@ -11,22 +9,22 @@ import { Evaluation } from 'src/app/models/teacher-eval/evaluation';
 import {ButtonModule} from 'primeng/button';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
-
-
+import { EvaluationTeacherComponent } from './evaluation-teacher.component';
+import {Table, TableModule} from 'primeng/table';
 
 
 @NgModule({
-  
   imports: [
     CommonModule,
-    RouterModule.forChild(EvaluationTeacherRoutes),
     DropdownModule,
     RadioButtonModule,
     FormsModule,
     ButtonModule,
     ConfirmDialogModule,
+    TableModule
   ],
-   declarations: [EvaluationTeacherComponent],
-    providers: [MessageService, ConfirmationService]
+  declarations: [EvaluationTeacherComponent],
+  providers: [MessageService, ConfirmationService]
+
 })
 export class EvaluationTeacherModule { }
