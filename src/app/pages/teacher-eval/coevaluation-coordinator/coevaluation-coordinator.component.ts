@@ -41,7 +41,7 @@ export class CoevaluationCoordinatorComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 61 };
+    this.paginator = { current_page: 1, per_page: 47 };
     this.questions = [];
 
   }
@@ -133,12 +133,12 @@ export class CoevaluationCoordinatorComponent implements OnInit {
 
   //para que el radiobutton sea dinamico y no se marque todos al mism tiempo se gun la pregunta
   getCheckSelect() {
-    let numeroDePreguntas: number = 25;
+    let puntajeMaximo: number = 72;
     let porcentajeEvaluacion: number = 0;
     console.log(this.pregunta.length);
 
     for (const iterator of this.modelo) {
-      porcentajeEvaluacion += +iterator.valor * 100 / numeroDePreguntas;
+      porcentajeEvaluacion += +iterator.valor * 100 / puntajeMaximo;
     }
     console.log("resultado de la regla de 3 =", porcentajeEvaluacion);
 

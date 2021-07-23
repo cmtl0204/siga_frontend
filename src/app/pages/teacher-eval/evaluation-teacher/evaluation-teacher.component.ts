@@ -43,7 +43,7 @@ export class EvaluationTeacherComponent implements OnInit {
     private confirmationService: ConfirmationService,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 79 };
+    this.paginator = { current_page: 1, per_page: 65 };
     this.questions = [];
 
   }
@@ -135,16 +135,15 @@ export class EvaluationTeacherComponent implements OnInit {
 
   //para que el radiobutton sea dinamico y no se marque todos al mism tiempo se gun la pregunta
   getCheckSelect() {
-    let numeroDePreguntas: number = 25;
+    let puntajeMaximo: number = 72;
     let porcentajeEvaluacion: number = 0;
     console.log(this.pregunta.length);
 
     for (const iterator of this.modelo) {
-      porcentajeEvaluacion += +iterator.valor * 100 / numeroDePreguntas;
+      porcentajeEvaluacion += +iterator.valor * 100 / puntajeMaximo;
     }
     console.log("resultado de la regla de 3 =", porcentajeEvaluacion);
-
-
+    
     this.docente = {
       id: 1,
       name: "Profe Edu"

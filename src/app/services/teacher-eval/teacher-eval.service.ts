@@ -21,12 +21,12 @@ export class TeacherEvalService {
   //urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/index?evaluation_type_id=4&per_page=3&page=3";
 
 
-  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=33&page=1";
+  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=18&page=1";
   urlguardar: string = URL_API + "teacher-eval/evaluation/create";
   
   getInit(param: any): Observable<any> {   
     const params = {
-      per_page:'33',
+      per_page:'18',
       page: '1'
     };
     return this.http.get(this.urlvs, { params: params })     
@@ -36,12 +36,12 @@ export class TeacherEvalService {
     return this.http.post(this.urlguardar, param);   
    }
 
-  urlhtr: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=33&page=1";
+  urlhtr: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=18&page=1";
   urlheteroevaluation: string = URL_API + "teacher-evaluation/create";
 
   getHeteroevaluation(param: any): Observable<any> {   
     const params = {
-      per_page:'33',
+      per_page:'18',
       page: '1'
     }
     return this.http.get(this.urlhtr, { params: params })     
@@ -51,12 +51,12 @@ export class TeacherEvalService {
     return this.http.post(this.urlheteroevaluation, param);   
    };
 
-   urlcoev: string = URL_API + "teacher-eval/question/index?evaluation_type_id=3&per_page=61&page=1";
+   urlcoev: string = URL_API + "teacher-eval/question/index?evaluation_type_id=3&per_page=47&page=1";
    urlcoevaluation: string = URL_API + "teacher-evaluation/create";
  
    getCoevaluation(param: any): Observable<any> {   
     const params = {
-      per_page:'61',
+      per_page:'47',
       page: '1'
     }
     return this.http.get(this.urlcoev, { params: params })     
@@ -67,12 +67,12 @@ export class TeacherEvalService {
   
     };
  
-    urlcoear: string = URL_API + "teacher-eval/question/index?evaluation_type_id=2&per_page=13&page=1";
+    urlcoear: string = URL_API + "teacher-eval/question/index?evaluation_type_id=2&per_page=29&page=1";
     urlcoevaluationarea: string = URL_API + "teacher-evaluation/create";
  
     getEvaluationArea(param: any): Observable<any> {   
       const params = {
-        per_page:'13',
+        per_page:'29',
         page: '1'
       }
       return this.http.get(this.urlcoear, { params: params })     
@@ -82,12 +82,12 @@ export class TeacherEvalService {
   
     };
 
-    urleva: string = URL_API + "teacher-eval/question/index?evaluation_type_id=4&per_page=48&page=1";
+    urleva: string = URL_API + "teacher-eval/question/index?evaluation_type_id=4&per_page=65&page=1";
     urlevaluation: string = URL_API + "teacher-evaluation/create";
 
     getEvaluation(param: any): Observable<any> {   
       const params = {
-        per_page:'48',
+        per_page:'65',
         page: '1'
       }
       return this.http.get(this.urleva, { params: params })     
