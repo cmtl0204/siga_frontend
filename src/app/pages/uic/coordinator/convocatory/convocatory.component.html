@@ -1,0 +1,40 @@
+<div class="p-grid">
+  <div class="p-xl-12 p-lg-12 p-md-12 p-sm-12">
+    <!-- //responsive -->
+    <app-convocatory-list
+      *ngIf="!planningDialog"
+      [planningsIn]="plannings"
+      [planningsEndIn]="planningsEnd"
+      [flagPlannings]="flagPlannings"
+      [paginatorIn]="paginator"
+      [formPlanningIn]="formPlanning"
+      (planningsOut)="plannings = $event"
+      (planningsEndOut)="planningsEnd = $event"
+      (displayOut)="planningDialog = $event"
+      (formPlanningOut)="formPlanning = $event"
+      (disabledFormOut)="disabledForm = $event"
+      (paginatorOut)="getPlannings($event)"
+    >
+    </app-convocatory-list>
+
+    <p-dialog
+      [(visible)]="planningDialog"
+      [style]="{ width: '768px' }"
+      header="Convocatoria"
+      [modal]="true"
+      styleClass="p-fluid"
+      (onHide)="planningDialog = false"
+    >
+      <app-convocatory-form
+        [planningsIn]="plannings"
+        [formPlanningIn]="formPlanning"
+        [disabledFormIn]="disabledForm"
+        (planningsOut)="plannings = $event"
+        (paginatorAdd)="paginator.total = paginator.total + $event"
+        (displayOut)="planningDialog = $event"
+
+      >
+      </app-convocatory-form>
+    </p-dialog>
+  </div>
+</div>
