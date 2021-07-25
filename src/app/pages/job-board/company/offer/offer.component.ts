@@ -30,17 +30,17 @@ export class OfferComponent implements OnInit {
         //     {label: 'Empresa', routerLink: ['/job-board/company']},
         //     {label: 'Oferta'}
         // ]);
-        this.paginator = {current_page: 1, per_page: 2};
+        this.paginator = {current_page: 1, per_page: 10};
         this.offers = [];
     }
 
     ngOnInit(): void {
+        this.getOffers(this.paginator);
         this.buildFormSkill();
     }
 
     buildFormSkill() {
         this.formOffer = this.formBuilder.group({
-            // VERIFICAR CAMPOS Y SI TODOS SON REQUERIDOS Y CON EL MINIMO
             id: [null],
             vacancies: [null, [Validators.required, Validators.min(1)]],
             code: [{value: null, disabled: true}],

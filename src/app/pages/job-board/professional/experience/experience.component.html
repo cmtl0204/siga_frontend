@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <app-experience-list [experiencesIn]="experiences" [flagExperiences]="flagExperiences" [paginatorIn]="paginator"
-            [formExperienceIn]="formExperience" (experiencesOut)="experiences=$event"
+        <app-experience-list [experiencesIn]="experiences" [flagSkeletonExperiences]="flagExperiences"
+            [paginatorIn]="paginator" [formExperienceIn]="formExperience" (experiencesOut)="experiences=$event"
             (displayOut)="experienceDialog=$event" (formExperienceOut)="formExperience=$event"
             (paginatorOut)="getExperiences($event)">
         </app-experience-list>

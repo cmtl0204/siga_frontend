@@ -6,10 +6,6 @@ import { Paginator } from '../../../../models/setting/paginator';
 import { HttpParams } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from '../../../shared/services/message.service';
-import { DateValidators } from '../../../shared/validators/date.validators';
-import { BreadcrumbService } from '../../../../shared/services/breadcrumb.service';
-
-
 @Component({
     selector: 'app-experience',
     templateUrl: './experience.component.html',
@@ -46,11 +42,11 @@ export class ExperienceComponent implements OnInit {
             employer: [null, Validators.required],
             position: [null, [Validators.required, Validators.minLength(3)]],
             start_date: [null, Validators.required],
-            end_date: [null, Validators.required],
-            reason_leave: [null, Validators.required],
+            end_date: [null],
+            reason_leave: [null],
             activities: this.formBuilder.array([this.formBuilder.control(null, Validators.required)]),
-            is_working: [null, Validators.required],
-            is_disability: [null, Validators.required],
+            is_working: [null],
+            is_disability: [null],
         });
     }
 

@@ -6,10 +6,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
 import { Catalogue } from '../../../../../models/app/catalogue';
-import { MessageService as MessagePnService } from 'primeng/api';
-import { SharedService } from '../../../../shared/services/shared.service';
-
-import { add, format } from 'date-fns';
 
 @Component({
     selector: 'app-experience-form',
@@ -25,16 +21,14 @@ export class ExperienceFormComponent implements OnInit {
     filteredAreas: any[];
     areas: Catalogue[];
     isWorking: boolean = true;
-    isDisability: boolean = false;
+    isDisability: boolean = true;
     selectedValues: string[] = [];
     value: boolean;
 
     constructor(private formBuilder: FormBuilder,
         public messageService: MessageService,
-        private messagePnService: MessagePnService,
         private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
-        private sharedService: SharedService,
         private jobBoardHttpService: JobBoardHttpService) {
     }
 
@@ -68,7 +62,7 @@ export class ExperienceFormComponent implements OnInit {
     }
 
     get endDateField() {
-        return this.formExperienceIn.get('start_date');
+        return this.formExperienceIn.get('end_date');
     }
 
     get activitiesField() {
@@ -150,7 +144,6 @@ export class ExperienceFormComponent implements OnInit {
             });
     }
 
-
     // Save in frontend
     saveExperience(experience: Experience) {
         const index = this.experiencesIn.findIndex(element => element.id === experience.id);
@@ -172,12 +165,8 @@ export class ExperienceFormComponent implements OnInit {
     clickIsDisability(e) {
         const isDisability = e.checked;
         if (isDisability) {
-            console.log('jsdhck');
             this.isDisability = true;
             this.isDisability = false;
-
-
         }
     }
-
 }

@@ -28,7 +28,7 @@ export class LanguageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private jobBoardHttpService: JobBoardHttpService) {
 
-    this.paginator = { current_page: 1, per_page: 5 };
+    this.paginator = { current_page: 1, per_page: 2 };
     this.languages = [];
   }
 

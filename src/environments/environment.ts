@@ -2,13 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const URL_API = 'http://siga_backend.test/v1/';
-export const URL = 'http://siga_backend.test/';
-export const WEB = 'http://127.0.0.1:8000/';
+export const URL_API = 'http://siga_backend.test:8080/v1/';
+export const URL = 'http://siga_backend.test:8080/';
+export const WEB = 'http://siga_backend.test:8080/';
+
 
 export const environment = {
     production: false,
-    STORAGE_URL: 'http://siga_backend.test/storage/',
+    STORAGE_URL: URL+'storage/',
     WEB,
     API_URL_AUTHENTICATION: URL_API + 'authentication/',
     API_URL_APP: URL_API + 'app/',
@@ -19,7 +20,7 @@ export const environment = {
     API_URL_COMMUNITY: URL_API + 'community/',
     SYSTEM_ID: 1,
     CLIENT_ID: '1',
-    CLIENT_SECRET: 'FRXFnhRzbAOVSzRo2JIR9UBFdhNMwgG0Pl0OzavQ',
+    CLIENT_SECRET: 'hQPpqSQNRZATRdAtPoQkVlzyoXRy2GtXEWrPa0bl',
     GRANT_TYPE: 'password',
 
     SITE_KEY: 'QpKtUkaJ40HNd1Di74B0pKC6asgKzAxuTx69L9Nb',
@@ -33,3 +34,8 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
