@@ -8,8 +8,8 @@
                 (click)="paginatorUserOut.emit(paginatorUserIn)"></button>
         </ng-template>
         <ng-template pTemplate="right">
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
-                (click)="dt.exportCSV()"></button>
+            <!--<button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
+                (click)="dt.exportCSV()"></button>-->
         </ng-template>
     </p-toolbar>
     <app-skeleton *ngIf="flagUsers" [type]="'user-admin'"></app-skeleton>
