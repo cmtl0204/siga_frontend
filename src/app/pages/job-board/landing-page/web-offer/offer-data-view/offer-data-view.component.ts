@@ -8,10 +8,10 @@ import {JobBoardHttpService} from '../../../../../services/job-board/job-board-h
 import {AuthService} from '../../../../../services/auth/auth.service';
 
 // models
-import {User} from '../../../../../models/auth/user';
 import {Offer} from '../../../../../models/job-board/offer';
 import {HttpParams} from '@angular/common/http';
 import {Paginator} from '../../../../../models/setting/paginator';
+import {Role} from '../../../../../models/auth/role';
 
 @Component({
     selector: 'app-offer-data-view',
@@ -22,7 +22,7 @@ export class OfferDataViewComponent implements OnInit {
 
     @Input() offers: Offer[];
     @Output() argsFilters = new EventEmitter<string>();
-    auth: User;
+    role: Role;
     paginator: Paginator;
     moreInformation: Offer;
     displayButtonApply: boolean;
@@ -34,24 +34,11 @@ export class OfferDataViewComponent implements OnInit {
                 private authService: AuthService,
                 private jobBoardHttpService: JobBoardHttpService,
                 private messagePnService: MessagePnService) {
-        this.auth = this.getRol(authService.getAuth());
-        this.auth ? this.displayButtonApply = true : this.displayButtonApply = false;
+        this.role = authService.getRole();
+        this.role?.code === ('ADMIN' || 'PROFESSIONAL') ? this.displayButtonApply = true : this.displayButtonApply = false;
     }
 
     ngOnInit(): void {
-    }
-
-    getRol(user): User {
-        if (user != null) {
-            for (const rol of user.roles) {
-                if (rol.code === 'PROFESSIONAL') {
-                    return user;
-                }
-            }
-        }
-        if (user === null || undefined) {
-            return user;
-        }
     }
 
     applyOffer(idOffer: string, typeAlert: string) {
