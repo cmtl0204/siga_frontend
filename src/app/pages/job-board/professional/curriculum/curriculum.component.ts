@@ -12,10 +12,11 @@ import { Professional } from 'src/app/models/job-board/professional';
 export class CurriculumComponent implements OnInit {
 
     formProfessional: FormGroup;
-    //formCourse: FormGroup;
+    // formCourse: FormGroup;
     professional: Professional;
     professionalDialog: boolean;
-    //courseDialog: boolean;
+    // courseDialog: boolean;
+    // course: Course;
     paginator: Paginator;
 
     constructor(private formBuilder: FormBuilder) {

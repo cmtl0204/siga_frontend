@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Experience } from '../../../../../models/job-board/experience';
-import { FormGroup } from '@angular/forms';
 import { Col } from '../../../../../models/setting/col';
 import { Paginator } from '../../../../../models/setting/paginator';
 import { MessageService } from '../../../../shared/services/message.service';
@@ -8,6 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
 import { File } from '../../../../../models/app/file';
+import {FormArray, FormGroup,  FormBuilder, Validators} from '@angular/forms';
+
 
 @Component({
     selector: 'app-experience-list',
@@ -15,7 +16,7 @@ import { File } from '../../../../../models/app/file';
     styleUrls: ['./experience-list.component.scss']
 })
 export class ExperienceListComponent implements OnInit {
-    @Input() flagExperiences: boolean;
+    @Input() flagSkeletonExperiences: boolean;
     @Input() experiencesIn: Experience[];
     @Input() paginatorIn: Paginator;
     @Input() formExperienceIn: FormGroup;
@@ -31,12 +32,16 @@ export class ExperienceListComponent implements OnInit {
     files: File[];
     paginatorFiles: Paginator;
     colsExperience: Col[];
+    isWorking: boolean;
+
+
 
     constructor(private messageService: MessageService,
         private spinnerService: NgxSpinnerService,
-        private jobBoardHttpService: JobBoardHttpService) {
+        private jobBoardHttpService: JobBoardHttpService,
+        private formBuilder: FormBuilder,) {
         this.resetPaginatorExperiences();
-        // this.resetPaginatorFiles();
+        //this.resetPaginatorFiles();
     }
     resetPaginator() {
         this.paginatorFiles = { current_page: 1, per_page: 5 };
@@ -46,13 +51,16 @@ export class ExperienceListComponent implements OnInit {
         this.paginatorIn = { current_page: 1, per_page: 5 };
     }
 
-    // resetPaginatorFiles() {
-    //     this.paginatorFiles = {current_page: 1, per_page: 5};
-    //  }
-
     ngOnInit(): void {
+        // this.loadColsExperience();
     }
 
+   /* get activitiesField() {
+        return this.formExperienceIn.get('activities') as FormArray;
+    }
+    get requirementsField() {
+        return this.formExperienceIn.get('requirements') as FormArray;
+    }*/
     // Search experiences in backend
     searchExperiences(event, search) {
         if (event.type === 'click' || event.keyCode === 13 || search.length === 0) {
@@ -75,11 +83,31 @@ export class ExperienceListComponent implements OnInit {
     }
 
     openEditFormExperience(experience: Experience) {
-       this.formExperienceIn.patchValue(experience);
+     this.formExperienceIn.patchValue(experience);
         this.formExperienceOut.emit(this.formExperienceIn);
         this.displayOut.emit(true);
     }
+  /*  openEditFormExperience(experience: Experience) {
+        this.formExperienceIn.patchValue(experience);
+            this.activitiesField.clear();
+          //  this.requirementsField.clear();
+            for(const activity of experience.activities){
+              this.addActivities(activity);
+            }
+            for(const requirement of experience.requirements){
+                this.addRequirements(requirement);
+              }
+        this.formExperienceOut.emit(this.formExperienceIn); 
+        this.displayOut.emit(true);
+    }
 
+    addActivities(data = null){
+        this.activitiesField.push(this.formBuilder.control(data, Validators.required));
+    }
+    addRequirements(data = null){
+        this.requirementsField.push(this.formBuilder.control(data, Validators.required));
+    }
+*/
     openUploadFilesExperience() {
         this.dialogUploadFiles = true;
     }
@@ -111,8 +139,6 @@ export class ExperienceListComponent implements OnInit {
             this.messageService.error(error);
         });
     }
-
-
     pageChange(event) {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
@@ -128,7 +154,6 @@ export class ExperienceListComponent implements OnInit {
                         this.selectedExperiences = [];
                         this.selectedExperiences.push(experience);
                     }
-
                     const ids = this.selectedExperiences.map(element => element.id);
                     this.spinnerService.show();
                     this.jobBoardHttpService.delete('experience/delete', ids)
@@ -145,7 +170,6 @@ export class ExperienceListComponent implements OnInit {
             });
 
     }
-
     removeExperiences(ids) {
         for (const id of ids) {
             this.experiencesIn = this.experiencesIn.filter(element => element.id !== id);

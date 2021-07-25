@@ -9,6 +9,7 @@ export interface Experience {
     position?: string;
     start_date?: string;
     end_date?: string;
+    requirements: string;
     activities?: string;
     reason_leave?: string;
     is_working?: boolean;

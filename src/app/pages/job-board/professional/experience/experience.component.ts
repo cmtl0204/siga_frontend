@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {JobBoardHttpService} from '../../../../services/job-board/job-board-http.service';
-import {Experience} from '../../../../models/job-board/experience';
-import {Paginator} from '../../../../models/setting/paginator';
-import {HttpParams} from '@angular/common/http';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {MessageService} from '../../../shared/services/message.service';
-import {BreadcrumbService} from '../../../../shared/services/breadcrumb.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { JobBoardHttpService } from '../../../../services/job-board/job-board-http.service';
+import { Experience } from '../../../../models/job-board/experience';
+import { Paginator } from '../../../../models/setting/paginator';
+import { HttpParams } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService } from '../../../shared/services/message.service';
+import { DateValidators } from '../../../shared/validators/date.validators';
+import { BreadcrumbService } from '../../../../shared/services/breadcrumb.service';
 
 @Component({
     selector: 'app-experience',
@@ -18,18 +19,17 @@ export class ExperienceComponent implements OnInit {
     paginator: Paginator;
     experiences: Experience[];
     formExperience: FormGroup;
-    experience: Experience;
     experienceDialog: boolean;
     flagExperiences: boolean;
 
     constructor(
         private spinnerService: NgxSpinnerService,
-        private messageService: MessageService,
+        public messageService: MessageService,
         private formBuilder: FormBuilder,
         private breadcrumbService: BreadcrumbService,
         private jobBoardHttpService: JobBoardHttpService) {
 
-        this.paginator = {current_page: 1, per_page: 2};
+        this.paginator = { current_page: 1, per_page: 2 };
         this.experiences = [];
     }
 
@@ -44,7 +44,7 @@ export class ExperienceComponent implements OnInit {
             id: [null],
             area: [null, Validators.required],
             employer: [null, Validators.required],
-            position: [null, [Validators.required, Validators.minLength(10)]],
+            position: [null, [Validators.required, Validators.minLength(3)]],
             start_date: [null, Validators.required],
             end_date: [null, Validators.required],
             reason_leave: [null, Validators.required],
@@ -60,16 +60,12 @@ export class ExperienceComponent implements OnInit {
             .append('page', paginator.current_page.toString())
             .append('per_page', paginator.per_page.toString());
         this.flagExperiences = true;
-        // this.spinnerService.show();
         this.jobBoardHttpService.get('experiences', params).subscribe(
             response => {
-                // this.spinnerService.hide();
                 this.flagExperiences = false;
                 this.experiences = response['data'];
-              // console.log(this.experiences);
                 this.paginator = response as Paginator;
             }, error => {
-                // this.spinnerService.hide();
                 this.flagExperiences = false;
                 this.messageService.error(error);
             });
