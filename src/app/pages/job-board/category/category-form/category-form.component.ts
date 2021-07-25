@@ -79,7 +79,6 @@ export class CategoryFormComponent implements OnInit {
 
     // Save in backend
     storeCategory(category: Category, flag = false) {
-        console.log('hola');
         this.spinnerService.show();
         this.jobBoardHttpService.store('categories', {category}).subscribe(
             response => {
@@ -105,8 +104,6 @@ export class CategoryFormComponent implements OnInit {
                 this.spinnerService.hide();
                 this.messageService.success(response);
                 this.saveCategory(response['data']);
-                console.log("eve");
-                console.log(this.saveCategory);
                 this.displayOut.emit(false);
             }, error => {
                 this.spinnerService.hide();
@@ -138,7 +135,7 @@ export class CategoryFormComponent implements OnInit {
     }
 
 
-     // categories of backend
+     // categories parets of backend
      getParentCategories() {
         this.jobBoardHttpService.get('category/parents').subscribe(
             response => {
