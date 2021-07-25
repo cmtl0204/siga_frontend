@@ -14,7 +14,7 @@ import { DateValidators } from '../../../shared/validators/date.validators';
     styleUrls: ['./reference.component.scss']
 })
 
-export class  ReferenceComponent implements OnInit {
+export class ReferenceComponent implements OnInit {
     paginator: Paginator;
     references: Reference[];
     formReference: FormGroup;
@@ -23,7 +23,7 @@ export class  ReferenceComponent implements OnInit {
 
     constructor(
         private spinnerService: NgxSpinnerService,
-        private messageService: MessageService,
+        public messageService: MessageService,
         private formBuilder: FormBuilder,
         private jobBoardHttpService: JobBoardHttpService) {
 
@@ -41,9 +41,9 @@ export class  ReferenceComponent implements OnInit {
         this.formReference = this.formBuilder.group({
             id: [null],
             institution: [null, Validators.required],
-            position: [null, Validators.required],
+            position: [null, [Validators.required, Validators.minLength(3)]],
             contact_name: [null, Validators.required],
-            contact_phone: [null, Validators.required],
+            contact_phone: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(10)]],
             contact_email: [null, Validators.required],
         });
     }
@@ -51,7 +51,7 @@ export class  ReferenceComponent implements OnInit {
     // references of backend
     getReferences(paginator: Paginator) {
         const params = new HttpParams()
-        .append('professional_id', "1")
+            .append('professional_id', "1")
             .append('page', paginator.current_page.toString())
             .append('per_page', paginator.per_page.toString());
 

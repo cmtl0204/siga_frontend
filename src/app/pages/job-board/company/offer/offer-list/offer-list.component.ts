@@ -35,7 +35,6 @@ export class OfferListComponent implements OnInit {
                 private spinnerService: NgxSpinnerService,
                 private jobBoardHttpService: JobBoardHttpService,
                 private formBuilder: FormBuilder,) {
-        this.resetPaginatorOffers();
         this.paginator = { current_page: 1, per_page: 10 };
     }
 
@@ -52,9 +51,9 @@ export class OfferListComponent implements OnInit {
 
     loadColsOffer() {
         this.colsOffer = [
+            {field: 'position', header: 'Cargo'},
             {field: 'status', header: 'Estado'},
             {field: 'vacancies', header: 'Vacantes'},
-            {field: 'position', header: 'Cargo'},
             {field: 'start_date', header: 'Fecha Inicio'},
             {field: 'end_date', header: 'Fecha Fin'},
         ];
@@ -107,7 +106,7 @@ export class OfferListComponent implements OnInit {
     }
 
     resetPaginatorOffers() {
-        this.paginatorIn = {current_page: 1, per_page: 5};
+        this.paginatorIn = {current_page: 1, per_page: 10};
     }
 
     deleteOffer(offer: Offer) {
@@ -140,8 +139,7 @@ export class OfferListComponent implements OnInit {
                 if (result.isConfirmed) {
                     const ids = this.selectedOffers.map(element => element.id);
                     this.spinnerService.show();
-                    console.log(ids);
-                    this.jobBoardHttpService.delete('offer/delete', {ids})
+                    this.jobBoardHttpService.delete('offer/delete', ids)
                         .subscribe(response => {
                             this.spinnerService.hide();
                             this.messageService.success(response);
