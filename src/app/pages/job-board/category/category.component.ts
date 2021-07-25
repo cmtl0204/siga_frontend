@@ -23,7 +23,7 @@ import { MessageService } from '../../shared/services/message.service';
         public messageService: MessageService,
         private formBuilder: FormBuilder,
         private jobBoardHttpService: JobBoardHttpService) {
-        this.paginator = { current_page: 1, per_page: 20 };
+        this.paginator = { current_page: 1, per_page: 5 };
         this.categories = [];
     }
 
@@ -53,10 +53,10 @@ import { MessageService } from '../../shared/services/message.service';
         this.flagSkeletonListCategories = true;
         this.jobBoardHttpService.get('categories', params).subscribe(
             response => {
-                console.log(response);
                 this.flagSkeletonListCategories = false;
                 this.categories = response['data'];
                 console.log(this.categories);
+                console.log("holii");
                 this.paginator = response as Paginator;
             }, error => {
                 this.flagSkeletonListCategories = false;

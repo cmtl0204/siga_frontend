@@ -53,19 +53,4 @@ export class CurriculumComponent implements OnInit {
         });
         console.log(this.formProfessional['controls']['user']);
     }
-    // Build form course
-    // buildFormCourse() {
-    //     this.formCourse = this.formBuilder.group({
-    //         id: [null],
-    //         type: [null, Validators.required],
-    //         institution: [null, Validators.required],
-    //         certification_type: [null, Validators.required],
-    //         area: [null, Validators.required],
-    //         name: [null, Validators.required],
-    //         description: [null, [Validators.required, Validators.minLength(10)]],
-    //         start_date: [null, Validators.required],
-    //         end_date: [null, Validators.required],
-    //         hours: [null, Validators.required],
-    //     });
-    // }
 }

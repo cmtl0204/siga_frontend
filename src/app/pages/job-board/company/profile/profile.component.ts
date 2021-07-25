@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Company} from 'src/app/models/job-board/company';
-import {Paginator} from 'src/app/models/setting/paginator';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Company } from 'src/app/models/job-board/company';
+import { Paginator } from 'src/app/models/setting/paginator';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
     paginator: Paginator;
 
     constructor(private formBuilder: FormBuilder) {
-        this.paginator = {current_page: 1, per_page: 3};
+        this.paginator = { current_page: 1, per_page: 3 };
 
     }
 
@@ -30,13 +30,13 @@ export class ProfileComponent implements OnInit {
         this.formCompany = this.formBuilder.group({
             user: this.formBuilder.group({
                 identification: [null, Validators.required],
-                email: [null, Validators.required],
-                phone: [null, Validators.required],
+                email: [null, [Validators.required, Validators.email]],
+                phone: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(10)]],
                 address: [null],
                 identification_type: [null, Validators.required],
             }),
             trade_name: [null, Validators.required],
-            prefix: [null, Validators.required],
+            prefix: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(5)]],
             comercial_activities: this.formBuilder.array([
                 this.formBuilder.control(null, Validators.required)
             ]),
@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit {
             activity_type: [null, Validators.required],
             person_type: [null, Validators.required],
         });
-        console.log(this.formCompany['controls']['user']);
     }
 
 }

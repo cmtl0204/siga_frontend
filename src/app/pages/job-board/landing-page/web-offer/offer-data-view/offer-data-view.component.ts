@@ -1,13 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Offer} from '../../../../../models/job-board/offer';
-import {Paginator} from '../../../../../models/setting/paginator';
-import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
-import {HttpParams} from '@angular/common/http';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
+// services
 import {NgxSpinnerService} from 'ngx-spinner';
+import {MessageService as MessagePnService} from 'primeng/api';
 import {MessageService} from '../../../../shared/services/message.service';
-import {User} from '../../../../../models/auth/user';
+import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
-import {Router} from '@angular/router';
+
+// models
+import {Offer} from '../../../../../models/job-board/offer';
+import {HttpParams} from '@angular/common/http';
+import {Paginator} from '../../../../../models/setting/paginator';
+import {Role} from '../../../../../models/auth/role';
 
 @Component({
     selector: 'app-offer-data-view',
@@ -17,33 +21,49 @@ import {Router} from '@angular/router';
 export class OfferDataViewComponent implements OnInit {
 
     @Input() offers: Offer[];
-    auth: User;
+    @Output() argsFilters = new EventEmitter<string>();
+    role: Role;
     paginator: Paginator;
     moreInformation: Offer;
     displayButtonApply: boolean;
-    displayMaxeableButton: boolean;
     displayModalMoreInformation: boolean;
+    appliedOffer: any[];
 
     constructor(private spinnerService: NgxSpinnerService,
                 private messageService: MessageService,
                 private authService: AuthService,
-                private jobBoardHttpService: JobBoardHttpService) {
-        this.auth = authService.getAuth();
-        this.auth ? this.displayButtonApply = true : this.displayButtonApply = false;
+                private jobBoardHttpService: JobBoardHttpService,
+                private messagePnService: MessagePnService) {
+        this.role = authService.getRole();
+        this.role?.code === ('ADMIN' || 'PROFESSIONAL') ? this.displayButtonApply = true : this.displayButtonApply = false;
     }
 
     ngOnInit(): void {
-        this.test();
     }
 
-    applyOffer(idOffer: string) {
+    applyOffer(idOffer: string, typeAlert: string) {
         const params = new HttpParams()
             .append('id', String(idOffer));
         this.spinnerService.show();
         this.jobBoardHttpService.get('web-offer/apply-offer', params).subscribe(
             response => {
                 this.spinnerService.hide();
-                this.messageService.success(response);
+                this.removeOffer(idOffer);
+                if (typeAlert === 'toast') {
+                    this.messagePnService.add({
+                        key: 'ap',
+                        severity: 'success',
+                        summary: 'Oferta aplicada.',
+                        life: 5000
+                    });
+                    setTimeout(() => {
+                        this.displayModalMoreInformation = false;
+                        this.messagePnService.clear();
+                    }, 1000);
+                }
+                if (typeAlert === 'sweet') {
+                    this.messageService.success(response);
+                }
             }, error => {
                 this.spinnerService.hide();
                 this.messageService.error(error);
@@ -60,13 +80,14 @@ export class OfferDataViewComponent implements OnInit {
         this.moreInformation = null;
     }
 
-    test() {
-        if (screen.width < 1024) {
-            console.log('Pequeña');
-        } else if (screen.width < 1280) {
-            console.log('Mediana');
-        } else {
-            console.log('Grande');
+    removeOffer(idOffer) {
+        const offer = Number(idOffer);
+        this.offers = this.offers.filter(each => each.id !== offer);
+    }
+
+    sendArgs(args) {
+        if (!(args === '')) {
+            this.argsFilters.emit(args);
         }
     }
 }

@@ -6,6 +6,7 @@ sassdoc
 
 /idea
 /.idea
+/.vscode
 /src/environments/environment.ts
 /src/environments/environment.prod.ts
 package-lock.json

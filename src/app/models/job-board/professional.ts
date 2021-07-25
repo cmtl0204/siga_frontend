@@ -13,6 +13,7 @@ export interface Professional {
     is_familiar_catastrophic_illness?: boolean;
     about_me?: string;
     address?: Address;
-    sex?: User
+    sex?: Catalogue;
+    gender?: Catalogue;
     nationality?: Catalogue;
 }

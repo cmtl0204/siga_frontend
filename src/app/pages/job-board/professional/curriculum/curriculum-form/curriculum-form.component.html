@@ -1,4 +1,4 @@
-<div class="p-fluid">
+<!-- <div class="p-fluid">
     <form [formGroup]="formCurriculumIn" (ngSubmit)="onSubmit()">
         <div class="p-formgrid p-grid">
             <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
@@ -104,51 +104,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-formgrid p-grid">
-                            <!-- <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
-                                <label for="nationality">
-                                    <i class="p-error">*</i> Nacionalidad:
-                                    <i *ngIf="birthdateField.valid" class="pi pi-check-circle icon-valid"></i>
-                                    <i *ngIf="birthdateField.invalid && (birthdateField.touched || birthdateField.dirty)"
-                                        class="pi pi-times-circle icon-invalid"></i>
-                                </label>
-                                <p-dropdown id="nationality" [options]="nacionalidades" formControlName="area"
-                                    optionLabel="name" [filter]="true" filterBy="name" placeholder="Seleccione...">
-                                    <ng-template pTemplate="selectednationality">
-                                        <div class="country-nationality country-nationality-value"
-                                            *ngIf="birthdateField.value">
-                                            <div>{{nationality.name}}</div>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template let-nationality pTemplate="nationality">
-                                        <div class="country-nationality">
-                                            <div>{{nationality.name}}</div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div> -->
-                            <!-- <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                                <label for="sex">
-                                    <i class="p-error">*</i>Sexo:
-                                    <i *ngIf="sexField.valid" class="pi pi-check-circle icon-valid"></i>
-                                    <i *ngIf="sexField.invalid && (sexField.touched || sexField.dirty)"
-                                        class="pi pi-times-circle icon-invalid"></i>
-                                </label>
-                                <p-dropdown id="sex" [options]="sex" formControlName="sex" optionLabel="name"
-                                    [filter]="true" filterBy="name" placeholder="Seleccione...">
-                                    <ng-template pTemplate="selectedItem">
-                                        <div class="country-item country-item-value" *ngIf="sexField.value">
-                                            <div>{{sexField.value.name}}</div>
-                                        </div>
-                                    </ng-template>
-                                    <ng-template let-item pTemplate="item">
-                                        <div class="country-item">
-                                            <div>{{item.name}}</div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div> -->
-                        </div>
                         <div class="p-field">
                             <label for="birthdate">
                                 <i class="p-error">*</i> Fecha de Nacimiento:
@@ -183,11 +138,6 @@
                             </div>
                         </div>
                     </p-card>
-                    <!-- <div class="p-field">
-                        <app-location-address [option]="1" (formAddressOut)="formAddress=$event"
-                            (formLocationOut)="setFormLocation($event)" id="address" formControlName="address">
-                        </app-location-address>
-                    </div> -->
                 </div>
             </div>
             <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
@@ -360,4 +310,12 @@
             </div>
         </div>
     </form>
-</div>
+</div> -->
+
+<ul>
+    <li *ngFor="let information of information">
+        <app-course [names]="name"></app-course>
+        <app-profile [formProfessionalIn]="information"></app-profile>
+
+    </li>
+</ul>

@@ -21,14 +21,13 @@ export class CourseComponent implements OnInit {
     formCourse: FormGroup;
     course: Course;
     courseDialog: boolean;
-    flagCourses: boolean;
+    flagSkeletonCourses: boolean;
 
     constructor(private spinnerService: NgxSpinnerService,
         public messageService: MessageService,
         private formBuilder: FormBuilder,
-        private jobBoardHttpService: JobBoardHttpService,
-        private breadcrumbService: BreadcrumbService) {
-        this.paginator = { current_page: 1, per_page: 5 };
+        private jobBoardHttpService: JobBoardHttpService) {
+        this.paginator = { current_page: 1, per_page: 2 };
         this.courses = [];
     }
 
@@ -50,7 +49,7 @@ export class CourseComponent implements OnInit {
             description: [null, [Validators.required, Validators.minLength(10)]],
             start_date: [null, Validators.required],
             end_date: [null, Validators.required],
-            hours: [null, Validators.required],
+            hours: [null, [Validators.required, Validators.minLength(2)]],
         });
     }
 
@@ -59,14 +58,14 @@ export class CourseComponent implements OnInit {
         const params = new HttpParams()
             .append('page', paginator.current_page.toString())
             .append('per_page', paginator.per_page.toString());
-        this.flagCourses = true;
+        this.flagSkeletonCourses = true;
         this.jobBoardHttpService.get('courses', params).subscribe(
             response => {
-                this.flagCourses = false;
+                this.flagSkeletonCourses = false;
                 this.courses = response['data'];
                 this.paginator = response as Paginator;
             }, error => {
-                this.flagCourses = false;
+                this.flagSkeletonCourses = false;
                 this.messageService.error(error);
             });
     }

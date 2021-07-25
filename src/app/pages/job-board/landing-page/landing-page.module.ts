@@ -33,7 +33,6 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {CardModule} from 'primeng/card';
 import {RippleModule} from 'primeng/ripple';
 import {SplitButtonModule} from 'primeng/splitbutton';
-import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 
 // My Components
@@ -44,11 +43,10 @@ import {WebProfessionalComponent} from './web-professional/web-professional.comp
 import { OfferDataViewComponent } from './web-offer/offer-data-view/offer-data-view.component';
 import {TotalComponent} from './total/total.component';
 import {ProfessionalListComponent} from './web-professional/professional-list/professional-list.component';
-import {CategoryFilterComponent} from './web-professional/category-filter/category-filter.component';
-import {FilterComponent} from './web-professional/filter/filter.component';
-import { DataViewGridItemComponent } from './web-offer/offer-data-view/data-view-grid-item/data-view-grid-item.component';
 import { DataViewListItemComponent } from './web-offer/offer-data-view/data-view-list-item/data-view-list-item.component';
 import {DividerModule} from 'primeng/divider';
+import {CategoryFilterComponent} from './web-professional/category-filter/category-filter.component';
+import {FilterComponent} from './web-professional/filter/filter.component';
 
 
 @NgModule({
@@ -88,7 +86,6 @@ import {DividerModule} from 'primeng/divider';
         TabMenuModule,
         DividerModule,
         SplitButtonModule,
-        MessagesModule,
         MessageModule
     ],
     declarations: [
@@ -100,8 +97,8 @@ import {DividerModule} from 'primeng/divider';
         CategoryFilterComponent,
         FilterComponent,
         OfferDataViewComponent,
-        DataViewGridItemComponent,
         DataViewListItemComponent,
+
     ],
     providers: []
 })

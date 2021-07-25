@@ -54,7 +54,9 @@ export class SelectRoleComponent implements OnInit {
     continueLogin() {
         this.authService.setAuth(this.authService.auth);
         this.authService.setRole(this.roleField.value);
-        this.router.navigate(['/']);
+        if(this.roleField.value.code==='ADMIN'){
+            this.router.navigate(['/user-administration']);
+        }
     }
 
     getRoles() {
