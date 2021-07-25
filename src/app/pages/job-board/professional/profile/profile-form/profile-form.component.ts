@@ -1,17 +1,13 @@
-import { Professional } from './../../../../../models/job-board/professional';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Professional } from './../../../../../models/job-board/professional';
 import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { MessageService as MessagePnService } from 'primeng/api';
-import { SharedService } from '../../../../shared/services/shared.service';
-import { AppHttpService } from '../../../../../services/app/app-http.service';
+import { FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/auth/user';
 import { Catalogue } from 'src/app/models/app/catalogue';
+import { AppHttpService } from '../../../../../services/app/app-http.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { isAsciiHexDigit } from 'codelyzer/angular/styles/chars';
 
 @Component({
     selector: 'app-profile-form',
@@ -22,26 +18,25 @@ export class ProfileFormComponent implements OnInit {
 
     @Input() formProfessionalIn: FormGroup;
     @Output() displayOut = new EventEmitter<boolean>();
+    identificationTypes: Catalogue[];
+    filteredTypes: any[];
     auth: User;
-    sex: Catalogue[];
+    sexs: Catalogue[];
+    genders: Catalogue[];
     formAddress: FormGroup;
     formLocation: FormGroup;
-    isTravel: boolean = true;
+    isTravel: boolean = false;
     isDisability: boolean = false;
     isCatastrophicIllness: boolean = false;
     isFamiliarDisability: boolean = false;
     isFamiliarCatastrophicIllness: boolean = false;
     selectedValues: string[] = [];
     value: boolean;
-    // nacionalidades: Catalogue[];
 
     constructor(
-        private formBuilder: FormBuilder,
         public messageService: MessageService,
-        private messagePnService: MessagePnService,
         private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
-        private sharedService: SharedService,
         private jobBoardHttpService: JobBoardHttpService,
         private authServices: AuthService,
     ) {
@@ -49,8 +44,15 @@ export class ProfileFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.getSex();
-        //this.getProfessional();
+        this.getSexs();
+        this.getGenders();
+        this.getIdentificationTypes();
+        this.getProfessional();
+    }
+
+    // Fields of Form
+    get idField() {
+        return this.formProfessionalIn.get('id');
     }
 
     get identificationField() {
@@ -61,8 +63,8 @@ export class ProfileFormComponent implements OnInit {
         return this.formProfessionalIn['controls']['user'].get('email');
     }
 
-    get firstNameField() {
-        return this.formProfessionalIn['controls']['user'].get('first_name');
+    get namesField() {
+        return this.formProfessionalIn['controls']['user'].get('names');
     }
 
     get firstLastnameField() {
@@ -76,11 +78,12 @@ export class ProfileFormComponent implements OnInit {
     get phoneField() {
         return this.formProfessionalIn['controls']['user'].get('phone');
     }
+
     get birthdateField() {
         return this.formProfessionalIn['controls']['user'].get('birthdate');
     }
-    get sexField() {
-        return this.formProfessionalIn['controls']['user'].get('sex');
+    get addressField() {
+        return this.formProfessionalIn['controls']['user'].get('address');
     }
 
     get isTravelField() {
@@ -111,20 +114,22 @@ export class ProfileFormComponent implements OnInit {
         return this.formProfessionalIn.get('about_me');
     }
 
-    onSubmit() {
+    get sexTypeField() {
+        return this.formProfessionalIn.get('sex_type');
+    }
+
+    get genderField() {
+        return this.formProfessionalIn.get('gender');
+    }
+
+    // Submit Form
+    onSubmit(flag = false) {
         if (this.formProfessionalIn.valid) {
             this.updateProfessional(this.formProfessionalIn.value);
         } else {
             this.formProfessionalIn.markAllAsTouched();
         }
     }
-    // getSex() {
-    //     this.appHttpService.getCatalogues('PROFESSIONAL_SEX').subscribe(response => {
-    //         this.sex = response['data'];
-    //     }, error => {
-    //         this.messageService.error(error);
-    //     });
-    // }
 
     updateProfessional(professional: Professional) {
         this.spinnerService.show();
@@ -140,21 +145,44 @@ export class ProfileFormComponent implements OnInit {
             });
     }
 
-    // getProfessional() {
-    //     this.spinnerService.show();
-    //     this.jobBoardHttpService.get('professional/show')
-    //         .subscribe(response => {
-    //             this.spinnerService.hide();
-    //             this.formProfessionalIn.patchValue(response['data']);
-    //             console.log(response);
-    //         }, error => {
-    //             this.spinnerService.hide();
-    //             this.messageService.error(error);
-    //         });
-    // }
+    getProfessional() {
+        this.spinnerService.show();
+        this.jobBoardHttpService.get('professional/show')
+            .subscribe(response => {
+                this.spinnerService.hide();
+                this.formProfessionalIn.patchValue(response['data']);
+                console.log(response);
+            }, error => {
+                this.spinnerService.hide();
+                this.messageService.error(error);
+            });
+    }
 
     markAllAsTouchedFormProfessional() {
         this.formProfessionalIn.markAllAsTouched();
+    }
+
+    // Types of catalogues
+    getSexs() {
+        this.appHttpService.getCatalogues('PROFESSIONAL_SEX_TYPE').subscribe(response => {
+            this.sexs = response['data'];
+        }, error => {
+            this.messageService.error(error);
+        });
+    }
+    getGenders() {
+        this.appHttpService.getCatalogues('PROFESSIONAL_GENDER_TYPE').subscribe(response => {
+            this.genders = response['data'];
+        }, error => {
+            this.messageService.error(error);
+        });
+    }
+    getIdentificationTypes() {
+        this.appHttpService.getCatalogues('IDENTIFICATION_TYPE').subscribe(response => {
+            this.identificationTypes = response['data'];
+        }, error => {
+            this.messageService.error(error);
+        });
     }
 
     validateIsDisability() {

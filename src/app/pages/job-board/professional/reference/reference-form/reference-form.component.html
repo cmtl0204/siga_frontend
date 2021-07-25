@@ -1,94 +1,111 @@
- {{formReferenceIn.value|json}} 
-<p-card>
- <div class="p-fluid">
-    <form [formGroup]="formReferenceIn" (ngSubmit)="onSubmit()">
-       
-        <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
-            <label for="institution">
-              <i class="p-error">*</i> Institución:
-              <i *ngIf="institutionField.valid" class="pi pi-check-circle icon-valid"></i>
-              <i *ngIf="institutionField.invalid && (institutionField.touched || institutionField.dirty)"
-                class="pi pi-times-circle icon-invalid"></i>
-            </label>
-            <p-dropdown id="institution" [options]="institutions" formControlName="institution"
-                        optionLabel="name" [filter]="true" filterBy="name"
-                        placeholder="Seleccione...">
-              <ng-template pTemplate="selectedinstitution">
-                <div class="country-institution country-institution-value"  *ngIf="institutionField.value">
-                  <div>{{institution.name}}</div>
-                </div>
-              </ng-template>
-              <ng-template let-institution pTemplate="institution">
-                <div class="country-institution">
-                  <div>{{institution.name}}</div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </div>
-
-         <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <i class="p-error">*</i>Cargo:
-                <input id="position" name="position" pInputText formControlName="position" />
-                <div *ngIf="positionField.errors && positionField.touched">
-                    <small *ngIf="positionField.hasError('required')" 
-                    id="position-help-1" class="p-error">
-                        {{messageService.fieldRequired}}
-                    </small>
-                </div>
-            </div>
-        </div>
-         <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <i class="p-error">*</i>Nombre de contacto:
-                <input id="contactName" name="contactName" pInputText formControlName="contact_name" />
-                <div *ngIf="contactNameField.errors && contactNameField.touched">
-                    <small *ngIf="contactNameField.hasError('required')" 
-                    id="contact_name-help-1" class="p-error">
-                        {{messageService.fieldRequired}}
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <i class="p-error">*</i>Número de contacto:
-                <input id="contactPhone" name="contactPhone" pInputText formControlName="contact_phone" />
-                <div *ngIf="contactPhoneField.errors && contactPhoneField.touched">
-                    <small *ngIf="contactPhoneField.hasError('required')" 
-                    id="contact_phone-help-1" class="p-error">
-                        {{messageService.fieldRequired}}
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <i class="p-error">*</i>Email de contacto:
-                <input id="contactEmail" name="contactEmail" pInputText formControlName="contact_email" />
-                <div *ngIf="contactEmailField.errors && contactEmailField.touched">
-                    <small *ngIf="contactEmailField.hasError('required')" 
-                    id="contact_email-help-1" class="p-error">
-                        {{messageService.fieldRequired}}
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="p-formgrid p-grid">
-            <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
-                <button pButton pRipple type="submit" id="btnSaveLeave"
-                        label="Guardar y Salir"
-                        class="p-button-success p-button-raised"
-                        icon="pi pi-save"></button>
-            </div>
-            <div *ngIf="!idField.value" class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
-                <button pButton pRipple type="button" id="btnSave"
-                        label="Guardar"
-                        class="p-button-raised"
-                        icon="pi pi-arrow-right"
-                        (click)="onSubmit(true)"></button>
-            </div>
-        </div>
-    </form>
-</div>
-</p-card>
+ <!-- {{formReferenceIn.value|json}} -->
+ <p-toast></p-toast>
+ <p-card>
+     <div class="p-fluid">
+         <form [formGroup]="formReferenceIn" (ngSubmit)="onSubmit()">
+             <div class="p-formgrid p-grid">
+                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                     <label for="institution">
+                         <i class="p-error">*</i> Institución:
+                         <i *ngIf="institutionField.valid" class="pi pi-check-circle icon-valid"></i>
+                         <i *ngIf="institutionField.invalid && (institutionField.touched || institutionField.dirty)"
+                             class="pi pi-times-circle icon-invalid"></i>
+                     </label>
+                     <p-dropdown id="institution" [options]="institutions" formControlName="institution"
+                         optionLabel="name" [filter]="true" filterBy="name" placeholder="Seleccione...">
+                         <ng-template pTemplate="selectedinstitution">
+                             <div class="country-institution country-institution-value" *ngIf="institutionField.value">
+                                 <div>{{institution.name}}</div>
+                             </div>
+                         </ng-template>
+                         <ng-template let-institution pTemplate="institution">
+                             <div class="country-institution">
+                                 <div>{{institution.name}}</div>
+                             </div>
+                         </ng-template>
+                     </p-dropdown>
+                 </div>
+                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                     <label for="position">
+                         <i class="p.error">*</i>Cargo:
+                         <i *ngIf="positionField.valid" class="pi pi-check-circle icon-valid"></i>
+                         <i *ngIf="positionField.invalid && (positionField.touched || positionField.dirty)"
+                             class="pi pi-times-circle icon-invalid"></i>
+                     </label>
+                     <input id="position" name="position" pInputText formControlName="position" />
+                     <div *ngIf="positionField.errors && positionField.touched">
+                         <small *ngIf="positionField.errors?.required" id="position-help-1" class="p-error">
+                             {{messageService.fieldRequired}}
+                         </small>
+                         <small *ngIf="positionField.errors?.minlength" id="position-help-2" class="p-error">
+                             {{messageService.fieldMinLength(positionField)}}
+                         </small>
+                     </div>
+                 </div>
+             </div>
+             <div class="p-formgrid p-grid">
+                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                     <label for="contactName">
+                         <i class="p-error">*</i>Nombre de Contacto:
+                         <i *ngIf="contactNameField.valid" class="pi pi-check-circle icon-valid"></i>
+                         <i *ngIf="contactNameField.invalid && (contactNameField.touched || contactNameField.dirty)"
+                             class="pi pi-times-circle icon-invalid"></i>
+                     </label>
+                     <input id="contactName" formControlName="contact_name" pInputText>
+                     <div *ngIf="contactNameField.errors && (contactNameField.touched ||contactNameField.dirty)">
+                         <small *ngIf="contactNameField.errors?.required" id="contact_name-help-1" class="p-error">
+                             {{messageService.fieldRequired}}
+                         </small>
+                     </div>
+                 </div>
+                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                     <label for="contactPhone">
+                         <i class="p-error">*</i>Telefóno de Contacto:
+                         <i *ngIf="contactPhoneField.valid" class="pi pi-check-circle icon-valid"></i>
+                         <i *ngIf="contactPhoneField.invalid && (contactPhoneField.touched || contactPhoneField.dirty)"
+                             class="pi pi-times-circle icon-invalid"></i>
+                     </label>
+                     <input id="contactPhone" formControlName="contact_phone" pInputText>
+                     <div *ngIf="contactPhoneField.errors && (contactPhoneField.touched || contactPhoneField.dirty)">
+                         <small *ngIf="contactPhoneField.errors?.required" id="contact_phone-help-1" class="p-error">
+                             {{messageService.fieldRequired}}
+                         </small>
+                         <small *ngIf="contactPhoneField.errors?.minlength" id="contact_phone-help-2" class="p-error">
+                             {{messageService.fieldMinLength(contactPhoneField)}}
+                         </small>
+                         <small *ngIf="contactPhoneField.errors?.maxlength" id="contact_phone-help-3" class="p-error">
+                             {{messageService.fieldMaxLength(contactPhoneField)}}
+                         </small>
+                     </div>
+                 </div>
+             </div>
+             <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
+                 <label for="contactEmail">
+                     <i class="p-error">*</i>Correo:
+                     <i *ngIf="contactEmailField.valid" class="pi pi-check-circle icon-valid"></i>
+                     <i *ngIf="contactEmailField.invalid && (contactEmailField.touched || contactEmailField.dirty)"
+                         class="pi pi-times-circle icon-invalid"></i>
+                 </label>
+                 <input id="contactEmail" formControlName="contact_email" pInputText>
+                 <div *ngIf="contactEmailField.errors && (contactEmailField.touched || contactEmailField.dirty)">
+                     <small *ngIf="contactEmailField.errors?.required" id="contact_email-help-1" class="p-error">
+                         {{messageService.fieldRequired}}
+                     </small>
+                     <small *ngIf="contactEmailField.errors?.email" id="contact_email-help-2" class="p-error">
+                         {{messageService.fieldEmail}}
+                     </small>
+                 </div>
+             </div>
+             <div class="p-formgrid p-grid">
+                 <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
+                     <button pButton pRipple type="submit" id="btnSaveLeave" label="Guardar y Salir"
+                         class="p-button-success p-button-raised" icon="pi pi-save"></button>
+                 </div>
+                 <div *ngIf="!idField.value" class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
+                     <button pButton pRipple type="button" id="btnSave" label="Guardar" class="p-button-raised"
+                         icon="pi pi-arrow-right" (click)="onSubmit(true)"></button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </p-card>

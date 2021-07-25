@@ -44,20 +44,18 @@ export class ProfessionalListComponent implements OnInit {
 
   applyProfessional(professional: Professional): void {
     if (this.role?.code === 'COMPANY') {
-      alert('Professional contactado con éxito ' + professional);
-      // this.spinnerService.show();
-      // this.jobBoardHttpService.applyProfessional(professional.id).subscribe(
-      //   response => {
-      //     this.spinnerService.hide();
-      //     console.log(response);
-      //     this.messageService.success(response);
-      //   },
-      //   error => {
-      //     this.spinnerService.hide();
-      //     console.error(error);
-      //     this.messageService.error(error);
-      //   }
-      // );
+      this.spinnerService.show();
+      this.jobBoardHttpService.applyProfessional(professional.id).subscribe(
+        response => {
+          this.spinnerService.hide();
+          this.professionalsIn = this.professionalsIn.filter(value => value!=professional);
+          this.messageService.success(response);
+        },
+        error => {
+          this.spinnerService.hide();
+          this.messageService.error(error);
+        }
+      );
     } else {
       Swal.fire({
         text: 'Para contactar con los profesionales tiene que iniciar sesión como EMPRESA',
@@ -68,11 +66,14 @@ export class ProfessionalListComponent implements OnInit {
 
   showCurriculum(professional: Professional){
     if (this.role?.code === 'COMPANY') {
-      alert(professional);
+      Swal.fire({
+        text: 'Lo sentimos, aún estamos trabajando en esta funcionalidad',
+        icon: 'warning'
+      });
     }
     else {
       Swal.fire({
-        text: 'Para ver más información tiene que iniciar sesión como EMPRESA',
+        text: 'Para visualizar la hoja de vida del profesional tiene que iniciar sesión como EMPRESA',
         icon: 'error'
       });
     }

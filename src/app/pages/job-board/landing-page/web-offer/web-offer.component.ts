@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from 'primeng/api';
 
 // servicios
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -13,7 +14,7 @@ import {Offer, Category, SearchParams} from '../../../../models/job-board/models
 import {User} from '../../../../models/auth/user';
 import {AuthService} from '../../../../services/auth/auth.service';
 import Swal from 'sweetalert2';
-import {Location} from '../../../../models/app/location';
+
 
 @Component({
     selector: 'app-web-offer',
@@ -23,11 +24,11 @@ import {Location} from '../../../../models/app/location';
 export class WebOfferComponent implements OnInit {
 
     auth: User;
-    items: object[];
+    items: MenuItem[];
     offers: Offer[];
     treeData: any[];
     paginator: Paginator;
-    scrollHeight = '10px';
+    scrollHeight = '100px';
     formCodeFilter: FormGroup;
     formMoreFilters: FormGroup;
     categories: Category[];
@@ -41,13 +42,14 @@ export class WebOfferComponent implements OnInit {
     specificCategories: any[];
     filteredWideCategory: any[];
     filteredSpecificCategory: any[];
+    displayXButton = false;
+    generalSearch: string;
 
     constructor(private spinnerService: NgxSpinnerService,
-        private messageService: MessageService,
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
-        private jobBoardHttpService: JobBoardHttpService) {
-        this.auth = authService.getAuth();
+                private messageService: MessageService,
+                private authService: AuthService,
+                private formBuilder: FormBuilder,
+                private jobBoardHttpService: JobBoardHttpService) {
         this.paginator = {
             per_page: 9,
             current_page: 1,
@@ -56,24 +58,25 @@ export class WebOfferComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.buildForms();
-        // this.getOffers(this.paginator, this.searchParams);
-        // this.getCategories();
-        // this.items = [
-        //     {
-        //         label: 'Filtrar por código', icon: 'pi pi-percentage', command: () => {
-        //             this.showModalFilter('code');
-        //         }
-        //     },
-        //     {
-        //         label: 'Más filtros', icon: 'pi pi-plus', command: () => {
-        //             this.showModalFilter('moreFilter');
-        //         }
-        //     }
-        // ];
+        this.auth = this.getRol(this.authService.getAuth());
+        this.buildForms();
+        this.getOffers(this.paginator, this.searchParams);
+        this.getCategories();
+        this.items = [
+            {
+                label: 'Filtrar por código', icon: 'pi pi-percentage', command: () => {
+                    this.showModalFilter('code');
+                }
+            },
+            {
+                label: 'Más filtros', icon: 'pi pi-plus', command: () => {
+                    this.showModalFilter('moreFilter');
+                }
+            }
+        ];
     }
 
-    buildForms() {
+    buildForms(): void {
         this.formMoreFilters = this.formBuilder.group({
             ids: [null],
             position: [null],
@@ -85,8 +88,9 @@ export class WebOfferComponent implements OnInit {
         });
     }
 
-    setDefaultParamsSearch() {
+    setDefaultParamsSearch(): void {
         this.searchParams = {
+            generalSearch: null,
             searchCode: null,
             searchProvince: null,
             searchCanton: null,
@@ -100,7 +104,24 @@ export class WebOfferComponent implements OnInit {
         this.getOffers(this.paginator, this.searchParams);
     }
 
-    showModalFilter(typeFilter) {
+    locationOut(event): void {
+        this.infoLocationOut = event;
+    }
+
+    getRol(user): User {
+        if (user != null) {
+            for (const rol of user.roles) {
+                if (rol.code === 'PROFESSIONAL') {
+                    return user;
+                }
+            }
+        }
+        if (user === null || undefined) {
+            return user;
+        }
+    }
+
+    showModalFilter(typeFilter): void {
         if (typeFilter === 'code') {
             this.displayCodeFilter = true;
             this.displayMoreFilters = false;
@@ -112,12 +133,8 @@ export class WebOfferComponent implements OnInit {
         this.displayModalFilter = true;
     }
 
-    locationOut(event) {
-        this.infoLocationOut = event;
-    }
-
     // ----------------------- get data -----------------------
-    getOffers(paginator: Paginator, searchParams: SearchParams) {
+    getOffers(paginator: Paginator, searchParams: SearchParams): void {
         const params = new HttpParams()
             .append('page', String(paginator.current_page))
             .append('per_page', String(paginator.per_page));
@@ -160,16 +177,16 @@ export class WebOfferComponent implements OnInit {
         for (const category of categories) {
             const nodeChildren = [];
             for (const child of category.children) {
-                nodeChildren.push({ id: child.id, label: child.name });
+                nodeChildren.push({id: child.id, label: child.name});
             }
-            treeData.push({ id: category.id, label: category.name, children: nodeChildren });
+            treeData.push({id: category.id, label: category.name, children: nodeChildren});
         }
         this.treeData = treeData;
         this.loadWideField();
     }
 
     // ----------------------- filters -----------------------
-    filterForCode() {
+    filterForCode(): void {
         const params: SearchParams = this.searchParams;
 
         params.searchCode = this.formCodeFilter.value.code;
@@ -177,7 +194,7 @@ export class WebOfferComponent implements OnInit {
         this.displayModalFilter = false;
     }
 
-    filterForMore() {
+    filterForMore(): void {
         const params: SearchParams = this.searchParams;
         params.searchPosition = this.formMoreFilters.value.position;
         if (this.infoLocationOut.value.country != null) {
@@ -211,6 +228,7 @@ export class WebOfferComponent implements OnInit {
         }
 
         this.getOffers(this.paginator, params);
+        console.log(params);
         this.displayModalFilter = false;
     }
 
@@ -234,10 +252,21 @@ export class WebOfferComponent implements OnInit {
         }
     }
 
-    cleanSelectedCategories() {
+    generalFilter(args): void {
+        const params: SearchParams = this.searchParams;
+        params.generalSearch = args;
+        this.getOffers(this.paginator, params);
+        console.log(params);
+    }
+
+    cleanSelectedCategories(): void {
+        const paginator: Paginator = {
+            per_page: 9,
+            current_page: 1,
+        };
         this.setDefaultParamsSearch();
         this.selectedCategories = undefined;
-        this.getOffers(this.paginator, this.searchParams);
+        this.getOffers(paginator, this.searchParams);
     }
 
     loadWideField() {
@@ -284,8 +313,15 @@ export class WebOfferComponent implements OnInit {
         this.filteredSpecificCategory = filtered;
     }
 
-    getSpecificField(parent) {
-        console.log(parent.value.id);
+    clearInputSearch(value) {
+        if (value === false) {
+            this.generalSearch = null;
+            this.displayXButton = value;
+            this.cleanSelectedCategories();
+        }
+        if (value === true){
+            this.displayXButton = value;
+        }
     }
 
     get wideField() {

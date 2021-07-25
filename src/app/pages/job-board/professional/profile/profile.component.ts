@@ -1,4 +1,3 @@
-import { Catalogue } from 'src/app/models/app/catalogue';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Paginator } from 'src/app/models/setting/paginator';
@@ -24,29 +23,29 @@ export class ProfileComponent implements OnInit {
         this.buildFormProfessional();
     }
 
-    //Formulario//
+    //Formulario Profesional//
     buildFormProfessional() {
         this.formProfessional = this.formBuilder.group({
             user: this.formBuilder.group({
                 identification: [null, Validators.required],
-                email: [null, Validators.required],
-                first_name: [null, Validators.required],
-                second_name: [null, Validators.required],
+                email: [null, [Validators.required, Validators.email]],
+                names: [null, Validators.required],
                 first_lastname: [null, Validators.required],
                 second_lastname: [null],
-                phone: [null, Validators.required],
+                phone: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(10)]],
                 birthdate: [null, Validators.required],
-            }),
-            catalogue: this.formBuilder.group({
-                sex: [null, Validators.required],
+                sex_type: [null, Validators.required],
+                gender: [null, Validators.required],
+                address: [null],
             }),
             is_travel: [null, Validators.required],
-            is_disability: [null, Validators.required],
-            is_catastrophic_illness: [null, Validators.required],
-            is_familiar_disability: [null, Validators.required],
+            is_disability: [null],
+            is_catastrophic_illness: [null],
+            is_familiar_disability: [null],
             identification_familiar_disability: [null],
-            is_familiar_catastrophic_illness: [null, Validators.required],
-            about_me: [null, Validators.required],
+            is_familiar_catastrophic_illness: [null],
+            about_me: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
+
         });
         console.log(this.formProfessional['controls']['user']);
     }

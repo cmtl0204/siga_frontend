@@ -23,7 +23,7 @@
                             </div>
                             <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                                 <label for="email">
-                                    <i class="p-error">*</i>Correo Eletrónico:
+                                    <i class="p-error">*</i>Correo:
                                     <i *ngIf="emailField.valid" class="pi pi-check-circle icon-valid"></i>
                                     <i *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)"
                                         class="pi pi-times-circle icon-invalid"></i>
@@ -41,16 +41,15 @@
                         </div>
                         <div class="p-formgrid p-grid">
                             <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                                <label for="first_name">
+                                <label for="names">
                                     <i class="p-error">*</i>Nombres:
-                                    <i *ngIf="firstNameField.valid" class="pi pi-check-circle icon-valid"></i>
-                                    <i *ngIf="firstNameField.invalid && (firstNameField.touched || firstNameField.dirty)"
+                                    <i *ngIf="namesField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="namesField.invalid && (namesField.touched || namesField.dirty)"
                                         class="pi pi-times-circle icon-invalid"></i>
                                 </label>
-                                <input id="first_name" formControlName="first_name" pInputText>
-                                <div *ngIf="firstNameField.errors && (firstNameField.touched || firstNameField.dirty)">
-                                    <small *ngIf="firstNameField.errors?.required" id="first_name-help-1"
-                                        class="p-error">
+                                <input id="names" formControlName="names" pInputText>
+                                <div *ngIf="namesField.errors && (namesField.touched || namesField.dirty)">
+                                    <small *ngIf="namesField.errors?.required" id="names-help-1" class="p-error">
                                         {{messageService.fieldRequired}}
                                     </small>
                                 </div>
@@ -101,44 +100,49 @@
                                     <small *ngIf="phoneField.errors?.required" id="phone-help-1" class="p-error">
                                         {{messageService.fieldRequired}}
                                     </small>
+                                    <small *ngIf="phoneField.errors?.minlength" id="phone-help-2" class="p-error">
+                                        {{messageService.fieldMinLength(phoneField)}}
+                                    </small>
+                                    <small *ngIf="phoneField.errors?.maxlength" id="phone-help-3" class="p-error">
+                                        {{messageService.fieldMaxLength(phoneField)}}
+                                    </small>
                                 </div>
                             </div>
                         </div>
                         <div class="p-formgrid p-grid">
-                            <!-- <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
-                                <label for="nationality">
-                                    <i class="p-error">*</i> Nacionalidad:
-                                    <i *ngIf="birthdateField.valid" class="pi pi-check-circle icon-valid"></i>
-                                    <i *ngIf="birthdateField.invalid && (birthdateField.touched || birthdateField.dirty)"
+                            <!--<div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                                <label for="gender">
+                                    <i class="p-error">*</i> Género:
+                                    <i *ngIf="genderField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="genderField.invalid && (genderField.touched || genderField.dirty)"
                                         class="pi pi-times-circle icon-invalid"></i>
                                 </label>
-                                <p-dropdown id="nationality" [options]="nacionalidades" formControlName="area"
-                                    optionLabel="name" [filter]="true" filterBy="name" placeholder="Seleccione...">
-                                    <ng-template pTemplate="selectednationality">
-                                        <div class="country-nationality country-nationality-value"
-                                            *ngIf="birthdateField.value">
-                                            <div>{{nationality.name}}</div>
+                                <p-dropdown id="gender" [options]="gender" formControlName="gender" optionLabel="name"
+                                    [filter]="true" filterBy="name" placeholder="Seleccione...">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="country-item country-item-value" *ngIf="genderField.value">
+                                            <div>{{genderField.value.name}}</div>
                                         </div>
                                     </ng-template>
-                                    <ng-template let-nationality pTemplate="nationality">
-                                        <div class="country-nationality">
-                                            <div>{{nationality.name}}</div>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{item.name}}</div>
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
-                            </div> -->
-                            <!-- <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                                <label for="sex">
-                                    <i class="p-error">*</i>Sexo:
-                                    <i *ngIf="sexField.valid" class="pi pi-check-circle icon-valid"></i>
-                                    <i *ngIf="sexField.invalid && (sexField.touched || sexField.dirty)"
+                            </div>
+                             <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                                <label for="sex_type">
+                                    <i class="p-error">*</i> Sexo:
+                                    <i *ngIf="sexTypeField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="sexTypeField.invalid && (sexTypeField.touched || sexTypeField.dirty)"
                                         class="pi pi-times-circle icon-invalid"></i>
                                 </label>
-                                <p-dropdown id="sex" [options]="sex" formControlName="sex" optionLabel="name"
-                                    [filter]="true" filterBy="name" placeholder="Seleccione...">
+                                <p-dropdown id="sex_type" [options]="sexType" formControlName="sex_type"
+                                    optionLabel="name" [filter]="true" filterBy="name" placeholder="Seleccione...">
                                     <ng-template pTemplate="selectedItem">
-                                        <div class="country-item country-item-value" *ngIf="sexField.value">
-                                            <div>{{sexField.value.name}}</div>
+                                        <div class="country-item country-item-value" *ngIf="sexTypeField.value">
+                                            <div>{{sexTypeField.value.name}}</div>
                                         </div>
                                     </ng-template>
                                     <ng-template let-item pTemplate="item">
@@ -166,19 +170,18 @@
                         </div>
                         <div class="p-field">
                             <label for="about_me">
-                                <i class="p-error">*</i> Acerca de Mí:
+                                <i class="p-error">*</i> Acerca de mí:
                                 <i *ngIf="aboutMeField.valid" class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="aboutMeField.invalid && (aboutMeField.touched || aboutMeField.dirty)"
                                     class="pi pi-times-circle icon-invalid"></i>
                             </label>
-                            <textarea pInputTextarea id="about_me" name="type" formControlName="about_me"
-                                rows="5"></textarea>
+                            <textarea pInputTextarea id="about_me" formControlName="about_me" rows="5"></textarea>
                             <div *ngIf="aboutMeField.errors && (aboutMeField.touched || aboutMeField.dirty)">
-                                <small *ngIf="aboutMeField.hasError('required')" id="about_me-help-1" class="p-error">
+                                <small *ngIf="aboutMeField.errors?.required" id="about_me-help-1" class="p-error">
                                     {{messageService.fieldRequired}}
                                 </small>
-                                <small *ngIf="aboutMeField.hasError('minlength')" id="about_me-help-2" class="p-error">
-                                    Mínimo de caracteres es {{aboutMeField.errors.minlength.requiredLength}}.
+                                <small *ngIf="aboutMeField.errors?.minlength" id="about_me-help-2" class="p-error">
+                                    {{messageService.fieldMinLength(aboutMeField)}}
                                 </small>
                             </div>
                         </div>
