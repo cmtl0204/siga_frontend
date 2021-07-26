@@ -53,6 +53,7 @@
         (completeMethod)="searchType($event)"
         [dropdown]="true"
         field="name" 
+        required
         placeholder="Seleccione el tipo de curso"
       >
       </p-autoComplete>
@@ -66,6 +67,7 @@
         (completeMethod)="searchModality($event)"
         [dropdown]="true"
         field="name"
+        required
         placeholder="Seleccione la modalidad"
       >
       </p-autoComplete>
@@ -204,7 +206,7 @@
  <!-- Dialogo para creación de necesidades -->
 <p-dialog
   [(visible)]="showDialog"
-  [style]="{width: '500px'}"
+  [style]="{ width: '700px'}"
   header="Registro de necesidades del curso"
   [modal]="true"
   styleClass="p-fluid"

@@ -1,5 +1,4 @@
 import { Component, EventEmitter,OnInit, Output } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //services
 import { CecyHttpService } from 'src/app/services/cecy/cecy-http.service';
@@ -30,12 +29,12 @@ export class CourseCreationComponent implements OnInit {
   courseSelected: any;
   courseSelectedData = {
     id: null,
-    code: null,
+    code: "",
     needs: [],
     free: null,
-    cost:null,
-    course_type_id: null,
-    modality_id: null,
+    cost: "",
+    course_type_id: {id: ''},
+    modality_id: {id: ''},
     hours_duration: null,
     capacity: null,
     place: null,
@@ -68,7 +67,6 @@ export class CourseCreationComponent implements OnInit {
 
   openNeeds() {
     this.showDialog = true
-    console.log('se abrió')
   }
   close() {
     this.showDialog = false
@@ -77,7 +75,6 @@ export class CourseCreationComponent implements OnInit {
   getCourse() {
     this.cecyHttpServices.get("course/all").subscribe(
       response=>{this.courses=response["data"];
-      console.log(this.courses)
     },error=>{
       console.log(error);
     })
@@ -97,7 +94,6 @@ export class CourseCreationComponent implements OnInit {
     const params = new HttpParams().append('type','COURSE_TYPE');
     this.AppHttpService.getCatalogues(params).subscribe(response => {
       this.types = response['data'];
-      console.log(this.types)
     }, error => {
       console.log(error);
     });
@@ -116,7 +112,6 @@ export class CourseCreationComponent implements OnInit {
     const params = new HttpParams().append('type','CAREER_MODALITY');
     this.AppHttpService.getCatalogues(params).subscribe(response => {
       this.modalities = response['data'];
-      console.log(this.modalities)
     }, error => {
       console.log(error);
     });
@@ -132,10 +127,6 @@ export class CourseCreationComponent implements OnInit {
   }
 
   getById() {
-    // this.courseSelectedData.needs.forEach(need => {
-    //   let needs = JSON.parse(need.needs)
-    //   console.log(needs)
-    // });
     this.courses.forEach(async course => {
       if (course.id == this.courseSelected.id) {
         this.courseSelectedData.id = course.id
@@ -143,7 +134,7 @@ export class CourseCreationComponent implements OnInit {
         this.courseSelectedData.needs = JSON.parse(course.needs)
         this.courseSelectedData.free = await course.free
         if(this.courseSelectedData.free) {
-          this.courseSelectedData.cost = 0
+          this.courseSelectedData.cost = "0"
         } else {
           this.courseSelectedData.cost = course.cost
         }
@@ -159,22 +150,9 @@ export class CourseCreationComponent implements OnInit {
     });
   }
 
-  // buildFormNeeds() {
-  //   this.formNeeds = this.formBuilder.group({
-  //     needs: [null, Validators.required],
-  //   });
-  //   console.log(this.formNeeds)
-  
-  //   this.formNeeds.valueChanges.subscribe(
-  //     reponse=>{console.log(reponse)}
-  //   )
-  // }
-
   async addNeeds() {
     try {
       await this.courseSelectedData.needs.push(this.need)
-      console.log('Agregado')
-      console.log(this.courseSelectedData)
     } catch (error) {
       console.log(error)
     } finally {
@@ -185,33 +163,32 @@ export class CourseCreationComponent implements OnInit {
   
   updateCourse() {
     this.spinnerService.show();
-    let coursSend = {
+    let data = {
       needs: JSON.stringify(this.courseSelectedData.needs),
       id: this.courseSelectedData.id,
       code: this.courseSelectedData.code,
       free: this.courseSelectedData.free,
       cost:this.courseSelectedData.cost,
-      course_type_id:this.courseSelectedData.course_type_id,
-      modality_id: this.courseSelectedData.modality_id,
+      course_type_id:this.courseSelectedData.course_type_id.id,
+      modality_id: this.courseSelectedData.modality_id.id,
       hours_duration: this.courseSelectedData.hours_duration,
       capacity: this.courseSelectedData.capacity,
-      place: this.courseSelectedData.place,
-      Target_group: this.courseSelectedData.Target_group,
+      place:  this.courseSelectedData.place,
+      Target_group: JSON.stringify(this.courseSelectedData.Target_group),
       summary: this.courseSelectedData.summary
     }
+    try {
+      this.cecyHttpServices.store("course/updateCourse", data)
+      alert('Se actualizó el curso')
+      console.log(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      this.showDialog = false
+      this.spinnerService.hide();
 
-    this.cecyHttpServices.update('course/approval/' + this.courseSelectedData.id,  {coursSend} )
-        .subscribe(response => {
-            this.spinnerService.hide();
-          //  this.messageService.success(response);
-            // this.courses(response['data']);
-            console.log(response)
-            this.displayOut.emit(false);
-        }, error => {
-            this.spinnerService.hide();
-            console.error(error)
-           // this.messageService.error(error);
-        });
+    }
+
 }
 
 }
