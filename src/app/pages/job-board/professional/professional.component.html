@@ -5,7 +5,8 @@
             <app-profile></app-profile>
         </p-tabPanel>
         <p-tabPanel header="Habilidades" leftIcon="pi pi-heart" tooltip="">
-            <app-skill *ngIf="selectedTab===1"></app-skill>
+            <app-skill *ngIf="selectedTab===1" [getPrueba]="prueba1"></app-skill>
+
         </p-tabPanel>
         <p-tabPanel header="Cursos y Capacitaciones" leftIcon="pi pi-star-o" tooltip="">
             <app-course *ngIf="selectedTab===2"></app-course>
@@ -20,7 +21,7 @@
             <app-reference *ngIf="selectedTab===5"></app-reference>
         </p-tabPanel>
         <p-tabPanel header="Curriculum" leftIcon="pi pi-book" tooltip="">
-            <app-curriculum *ngIf="selectedTab===6"></app-curriculum>
+            <app-curriculum *ngIf="selectedTab===6" [getPrueba]="prueba1"></app-curriculum>
         </p-tabPanel>
     </p-tabView>
 </div>

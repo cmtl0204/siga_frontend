@@ -37,7 +37,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 import { ProfessionalComponent } from './professional.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
-import { CurriculumFormComponent } from './curriculum/curriculum-form/curriculum-form.component';
+// import { CurriculumFormComponent } from './curriculum/curriculum-form/curriculum-form.component';
 import { SkillComponent } from './skill/skill.component';
 import { SkillFormComponent } from './skill/skill-form/skill-form.component';
 import { SkillListComponent } from './skill/skill-list/skill-list.component';
@@ -96,7 +96,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     declarations: [
         ProfessionalComponent,
         CurriculumComponent,
-        CurriculumFormComponent,
+        // CurriculumFormComponent,
         // ProfileComponent,
         SkillComponent,
         SkillFormComponent,
