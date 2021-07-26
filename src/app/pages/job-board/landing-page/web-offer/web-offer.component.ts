@@ -7,13 +7,14 @@ import {MessageService} from '../../../shared/services/message.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {JobBoardHttpService} from '../../../../services/job-board/job-board-http.service';
 import {HttpParams} from '@angular/common/http';
+import {MessageService as MessagePnService} from 'primeng/api';
 
 // Modelos
 import {Paginator} from '../../../../models/setting/paginator';
 import {Offer, Category, SearchParams} from '../../../../models/job-board/models.index';
-import {User} from '../../../../models/auth/user';
 import {AuthService} from '../../../../services/auth/auth.service';
 import Swal from 'sweetalert2';
+import {Role} from '../../../../models/auth/role';
 
 
 @Component({
@@ -23,7 +24,7 @@ import Swal from 'sweetalert2';
 })
 export class WebOfferComponent implements OnInit {
 
-    auth: User;
+    role: Role;
     items: MenuItem[];
     offers: Offer[];
     treeData: any[];
@@ -49,16 +50,17 @@ export class WebOfferComponent implements OnInit {
                 private messageService: MessageService,
                 private authService: AuthService,
                 private formBuilder: FormBuilder,
-                private jobBoardHttpService: JobBoardHttpService) {
+                private jobBoardHttpService: JobBoardHttpService,
+                private messagePnService: MessagePnService) {
         this.paginator = {
             per_page: 9,
             current_page: 1,
         };
         this.setDefaultParamsSearch();
+        this.role = authService.getRole();
     }
 
     ngOnInit() {
-        this.auth = this.getRol(this.authService.getAuth());
         this.buildForms();
         this.getOffers(this.paginator, this.searchParams);
         this.getCategories();
@@ -108,19 +110,6 @@ export class WebOfferComponent implements OnInit {
         this.infoLocationOut = event;
     }
 
-    getRol(user): User {
-        if (user != null) {
-            for (const rol of user.roles) {
-                if (rol.code === 'PROFESSIONAL') {
-                    return user;
-                }
-            }
-        }
-        if (user === null || undefined) {
-            return user;
-        }
-    }
-
     showModalFilter(typeFilter): void {
         if (typeFilter === 'code') {
             this.displayCodeFilter = true;
@@ -138,7 +127,7 @@ export class WebOfferComponent implements OnInit {
         const params = new HttpParams()
             .append('page', String(paginator.current_page))
             .append('per_page', String(paginator.per_page));
-        const routeFilter = this.auth ? 'private-offers' : 'public-offers';
+        const routeFilter = this.role?.code === ('ADMIN' || 'PROFESSIONAL') ? 'private-offers' : 'public-offers';
         this.spinnerService.show();
         this.jobBoardHttpService.store(`web-offer/${routeFilter}`, searchParams, params).subscribe(
             response => {
@@ -150,6 +139,7 @@ export class WebOfferComponent implements OnInit {
                 this.messageService.error(error);
                 console.log(error);
             });
+        console.log(routeFilter);
     }
 
     getCategories(): void {
@@ -228,7 +218,6 @@ export class WebOfferComponent implements OnInit {
         }
 
         this.getOffers(this.paginator, params);
-        console.log(params);
         this.displayModalFilter = false;
     }
 
@@ -256,16 +245,18 @@ export class WebOfferComponent implements OnInit {
         const params: SearchParams = this.searchParams;
         params.generalSearch = args;
         this.getOffers(this.paginator, params);
-        console.log(params);
     }
 
-    cleanSelectedCategories(): void {
+    cleanFilters(): void {
         const paginator: Paginator = {
             per_page: 9,
             current_page: 1,
         };
         this.setDefaultParamsSearch();
         this.selectedCategories = undefined;
+        this.generalSearch = null;
+        this.formCodeFilter.reset();
+        this.formMoreFilters.reset();
         this.getOffers(paginator, this.searchParams);
     }
 
@@ -292,6 +283,9 @@ export class WebOfferComponent implements OnInit {
     }
 
     updateSpecificField(parent) {
+        if (!parent) {
+            console.log('test');
+        }
         let filtered: any[] = [];
         for (const node of this.treeData) {
             if (parent.value.id === node.id) {
@@ -304,24 +298,31 @@ export class WebOfferComponent implements OnInit {
     filterSpecificField(event) {
         const filtered: any[] = [];
         const query = event.query;
-        for (const specificCategory of this.specificCategories) {
-            if (specificCategory.label.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                filtered.push(specificCategory);
+        if (!(this.specificCategories === undefined)) {
+            console.log(this.specificCategories);
+            for (const specificCategory of this.specificCategories) {
+                if (specificCategory.label.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+                    filtered.push(specificCategory);
+                }
             }
-        }
 
-        this.filteredSpecificCategory = filtered;
+            this.filteredSpecificCategory = filtered;
+        } else {
+            this.messagePnService.add({
+                key: 'errorSpecificField',
+                severity: 'error',
+                summary: 'Seleccione un categoria',
+                life: 5000
+            });
+        }
     }
 
     clearInputSearch(value) {
         if (value === false) {
             this.generalSearch = null;
-            this.displayXButton = value;
-            this.cleanSelectedCategories();
+            this.cleanFilters();
         }
-        if (value === true){
-            this.displayXButton = value;
-        }
+        this.displayXButton = value;
     }
 
     get wideField() {

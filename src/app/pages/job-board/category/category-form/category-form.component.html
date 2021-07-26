@@ -1,19 +1,17 @@
-{{formCategoryIn.value|json}}
-{{categories|json}}
+
 
 <p-toast></p-toast>
 
 
 <div class="p-fluid">
     <form [formGroup]="formCategoryIn" (ngSubmit)="onSubmit()" >
-        <div class="p-formgrid p-grid">
+        <div *ngIf="!idField.value || (idField.value && parentField.value)" class="p-formgrid p-grid">
             <div class="p-field p-col">
-                {{parentField.value|json}}
                 <label for="parent">Campo Amplio:</label>
                 
                 <p-dropdown id="parent" [options]="parentCategories" formControlName="parent" 
                 optionLabel="name"
-                    [filter]="true" filterBy="name" placeholder="Seleccione...">
+                    [filter]="true" filterBy="name" placeholder="Campo Amplio..">
                     <ng-template pTemplate="selectedItem">
                         <div class="country-item country-item-value" *ngIf="parentField.value">
                             <div>{{parentField.value.name}}</div>
@@ -64,19 +62,6 @@
                         {{messageService.fieldRequired}}
                     </small>
                 </div>
-                <!-- <p-dropdown id="icon" [options]="parentCategories" formControlName="icon" optionLabel="name" [filter]="true"
-                    filterBy="icon" placeholder="Seleccione...">
-                    <ng-template pTemplate="selectedItem">
-                        <div class="country-item country-item-value" *ngIf="iconField.value">
-                            <div>{{iconField.value.icon}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-item pTemplate="item">
-                        <div class="country-item">
-                            <div>{{item.icon}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown> -->
             </div>
         </div>
 

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 // models
 import {Offer} from '../../../../../../models/job-board/offer';
-import {User} from '../../../../../../models/auth/user';
+import {Role} from '../../../../../../models/auth/role';
 
 @Component({
     selector: 'app-data-view-list-item',
@@ -20,29 +20,16 @@ export class DataViewListItemComponent implements OnInit {
     @Output() idOffer = new EventEmitter<string>();
     @Output() displayModalMoreInformation = new EventEmitter<string>();
     displayButtonApply: boolean;
-    auth: User;
+    role: Role;
 
     constructor(private authService: AuthService,
                 private router: Router) {
-        this.auth = this.getRol(authService.getAuth());
-        this.auth ? this.displayButtonApply = true : this.displayButtonApply = false;
+        this.role = authService.getRole();
+        this.role?.code === ('ADMIN' || 'PROFESSIONAL') ? this.displayButtonApply = true : this.displayButtonApply = false;
     }
 
     ngOnInit(): void {
 
-    }
-
-    getRol(user): User {
-        if (user != null) {
-            for (const rol of user.roles) {
-                if (rol.code === 'PROFESSIONAL') {
-                    return user;
-                }
-            }
-        }
-        if (user === null || undefined) {
-            return user;
-        }
     }
 
     sendIdOffer(id: number) {
