@@ -9,6 +9,7 @@ import { CompanyRouting } from './company.routing';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import {InputMaskModule} from 'primeng/inputmask';
 import { DropdownModule } from 'primeng/dropdown';
 import { SkeletonModule } from 'primeng/skeleton';
 
@@ -54,6 +55,7 @@ import { RegisterFormComponent } from './register/register-form/register-form.co
         FormsModule,
         ReactiveFormsModule,
         InputTextModule,
+        InputMaskModule,
         PasswordModule,
         ButtonModule,
         DropdownModule,
