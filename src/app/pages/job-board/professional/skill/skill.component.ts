@@ -17,7 +17,6 @@ import { AppHttpService } from '../../../../services/app/app-http.service';
 export class SkillComponent implements OnInit {
     @Input() description: string;
     @Input() getPrueba: string;
-    prueba1 = "holaSoyHabilidad";
     paginator: Paginator;
     skills: Skill[];
     formSkill: FormGroup;

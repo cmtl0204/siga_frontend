@@ -1,6 +1,7 @@
+import { SkillComponent } from './../skill/skill.component';
 import { Skill } from './../../../../models/job-board/skill';
 import { Catalogue } from 'src/app/models/app/catalogue';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Host } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Paginator } from 'src/app/models/setting/paginator';
 
@@ -13,6 +14,7 @@ export class CurriculumComponent implements OnInit {
     [x: string]: any;
     // @Input() description: string;
     @Input() getPrueba: string;
+    @Host() private _app: SkillComponent;
 
     @Output() skillsOut = new EventEmitter<Skill[]>();
     @Input() skillIn: Skill[];
