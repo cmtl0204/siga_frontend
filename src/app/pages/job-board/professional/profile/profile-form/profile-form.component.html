@@ -168,23 +168,7 @@
                                 </small>
                             </div>
                         </div>
-                        <div class="p-field">
-                            <label for="about_me">
-                                <i class="p-error">*</i> Acerca de mí:
-                                <i *ngIf="aboutMeField.valid" class="pi pi-check-circle icon-valid"></i>
-                                <i *ngIf="aboutMeField.invalid && (aboutMeField.touched || aboutMeField.dirty)"
-                                    class="pi pi-times-circle icon-invalid"></i>
-                            </label>
-                            <textarea pInputTextarea id="about_me" formControlName="about_me" rows="5"></textarea>
-                            <div *ngIf="aboutMeField.errors && (aboutMeField.touched || aboutMeField.dirty)">
-                                <small *ngIf="aboutMeField.errors?.required" id="about_me-help-1" class="p-error">
-                                    {{messageService.fieldRequired}}
-                                </small>
-                                <small *ngIf="aboutMeField.errors?.minlength" id="about_me-help-2" class="p-error">
-                                    {{messageService.fieldMinLength(aboutMeField)}}
-                                </small>
-                            </div>
-                        </div>
+
                     </p-card>
                     <div class="p-field">
                         <app-location-address [option]="1" (formAddressOut)="formAddress=$event"
@@ -195,6 +179,23 @@
             </div>
             <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
                 <p-card header="Información Personal:">
+                    <div class="p-field">
+                        <label for="about_me">
+                            <i class="p-error">*</i> Acerca de mí:
+                            <i *ngIf="aboutMeField.valid" class="pi pi-check-circle icon-valid"></i>
+                            <i *ngIf="aboutMeField.invalid && (aboutMeField.touched || aboutMeField.dirty)"
+                                class="pi pi-times-circle icon-invalid"></i>
+                        </label>
+                        <textarea pInputTextarea id="about_me" formControlName="about_me" rows="5"></textarea>
+                        <div *ngIf="aboutMeField.errors && (aboutMeField.touched || aboutMeField.dirty)">
+                            <small *ngIf="aboutMeField.errors?.required" id="about_me-help-1" class="p-error">
+                                {{messageService.fieldRequired}}
+                            </small>
+                            <small *ngIf="aboutMeField.errors?.minlength" id="about_me-help-2" class="p-error">
+                                {{messageService.fieldMinLength(aboutMeField)}}
+                            </small>
+                        </div>
+                    </div>
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isTravel">

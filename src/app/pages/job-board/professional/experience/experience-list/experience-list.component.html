@@ -105,8 +105,13 @@
                     {{experience.is_disability}}
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning"
-                        (click)="openEditFormExperience(experience)"></button>
+                    <button pButton pRipple
+                            type="button" 
+                            id="btnEdit"
+                            pTooltip="Editar" 
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-warning"
+                            (click)="openEditFormExperience(rowData)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-ml-2"
                         (click)="deleteExperiences(experience)"></button>
                     <button pButton pRipple icon="pi pi-paperclip" class="p-button-rounded p-ml-2"
