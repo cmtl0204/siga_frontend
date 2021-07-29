@@ -1,0 +1,131 @@
+<div id="header"></div>
+<div class="title">
+    <h2>DATOS PERSONALES</h2>
+</div>
+<div class="card" *ngFor="let profesional of professional">
+    <table class="default">
+        <tr>
+            <td>Identificación</td>
+            <td>Correo Electrónico</td>
+            <td>Nombre</td>
+            <td>Primer Apellido</td>
+            <td>Segundo Apellido</td>
+            <td>Teléfono</td>
+            <td>Cumpleaños</td>
+        </tr>
+        <tr>
+            <td>{{profesional.identification.name}}</td>
+            <td>{{profesional.email.name}}</td>
+            <td>{{profesional.names.name}}</td>
+            <td>{{profesional.first_lastname.name}}</td>
+            <td>{{profesional.second_lastname.name}}</td>
+            <td>{{profesional.phone.name}}</td>
+            <td>{{profesional.birthdate.name}}</td>
+        </tr>
+    </table>
+</div>
+<div class="title">
+    <h2>HABILIDADES</h2>
+</div>
+<div class="card" *ngFor="let habilidades of skill">
+    <table class="default">
+        <tr>
+            <th>Tipo</th>
+            <th>Descripción</th>
+        </tr>
+        <tr>
+            <td>{{habilidades.type.name}}</td>
+            <td>{{habilidades.description}}</td>
+        </tr>
+    </table>
+</div>
+<div class="title">
+    <h2>CURSOS Y CAPACITACIONES</h2>
+</div>
+<div class="card" *ngFor="let curso of course">
+    <table class="default">
+        <tr>
+            <th>Tipo</th>
+            <th>Nombre Institución</th>
+            <th>Tipo de Certificado</th>
+            <th>Nombre de Área</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Horas</th>
+        </tr>
+        <tr>
+            <td>{{curso.type.name}}</td>
+            <td>{{curso.institution.name}}</td>
+            <td>{{curso.certification_type.name}}</td>
+            <td>{{curso.area.name}}</td>
+            <td>{{curso.name}}</td>
+            <td>{{curso.description}}</td>
+            <td>{{curso.hours}}</td>
+        </tr>
+    </table>
+</div>
+<div class="title">
+    <h2>EXPERIENCIA PROFESIONAL</h2>
+</div>
+<div class="card" *ngFor="let experiencia of experience">
+    <table class="default">
+        <tr>
+            <th>Area</th>
+            <th>Nombre Empleador</th>
+            <th>Cargo</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Motivo Salida</th>
+            <th>Actividad</th>
+        </tr>
+        <tr>
+            <td>{{experiencia.area.name}}</td>
+            <td>{{experiencia.employer}}</td>
+            <td>{{experiencia.position}}</td>
+            <td>{{experiencia.start_date}}</td>
+            <td>{{experiencia.end_date}}</td>
+            <td>{{experiencia.reason_leave}}</td>
+            <td>{{experiencia.activities}}</td>
+        </tr>
+    </table>
+</div>
+<div class="title">
+    <h2>IDIOMAS</h2>
+</div>
+<div class="card" *ngFor="let idioma of language">
+    <table class="default">
+        <tr>
+            <th>Idioma</th>
+            <th>Nivel Escrito</th>
+            <th>Nivel hablado</th>
+            <th>Nivel de Escritura</th>
+        </tr>
+        <tr>
+            <td>{{idioma.idiom.name}}</td>
+            <td>{{idioma.written_level.name}}</td>
+            <td>{{idioma.spoken_level.name}}</td>
+            <td>{{idioma.read_level.name}}</td>
+        </tr>
+    </table>
+</div>
+<div class="title">
+    <h2>REFERENCIAS PERSONALES</h2>
+</div>
+<div class="card" *ngFor="let referencia of reference">
+    <table class="default">
+        <tr>
+            <th>Istitución</th>
+            <th>cargo</th>
+            <th>Nombre de Contacto</th>
+            <th>Número de Contacto</th>
+            <th>Correo Electrónico</th>
+        </tr>
+        <tr>
+            <td>{{referencia.institution.name}}</td>
+            <td>{{referencia.position}}</td>
+            <td>{{referencia.contact_name}}</td>
+            <td>{{referencia.contact_phone}}</td>
+            <td>{{referencia.contact_email}}</td>
+        </tr>
+    </table>
+</div>

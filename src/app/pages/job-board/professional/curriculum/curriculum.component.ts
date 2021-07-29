@@ -1,9 +1,8 @@
-import { SkillComponent } from './../skill/skill.component';
-import { Skill } from './../../../../models/job-board/skill';
 import { Catalogue } from 'src/app/models/app/catalogue';
-import { Component, OnInit, Input, Output, EventEmitter, Host } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Paginator } from 'src/app/models/setting/paginator';
+import { Professional } from 'src/app/models/job-board/professional';
 
 @Component({
     selector: 'app-curriculum',
@@ -11,25 +10,50 @@ import { Paginator } from 'src/app/models/setting/paginator';
     styleUrls: ['./curriculum.component.scss']
 })
 export class CurriculumComponent implements OnInit {
-    [x: string]: any;
-    // @Input() description: string;
-    @Input() getPrueba: string;
-    @Host() private _app: SkillComponent;
 
-    @Output() skillsOut = new EventEmitter<Skill[]>();
-    @Input() skillIn: Skill[];
+    formProfessional: FormGroup;
+    // formCourse: FormGroup;
+    professional: Professional;
+    professionalDialog: boolean;
+    // courseDialog: boolean;
+    // course: Course;
+    paginator: Paginator;
 
-    constructor() {
-
+    constructor(private formBuilder: FormBuilder) {
+        this.paginator = { current_page: 1, per_page: 3 };
     }
 
     ngOnInit(): void {
-        console.log(this.getPrueba);
-    }
-    remove(id) {
-
-        this.skillsIn = this.skillsIn.filter(element => element.id !== id);
-        this.skillsOut.emit(this.skillsIn);
+        this.buildFormProfessional();
     }
 
+    //Formulario Professional//
+    buildFormProfessional() {
+        this.formProfessional = this.formBuilder.group({
+            user: this.formBuilder.group({
+                identification: [null, Validators.required],
+                email: [null, Validators.required],
+                first_name: [null, Validators.required],
+                second_name: [null, Validators.required],
+                first_lastname: [null, Validators.required],
+                second_lastname: [null],
+                phone: [null, Validators.required],
+                birthdate: [null, Validators.required],
+            }),
+            catalogue: this.formBuilder.group({
+                sex: [null, Validators.required],
+            }),
+            is_travel: [null, Validators.required],
+            is_disability: [null, Validators.required],
+            is_catastrophic_illness: [null, Validators.required],
+            is_familiar_disability: [null, Validators.required],
+            identification_familiar_disability: [null],
+            is_familiar_catastrophic_illness: [null, Validators.required],
+            about_me: [null, Validators.required],
+            id: [null],
+            type: [null, Validators.required],
+            description: [null, [Validators.required, Validators.minLength(10)]],
+        });
+        console.log(this.formProfessional['controls']['user']);
+    }
 }
