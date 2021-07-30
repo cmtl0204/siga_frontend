@@ -1,184 +1,184 @@
- <!-- {{formExperienceIn.value|json}} -->
+<!-- {{formExperienceIn.value|json}} -->
  <!-- <p-toast></p-toast> -->
  <p-card>
-     <div class="p-fluid">
-         <form [formGroup]="formExperienceIn" (ngSubmit)="onSubmit()">
-             <div class="p-formgrid p-grid">
-                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
-                     <label for="area">
-                         <i class="p-error">*</i> Area:
-                         <i *ngIf="areaField.valid" class="pi pi-check-circle icon-valid"></i>
-                         <i *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)"
-                             class="pi pi-times-circle icon-invalid"></i>
-                     </label>
-                     <p-dropdown id="area" [options]="areas" formControlName="area" optionLabel="name" [filter]="true"
-                         filterBy="name" placeholder="Seleccione...">
-                         <ng-template pTemplate="selectedItem">
-                             <div class="country-item country-item-value" *ngIf="areaField.value">
-                                 <div>{{areaField.value.name}}</div>
-                             </div>
-                         </ng-template>
-                         <ng-template let-item pTemplate="item">
-                             <div class="country-item">
-                                 <div>{{item.name}}</div>
-                             </div>
-                         </ng-template>
-                     </p-dropdown>
-                     <div *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)">
-                         <small *ngIf="areaField.errors?.required" id="area-help-1" class="p-error">
-                             {{messageService.fieldRequired}}
-                         </small>
-                     </div>
-                 </div>
-                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
-                     <label for="employer">
-                         <i class="p-error">*</i>Nombre Empleador:
-                         <i *ngIf="employerField.valid" class="pi pi-check-circle icon-valid"></i>
-                         <i *ngIf="employerField.invalid && (employerField.touched || employerField.dirty)"
-                             class="pi pi-times-circle icon-invalid"></i>
-                     </label>
-                     <input id="employer" name="employer" pInputText formControlName="employer" />
-                     <div *ngIf="employerField.errors && employerField.touched">
-                         <small *ngIf="employerField.errors?.required" id="employer-help-1" class="p-error">
-                             {{messageService.fieldRequired}}
-                         </small>
-                     </div>
-                 </div>
-             </div>
-             <div class="p-formgrid p-grid">
-                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
-                     <label for="position">
-                         <i class="p.error">*</i>Cargo:
-                         <i *ngIf="positionField.valid" class="pi pi-check-circle icon-valid"></i>
-                         <i *ngIf="positionField.invalid && (positionField.touched || positionField.dirty)"
-                             class="pi pi-times-circle icon-invalid"></i>
-                     </label>
-                     <input id="position" name="position" pInputText formControlName="position" />
-                     <div *ngIf="positionField.errors && positionField.touched">
-                         <small *ngIf="positionField.errors?.required" id="position-help-1" class="p-error">
-                             {{messageService.fieldRequired}}
-                         </small>
-                         <small *ngIf="positionField.errors?.minlength" id="position-help-2" class="p-error">
-                             {{messageService.fieldMinLength(positionField)}}
-                         </small>
-                     </div>
-                 </div>
-                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                     <label for="isWorking">
-                         <i class="p-error">*</i>Esta trabajando aquí:
-                         <i *ngIf="isWorkingField.valid" class="pi pi-check-circle icon-valid"></i>
-                         <i *ngIf="isWorkingField.invalid && (isWorkingField.touched || isWorkingField.dirty)"
-                             class="pi pi-times-circle icon-invalid"></i>
-                     </label>
-                     <div>
-                         <p-inputSwitch formControlName="is_working" (onChange)="clickIsWorking($event)" onLabel="yes"
-                             offLabel="no">
-                             <ng-template let-isWorking pTemplate="isWorking">
-                                 <div class="country-isWorking">
-                                     <div>{{is_working.name}}</div>
-                                 </div>
-                             </ng-template>
-                         </p-inputSwitch>
-                     </div>
-                 </div>
-             </div>
-             <div class="p-field">
-                 <label for="start_date">
-                     <i class="p-error">*</i> Fecha de Inicio:
-                     <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
-                     <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
-                         class="pi pi-times-circle icon-invalid"></i>
-                 </label>
-                 <app-date formControlName="start_date" id="start_date">
-                 </app-date>
-                 <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
-                     <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
-                         {{messageService.fieldRequired}}
-                     </small>
-                 </div>
-             </div>
-             <div class="p-field">
-                 <label for="end_date">
-                     <i class="p-error">*</i> Fecha se Salida:
-                     <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
-                     <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
-                         class="pi pi-times-circle icon-invalid"></i>
-                 </label>
-                 <app-date formControlName="end_date" id="end_date">
-                 </app-date>
-                 <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
-                     <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
-                         {{messageService.fieldRequired}}
-                     </small>
-                 </div>
-             </div>
-             <div formArrayName="activities">
-                 <div>
-                     <button pButton pRipple type="button" label="Añadir Activities" iconPos="right" icon="pi pi-plus"
-                         class="p-button-success p-button-raised" (click)="addActivities()">
-                     </button>
-                 </div>
-                 <label for="activities">Actividades</label>
-                 <div *ngFor="let activities of activitiesField.controls; let nameActivity = index">
-                     <div class="p-fluid p-formgrid p-grid">
-                         <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
-                             <input pInputText id="activities" [formControlName]="nameActivity">
-                         </div>
-                         <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
-                             <button pButton pRipple type="button" icon="pi pi-trash"
-                                 class="p-button-danger p-button-rounded" (click)="removeActivities(nameActivity)">
-                             </button>
-                         </div>
-                         <div *ngIf="activitiesField.errors && (activitiesField.touched || activitiesField.dirty)">
-                             <small *ngIf="activitiesField.controls[i].errors?.required" id="activities-help-1"
-                                 class="p-error">
-                                 {{messageService.fieldRequired}}
-                             </small>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-             <div class="p-field">
-                 <label for="reason_leave">
-                     <i class="p-error">*</i>Razón que se fue:
-                     <i *ngIf="reasonLeaveField.valid" class="pi pi-check-circle icon-valid"></i>
-                     <i *ngIf="reasonLeaveField.invalid && (reasonLeaveField.touched || reasonLeaveField.dirty)"
-                         class="pi pi-times-circle icon-invalid"></i>
-                 </label>
-                 <input id="reason_leave" pInputText formControlName="reason_leave" />
-                 <div *ngIf="reasonLeaveField.errors && reasonLeaveField.touched">
-                     <small *ngIf="reasonLeaveField.errors?.required" id="reason_leave-help-1" class="p-error">
-                         {{messageService.fieldRequired}}
-                     </small>
-                     <small *ngIf="reasonLeaveField.errors?.minlength" id="reason_leave-help-2" class="p-error">
-                         {{messageService.fieldMinLength(reasonLeaveField)}}
-                     </small>
-                 </div>
-             </div>
-             <label for="isDisability">
-                 <i class="p-error">*</i>Es discapacitado:
-                 <i *ngIf="isDisabilityField.valid" class="pi pi-check-circle icon-valid"></i>
-                 <i *ngIf="isDisabilityField.invalid && (isDisabilityField.touched || isDisabilityField.dirty)"
-                     class="pi pi-times-circle icon-invalid"></i>
-             </label>
-             <p-inputSwitch formControlName="is_disability" (onChange)="clickIsDisability($event)" onLabel="yes"
-                 offLabel="no">
-                 <ng-template let-isDisability pTemplate="isDisability">
-                     <div class="country-isDisability">
-                         <div>{{is_disability.name}}</div>
-                     </div>
-                 </ng-template>
-             </p-inputSwitch>
-             <div class="p-formgrid p-grid">
-                 <div class="p-field p-col">
-                     <button type="submit" pButton pRipple label="Guardar y Salir" icon="pi pi-save"
-                         class="p-button-success p-button-raised"></button>
-                 </div>
-                 <div *ngIf="!idField.value" class="p-field p-col">
-                     <button type="button" pButton pRipple label="Guardar" icon="pi pi-arrow-right"
-                         class="p-button-raised" (click)="onSubmit(true)"></button>
-                 </div>
-             </div>
-         </form>
-     </div>
- </p-card>
+    <div class="p-fluid">
+        <form [formGroup]="formExperienceIn" (ngSubmit)="onSubmit()">
+            <div class="p-formgrid p-grid">
+                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
+                    <label for="area">
+                        <i class="p-error">*</i> Area:
+                        <i *ngIf="areaField.valid" class="pi pi-check-circle icon-valid"></i>
+                        <i *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)"
+                            class="pi pi-times-circle icon-invalid"></i>
+                    </label>
+                    <p-dropdown id="area" [options]="areas" formControlName="area" optionLabel="name" [filter]="true"
+                        filterBy="name" placeholder="Seleccione...">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="country-item country-item-value" *ngIf="areaField.value">
+                                <div>{{areaField.value.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="country-item">
+                                <div>{{item.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <div *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)">
+                        <small *ngIf="areaField.errors?.required" id="area-help-1" class="p-error">
+                            {{messageService.fieldRequired}}
+                        </small>
+                    </div>
+                </div>
+                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
+                    <label for="employer">
+                        <i class="p-error">*</i>Nombre Empleador:
+                        <i *ngIf="employerField.valid" class="pi pi-check-circle icon-valid"></i>
+                        <i *ngIf="employerField.invalid && (employerField.touched || employerField.dirty)"
+                            class="pi pi-times-circle icon-invalid"></i>
+                    </label>
+                    <input id="employer" name="employer" pInputText formControlName="employer" />
+                    <div *ngIf="employerField.errors && employerField.touched">
+                        <small *ngIf="employerField.errors?.required" id="employer-help-1" class="p-error">
+                            {{messageService.fieldRequired}}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="p-formgrid p-grid">
+                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
+                    <label for="position">
+                        <i class="p.error">*</i>Cargo:
+                        <i *ngIf="positionField.valid" class="pi pi-check-circle icon-valid"></i>
+                        <i *ngIf="positionField.invalid && (positionField.touched || positionField.dirty)"
+                            class="pi pi-times-circle icon-invalid"></i>
+                    </label>
+                    <input id="position" name="position" pInputText formControlName="position" />
+                    <div *ngIf="positionField.errors && positionField.touched">
+                        <small *ngIf="positionField.errors?.required" id="position-help-1" class="p-error">
+                            {{messageService.fieldRequired}}
+                        </small>
+                        <small *ngIf="positionField.errors?.minlength" id="position-help-2" class="p-error">
+                            {{messageService.fieldMinLength(positionField)}}
+                        </small>
+                    </div>
+                </div>
+                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                    <label for="isWorking">
+                        <i class="p-error">*</i>Esta trabajando aquí:
+                        <i *ngIf="isWorkingField.valid" class="pi pi-check-circle icon-valid"></i>
+                        <i *ngIf="isWorkingField.invalid && (isWorkingField.touched || isWorkingField.dirty)"
+                            class="pi pi-times-circle icon-invalid"></i>
+                    </label>
+                    <div>
+                        <p-inputSwitch formControlName="is_working" (onChange)="clickIsWorking($event)" onLabel="yes"
+                            offLabel="no">
+                            <ng-template let-isWorking pTemplate="isWorking">
+                                <div class="country-isWorking">
+                                    <div>{{is_working.name}}</div>
+                                </div>
+                            </ng-template>
+                        </p-inputSwitch>
+                    </div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="start_date">
+                    <i class="p-error">*</i> Fecha de Inicio:
+                    <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <app-date formControlName="start_date" id="start_date">
+                </app-date>
+                <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
+                    <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="end_date">
+                    <i class="p-error">*</i> Fecha se Salida:
+                    <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <app-date formControlName="end_date" id="end_date">
+                </app-date>
+                <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
+                    <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+            <div formArrayName="activities">
+                <div>
+                    <button pButton pRipple type="button" label="Añadir Activities" iconPos="right" icon="pi pi-plus"
+                        class="p-button-success p-button-raised" (click)="addActivities()">
+                    </button>
+                </div>
+                <label for="activities">Actividades</label>
+                <div *ngFor="let activities of activitiesField.controls; let nameActivity = index">
+                    <div class="p-fluid p-formgrid p-grid">
+                        <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+                            <input pInputText id="activities" [formControlName]="nameActivity">
+                        </div>
+                        <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
+                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                class="p-button-danger p-button-rounded" (click)="removeActivities(nameActivity)">
+                            </button>
+                        </div>
+                        <div *ngIf="activitiesField.errors && (activitiesField.touched || activitiesField.dirty)">
+                            <small *ngIf="activitiesField.controls[i].errors?.required" id="activities-help-1"
+                                class="p-error">
+                                {{messageService.fieldRequired}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-field">
+                <label for="reason_leave">
+                    <i class="p-error">*</i>Razón que se fue:
+                    <i *ngIf="reasonLeaveField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="reasonLeaveField.invalid && (reasonLeaveField.touched || reasonLeaveField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <input id="reason_leave" pInputText formControlName="reason_leave" />
+                <div *ngIf="reasonLeaveField.errors && reasonLeaveField.touched">
+                    <small *ngIf="reasonLeaveField.errors?.required" id="reason_leave-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                    <small *ngIf="reasonLeaveField.errors?.minlength" id="reason_leave-help-2" class="p-error">
+                        {{messageService.fieldMinLength(reasonLeaveField)}}
+                    </small>
+                </div>
+            </div>
+            <label for="isDisability">
+                <i class="p-error">*</i>Es discapacitado:
+                <i *ngIf="isDisabilityField.valid" class="pi pi-check-circle icon-valid"></i>
+                <i *ngIf="isDisabilityField.invalid && (isDisabilityField.touched || isDisabilityField.dirty)"
+                    class="pi pi-times-circle icon-invalid"></i>
+            </label>
+            <p-inputSwitch formControlName="is_disability" (onChange)="clickIsDisability($event)" onLabel="yes"
+                offLabel="no">
+                <ng-template let-isDisability pTemplate="isDisability">
+                    <div class="country-isDisability">
+                        <div>{{is_disability.name}}</div>
+                    </div>
+                </ng-template>
+            </p-inputSwitch>
+            <div class="p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <button type="submit" pButton pRipple label="Guardar y Salir" icon="pi pi-save"
+                        class="p-button-success p-button-raised"></button>
+                </div>
+                <div *ngIf="!idField.value" class="p-field p-col">
+                    <button type="button" pButton pRipple label="Guardar" icon="pi pi-arrow-right"
+                        class="p-button-raised" (click)="onSubmit(true)"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</p-card>

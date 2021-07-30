@@ -32,11 +32,12 @@ export class ProfileComponent implements OnInit {
                 names: [null, Validators.required],
                 first_lastname: [null, Validators.required],
                 second_lastname: [null],
-                phone: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(10)]],
+                phone: [null, [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
                 birthdate: [null, Validators.required],
-                sex_type: [null, Validators.required],
+                sex: [null, Validators.required],
                 gender: [null, Validators.required],
                 address: [null],
+
             }),
             is_travel: [null, Validators.required],
             is_disability: [null],
@@ -47,6 +48,6 @@ export class ProfileComponent implements OnInit {
             about_me: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
 
         });
-        console.log(this.formProfessional['controls']['user']);
+        // console.log(this.formProfessional['controls']['user']);
     }
 }

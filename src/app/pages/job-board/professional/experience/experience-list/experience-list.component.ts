@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Experience } from '../../../../../models/job-board/experience';
+import { FormGroup } from '@angular/forms';
 import { Col } from '../../../../../models/setting/col';
 import { Paginator } from '../../../../../models/setting/paginator';
 import { MessageService } from '../../../../shared/services/message.service';
@@ -7,9 +8,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
 import { File } from '../../../../../models/app/file';
-import {FormArray, FormGroup,  FormBuilder, Validators} from '@angular/forms';
-
-
 @Component({
     selector: 'app-experience-list',
     templateUrl: './experience-list.component.html',
@@ -35,11 +33,9 @@ export class ExperienceListComponent implements OnInit {
     isWorking: boolean;
 
 
-
     constructor(private messageService: MessageService,
         private spinnerService: NgxSpinnerService,
-        private jobBoardHttpService: JobBoardHttpService,
-        private formBuilder: FormBuilder,) {
+        private jobBoardHttpService: JobBoardHttpService) {
         this.resetPaginatorExperiences();
         //this.resetPaginatorFiles();
     }
@@ -55,12 +51,17 @@ export class ExperienceListComponent implements OnInit {
         // this.loadColsExperience();
     }
 
-   /* get activitiesField() {
-        return this.formExperienceIn.get('activities') as FormArray;
-    }
-    get requirementsField() {
-        return this.formExperienceIn.get('requirements') as FormArray;
-    }*/
+    // loadColsExperience() {
+    //     this.colsExperience = [
+    //         { field: 'type', header: 'Tipo' },
+    //         { field: 'description', header: 'Descripción' },
+    //     ];
+    // }
+    // pageChange(event) {
+    //     this.paginatorIn.current_page = event.page + 1;
+    //     this.paginatorOut.emit(this.paginatorIn);
+    // }
+
     // Search experiences in backend
     searchExperiences(event, search) {
         if (event.type === 'click' || event.keyCode === 13 || search.length === 0) {
@@ -83,31 +84,11 @@ export class ExperienceListComponent implements OnInit {
     }
 
     openEditFormExperience(experience: Experience) {
-     this.formExperienceIn.patchValue(experience);
+        this.formExperienceIn.patchValue(experience);
         this.formExperienceOut.emit(this.formExperienceIn);
         this.displayOut.emit(true);
     }
-  /*  openEditFormExperience(experience: Experience) {
-        this.formExperienceIn.patchValue(experience);
-            this.activitiesField.clear();
-          //  this.requirementsField.clear();
-            for(const activity of experience.activities){
-              this.addActivities(activity);
-            }
-            for(const requirement of experience.requirements){
-                this.addRequirements(requirement);
-              }
-        this.formExperienceOut.emit(this.formExperienceIn); 
-        this.displayOut.emit(true);
-    }
 
-    addActivities(data = null){
-        this.activitiesField.push(this.formBuilder.control(data, Validators.required));
-    }
-    addRequirements(data = null){
-        this.requirementsField.push(this.formBuilder.control(data, Validators.required));
-    }
-*/
     openUploadFilesExperience() {
         this.dialogUploadFiles = true;
     }
@@ -143,8 +124,6 @@ export class ExperienceListComponent implements OnInit {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
     }
-
-
 
     deleteExperiences(experience = null) {
         this.messageService.questionDelete({})
@@ -201,6 +180,7 @@ export class ExperienceListComponent implements OnInit {
         this.spinnerService.show();
         this.jobBoardHttpService.get('experience/file', params).subscribe(response => {
             this.files = response['data'];
+            this.paginatorFiles = response as Paginator;
             this.spinnerService.hide();
         }, error => {
             this.spinnerService.hide();
