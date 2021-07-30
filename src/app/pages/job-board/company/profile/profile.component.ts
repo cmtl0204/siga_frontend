@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
             user: this.formBuilder.group({
                 identification: [null, Validators.required],
                 email: [null, [Validators.required, Validators.email]],
-                phone: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(10)]],
+                phone: [null, [Validators.required]],
                 address: [null],
                 identification_type: [null, Validators.required],
             }),
