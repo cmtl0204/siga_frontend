@@ -7,7 +7,9 @@ import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { SharedService } from 'src/app/pages/shared/services/shared.service';
 import { AppHttpService } from 'src/app/services/app/app-http.service';
 import { JobBoardHttpService } from 'src/app/services/job-board/job-board-http.service';
-import {MessageService as MessagePnService} from 'primeng/api';
+import {MessageService as MessagePnService, SelectItem} from 'primeng/api';
+import { Paginator } from 'src/app/models/setting/paginator';
+
 
 @Component({
   selector: 'app-category-form',
@@ -22,6 +24,10 @@ export class CategoryFormComponent implements OnInit {
     @Output() displayOut = new EventEmitter<boolean>();
     @Output() paginatorAdd = new EventEmitter<number>();
     filteredTypes: any[];
+    parentCategories:Category[]=[];
+    flagSkeletonListCategories: boolean;
+    paginator: Paginator;
+  
     constructor(private formBuilder: FormBuilder,
                 public messageService: MessageService,
                 private messagePnService: MessagePnService,
@@ -29,11 +35,12 @@ export class CategoryFormComponent implements OnInit {
                 private appHttpService: AppHttpService,
                 private sharedService: SharedService,
                 private jobBoardHttpService: JobBoardHttpService) {
-
-                    console.log("hola mundo");
+                
     }
 
     ngOnInit(): void {
+         this.getParentCategories();
+        
         
     }
 
@@ -72,7 +79,6 @@ export class CategoryFormComponent implements OnInit {
 
     // Save in backend
     storeCategory(category: Category, flag = false) {
-        console.log('hola');
         this.spinnerService.show();
         this.jobBoardHttpService.store('categories', {category}).subscribe(
             response => {
@@ -127,4 +133,18 @@ export class CategoryFormComponent implements OnInit {
     markAllAsTouchedFormCategory() {
         this.formCategoryIn.markAllAsTouched();
     }
+
+
+     // categories parets of backend
+     getParentCategories() {
+        this.jobBoardHttpService.get('category/parents').subscribe(
+            response => {
+                this.parentCategories = response['data'];
+            }, error => {
+                this.messageService.error(error);
+            });
+    } 
+
+
 }
+

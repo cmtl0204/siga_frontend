@@ -1,17 +1,13 @@
-import { Professional } from './../../../../../models/job-board/professional';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Professional } from './../../../../../models/job-board/professional';
 import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { MessageService as MessagePnService } from 'primeng/api';
-import { SharedService } from '../../../../shared/services/shared.service';
-import { AppHttpService } from '../../../../../services/app/app-http.service';
+import { FormArray, FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { User } from 'src/app/models/auth/user';
 import { Catalogue } from 'src/app/models/app/catalogue';
+import { AppHttpService } from '../../../../../services/app/app-http.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { isAsciiHexDigit } from 'codelyzer/angular/styles/chars';
 
 @Component({
     selector: 'app-profile-form',
@@ -21,27 +17,30 @@ import { isAsciiHexDigit } from 'codelyzer/angular/styles/chars';
 export class ProfileFormComponent implements OnInit {
 
     @Input() formProfessionalIn: FormGroup;
+    @Input() professionalsIn: Professional[];
     @Output() displayOut = new EventEmitter<boolean>();
+    identificationTypes: Catalogue[];
+    filteredTypes: any[];
     auth: User;
-    sex: Catalogue[];
+    sexs: Catalogue[];
+    genders: Catalogue[];
     formAddress: FormGroup;
     formLocation: FormGroup;
-    isTravel: boolean = true;
+    isTravel: boolean = false;
     isDisability: boolean = false;
     isCatastrophicIllness: boolean = false;
     isFamiliarDisability: boolean = false;
     isFamiliarCatastrophicIllness: boolean = false;
     selectedValues: string[] = [];
     value: boolean;
-    // nacionalidades: Catalogue[];
+    
+
 
     constructor(
         private formBuilder: FormBuilder,
         public messageService: MessageService,
-        private messagePnService: MessagePnService,
         private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
-        private sharedService: SharedService,
         private jobBoardHttpService: JobBoardHttpService,
         private authServices: AuthService,
     ) {
@@ -49,8 +48,15 @@ export class ProfileFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.getSex();
-        //this.getProfessional();
+        this.getSexs();
+        this.getGenders();
+        this.getIdentificationTypes();
+        this.getProfessional();
+    }
+
+    // Fields of Form
+    get idField() {
+        return this.formProfessionalIn.get('id');
     }
 
     get identificationField() {
@@ -61,8 +67,9 @@ export class ProfileFormComponent implements OnInit {
         return this.formProfessionalIn['controls']['user'].get('email');
     }
 
-    get firstNameField() {
-        return this.formProfessionalIn['controls']['user'].get('first_name');
+
+    get namesField() {
+        return this.formProfessionalIn['controls']['user'].get('names');
     }
 
     get firstLastnameField() {
@@ -76,11 +83,12 @@ export class ProfileFormComponent implements OnInit {
     get phoneField() {
         return this.formProfessionalIn['controls']['user'].get('phone');
     }
+
     get birthdateField() {
         return this.formProfessionalIn['controls']['user'].get('birthdate');
     }
-    get sexField() {
-        return this.formProfessionalIn['controls']['user'].get('sex');
+    get addressField() {
+        return this.formProfessionalIn['controls']['user'].get('address');
     }
 
     get isTravelField() {
@@ -111,6 +119,16 @@ export class ProfileFormComponent implements OnInit {
         return this.formProfessionalIn.get('about_me');
     }
 
+    get sexField() {
+        return this.formProfessionalIn['controls']['user'].get('sex');
+    }
+
+    get genderField() {
+        return this.formProfessionalIn['controls']['user'].get('gender');
+    }
+
+
+    // Submit Form
     onSubmit() {
         if (this.formProfessionalIn.valid) {
             this.updateProfessional(this.formProfessionalIn.value);
@@ -118,43 +136,64 @@ export class ProfileFormComponent implements OnInit {
             this.formProfessionalIn.markAllAsTouched();
         }
     }
-    // getSex() {
-    //     this.appHttpService.getCatalogues('PROFESSIONAL_SEX').subscribe(response => {
-    //         this.sex = response['data'];
-    //     }, error => {
-    //         this.messageService.error(error);
-    //     });
-    // }
+
 
     updateProfessional(professional: Professional) {
+
         this.spinnerService.show();
-        this.jobBoardHttpService.update('professional/update', { professional })
+        this.jobBoardHttpService.update('professionals/update', { professional })
             .subscribe(response => {
                 this.spinnerService.hide();
                 this.messageService.success(response);
-                console.log(response);
+                // console.log(response);
                 this.displayOut.emit(false);
             }, error => {
                 this.spinnerService.hide();
                 this.messageService.error(error);
             });
     }
+    
+     getProfessional() {
+         this.spinnerService.show();
+         this.jobBoardHttpService.get('professional/show')
+             .subscribe(response => {
+                 this.spinnerService.hide();
+                 this.formProfessionalIn.patchValue(response['data']);
+                 // console.log(response);
+             }, error => {
+                 this.spinnerService.hide();
+                 this.messageService.error(error);
+             });
+         console.log(this.formProfessionalIn);
+     }
 
-    // getProfessional() {
-    //     this.spinnerService.show();
-    //     this.jobBoardHttpService.get('professional/show')
-    //         .subscribe(response => {
-    //             this.spinnerService.hide();
-    //             this.formProfessionalIn.patchValue(response['data']);
-    //             console.log(response);
-    //         }, error => {
-    //             this.spinnerService.hide();
-    //             this.messageService.error(error);
-    //         });
-    // }
+     markAllAsTouchedFormProfessional() {
+         this.formProfessionalIn.markAllAsTouched();
+     }
 
-    markAllAsTouchedFormProfessional() {
-        this.formProfessionalIn.markAllAsTouched();
+    // Types of catalogues
+    getSexs() {
+        this.appHttpService.getCatalogues('SEX_TYPE').subscribe(response => {
+            this.sexs = response['data'];
+            console.log(this.sexs);
+        }, error => {
+            this.messageService.error(error);
+        });
+    }
+    getGenders() {
+        this.appHttpService.getCatalogues('GENDER_TYPE').subscribe(response => {
+            this.genders = response['data'];
+            console.log(this.genders);
+        }, error => {
+            this.messageService.error(error);
+        });
+    }
+    getIdentificationTypes() {
+        this.appHttpService.getCatalogues('IDENTIFICATION_TYPE').subscribe(response => {
+            this.identificationTypes = response['data'];
+        }, error => {
+            this.messageService.error(error);
+        });
     }
 
     validateIsDisability() {
@@ -164,42 +203,43 @@ export class ProfileFormComponent implements OnInit {
             this.formProfessionalIn.setValidators(null);
         }
     }
-    setFormLocation(event) {
+    setFormLocation(event: FormGroup) {
         this.formLocation = event;
     }
-    public clickIsTravel(e) {
+    public clickIsTravel(e: { checked: any; }) {
         const isTravel = e.checked;
         if (isTravel) {
             this.isTravel = true;
             this.isTravel = false;
         }
     }
-    public clickIsDisability(e) {
+    public clickIsDisability(e: { checked: any; }) {
         const isDisability = e.checked;
         if (isDisability) {
             this.isDisability = true;
             this.isDisability = false;
         }
     }
-    public clickIsCatastrophicIllness(e) {
+    public clickIsCatastrophicIllness(e: { checked: any; }) {
         const isCatastrophicIllness = e.checked;
         if (isCatastrophicIllness) {
             this.isCatastrophicIllness = true;
             this.isCatastrophicIllness = false;
         }
     }
-    public clickIsFamiliarDisability(e) {
+    public clickIsFamiliarDisability(e: { checked: any; }) {
         const isFamiliarDisability = e.checked;
         if (isFamiliarDisability) {
             this.isFamiliarDisability = true;
             this.isFamiliarDisability = false;
         }
     }
-    public clickIsFamiliarCatastrophicIllness(e) {
+    public clickIsFamiliarCatastrophicIllness(e: { checked: any; }) {
         const isFamiliarCatastrophicIllness = e.checked;
         if (isFamiliarCatastrophicIllness) {
             this.isFamiliarCatastrophicIllness = true;
             this.isFamiliarCatastrophicIllness = false;
         }
+      
     }
 }

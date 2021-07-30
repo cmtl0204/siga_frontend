@@ -5,12 +5,6 @@
     <div class="p-xl-6 p-lg-6 p-md-12 p-sm-12 p-col-12">
         <app-skeleton [type]="'rectangle'"></app-skeleton>
     </div>
-    <div class="p-xl-6 p-lg-6 p-md-12 p-sm-12 p-col-12">
-        <app-skeleton [type]="'rectangle'"></app-skeleton>
-    </div>
-    <div class="p-xl-6 p-lg-6 p-md-12 p-sm-12 p-col-12">
-        <app-skeleton [type]="'rectangle'"></app-skeleton>
-    </div>
 </div>
 
 <div class="card" [hidden]="flagProfessionals">
@@ -24,8 +18,18 @@
                 <ng-template pTemplate="content">
                     <div class="card-content">{{professional.about_me}}</div>
                 </ng-template>
-                <ng-template pTemplate="footer" *ngIf="loggedIn()">
+                <ng-template pTemplate="footer">
                     <div class="p-grid">
+                        <div class="p-xl-6 p-lg-12 p-md-6 p-sm-6 p-col-6">
+                            <button pButton pRipple
+                                    type="button"
+                                    label="Curriculum"
+                                    class="p-button-info"
+                                    icon="pi pi-file"
+                                    iconPos="left"
+                                    (click)="showCurriculum(professional)">
+                            </button>
+                        </div>
                         <div class="p-xl-6 p-lg-12 p-md-6 p-sm-6 p-col-6">
                             <button pButton pRipple
                                     type="button"
@@ -33,16 +37,7 @@
                                     class="p-button-success"
                                     icon="pi pi-check"
                                     iconPos="left"
-                                    (click)="professionalAplied(professional)">
-                            </button>
-                        </div>
-                        <div class="p-xl-6 p-lg-12 p-md-6 p-sm-6 p-col-6">
-                            <button pButton pRipple
-                                    type="button"
-                                    label="Ver más"
-                                    class="p-button-info"
-                                    icon="pi pi-eye"
-                                    iconPos="left">
+                                    (click)="applyProfessional(professional)">
                             </button>
                         </div>
                     </div>
@@ -50,10 +45,11 @@
             </p-card>
         </div>
     </div>
-
-    <div *ngIf="professionalsIn.length == 0">
-        No se encontraron profesionales, intenta más tarde
-    </div>
+    <p-message 
+        *ngIf="professionalsIn.length == 0" 
+        severity="info"
+        text="No se encontraron profesionales, intenta más tarde">
+    </p-message>
 </div>
 
 <p-paginator

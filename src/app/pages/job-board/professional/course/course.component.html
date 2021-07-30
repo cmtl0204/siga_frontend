@@ -1,23 +1,14 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <app-course-list
-                [coursesIn]="courses"
-                [flagCourses]="flagCourses"
-                [paginatorIn]="paginator"
-                [formCourseIn]="formCourse"
-                (coursesOut)="courses=$event"
-                (displayOut)="courseDialog=$event"
-                (formCourseOut)="formCourse=$event"
-                (paginatorOut)="getCourses($event)">
+        <app-course-list [coursesIn]="courses" [flagSkeletonCourses]="flagSkeletonCourses" [paginatorIn]="paginator"
+            [formCourseIn]="formCourse" (coursesOut)="courses=$event" (displayOut)="courseDialog=$event"
+            (formCourseOut)="formCourse=$event" (paginatorOut)="getCourses($event)">
         </app-course-list>
 
-        <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Cursos" [modal]="true"
-                  styleClass="p-fluid" (onHide)="courseDialog=false">
-            <app-course-form
-                    [coursesIn]="courses"
-                    [formCourseIn]="formCourse"
-                    (coursesOut)="courses=$event"
-                    (displayOut)="courseDialog=$event">
+        <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Cursos Y Capacitaciones" [modal]="true"
+            styleClass="p-fluid" (onHide)="courseDialog=false">
+            <app-course-form [coursesIn]="courses" [formCourseIn]="formCourse" (coursesOut)="courses=$event"
+                (displayOut)="courseDialog=$event">
             </app-course-form>
         </p-dialog>
     </div>

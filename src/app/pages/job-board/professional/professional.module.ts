@@ -37,7 +37,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 import { ProfessionalComponent } from './professional.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
-import { CurriculumFormComponent } from './curriculum/curriculum-form/curriculum-form.component';
+import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum-list.component';
 import { SkillComponent } from './skill/skill.component';
 import { SkillFormComponent } from './skill/skill-form/skill-form.component';
 import { SkillListComponent } from './skill/skill-list/skill-list.component';
@@ -57,6 +57,7 @@ import { LanguageListComponent } from './language/language-list/language-list.co
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileFormComponent } from './profile/profile-form/profile-form.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import {InputMaskModule} from 'primeng/inputmask';
 @NgModule({
     imports: [
         CommonModule,
@@ -92,11 +93,12 @@ import { CheckboxModule } from 'primeng/checkbox';
         RippleModule,
         CheckboxModule,
         InputSwitchModule,
+        InputMaskModule,
     ],
     declarations: [
         ProfessionalComponent,
         CurriculumComponent,
-        CurriculumFormComponent,
+        CurriculumListComponent,
         // ProfileComponent,
         SkillComponent,
         SkillFormComponent,

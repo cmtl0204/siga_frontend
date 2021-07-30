@@ -1,17 +1,14 @@
-import {Professional} from './../../../../models/job-board/professional';
-import {Institution} from './../../../../models/app/institution';
-import {Component, OnInit} from '@angular/core';
+import { Institution } from './../../../../models/app/institution';
+import { Component, OnInit } from '@angular/core';
 
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {JobBoardHttpService} from '../../../../services/job-board/job-board-http.service';
-import {Course} from '../../../../models/job-board/course';
-import {Paginator} from '../../../../models/setting/paginator';
-import {HttpParams} from '@angular/common/http';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {BreadcrumbService} from '../../../../shared/services/breadcrumb.service';
-import {MessageService} from '../../../shared/services/message.service';
-
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { JobBoardHttpService } from '../../../../services/job-board/job-board-http.service';
+import { Course } from '../../../../models/job-board/course';
+import { Paginator } from '../../../../models/setting/paginator';
+import { HttpParams } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BreadcrumbService } from '../../../../shared/services/breadcrumb.service';
+import { MessageService } from '../../../shared/services/message.service';
 @Component({
     selector: 'app-course',
     templateUrl: './course.component.html',
@@ -24,14 +21,13 @@ export class CourseComponent implements OnInit {
     formCourse: FormGroup;
     course: Course;
     courseDialog: boolean;
-    flagCourses: boolean;
+    flagSkeletonCourses: boolean;
 
     constructor(private spinnerService: NgxSpinnerService,
-                public messageService: MessageService,
-                private formBuilder: FormBuilder,
-                private jobBoardHttpService: JobBoardHttpService,
-                private breadcrumbService: BreadcrumbService) {
-        this.paginator = {current_page: 1, per_page: 5};
+        public messageService: MessageService,
+        private formBuilder: FormBuilder,
+        private jobBoardHttpService: JobBoardHttpService) {
+        this.paginator = { current_page: 1, per_page: 2 };
         this.courses = [];
     }
 
@@ -53,24 +49,23 @@ export class CourseComponent implements OnInit {
             description: [null, [Validators.required, Validators.minLength(10)]],
             start_date: [null, Validators.required],
             end_date: [null, Validators.required],
-            hours: [null, Validators.required],
+            hours: [null, [Validators.required, Validators.minLength(2)]],
         });
     }
 
     // courses of backend
-
     getCourses(paginator: Paginator) {
         const params = new HttpParams()
             .append('page', paginator.current_page.toString())
             .append('per_page', paginator.per_page.toString());
-        this.flagCourses = true;
+        this.flagSkeletonCourses = true;
         this.jobBoardHttpService.get('courses', params).subscribe(
             response => {
-                this.flagCourses = false;
+                this.flagSkeletonCourses = false;
                 this.courses = response['data'];
                 this.paginator = response as Paginator;
             }, error => {
-                this.flagCourses = false;
+                this.flagSkeletonCourses = false;
                 this.messageService.error(error);
             });
     }

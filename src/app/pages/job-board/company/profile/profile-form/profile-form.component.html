@@ -31,7 +31,7 @@
                   <small *ngIf="emailField.errors?.required" id="email-help-1" class="p-error">
                     {{messageService.fieldRequired}}
                   </small>
-                  <small *ngIf="emailField.errors?.email" id="email-help-1" class="p-error">
+                  <small *ngIf="emailField.errors?.email" id="email-help-2" class="p-error">
                     {{messageService.fieldEmail}}
                   </small>
                 </div>
@@ -45,7 +45,7 @@
                   <i *ngIf="phoneField.invalid && (phoneField.touched || phoneField.dirty)"
                     class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <input id="phone" formControlName="phone" pInputText>
+                <p-inputMask id="phone" mask="0999999999" formControlName="phone"></p-inputMask>
                 <div *ngIf="phoneField.errors && (phoneField.touched || phoneField.dirty)">
                   <small *ngIf="phoneField.errors?.required" id="phone-help-1" class="p-error">
                     {{messageService.fieldRequired}}
@@ -77,7 +77,7 @@
             </div>
           </p-card>
           <div class="p-field">
-            <app-location-address [option]="3" (formAddressOut)="formAddress=$event"
+            <app-location-address [option]="1" (formAddressOut)="formAddress=$event"
               (formLocationOut)="setFormLocation($event)" id="address" formControlName="address">
             </app-location-address>
           </div>
@@ -111,6 +111,12 @@
               <div *ngIf="prefixField.errors && (prefixField.touched ||prefixField.dirty)">
                 <small *ngIf="prefixField.errors?.required" id="prefix-help-1" class="p-error">
                   {{messageService.fieldRequired}}
+                </small>
+                <small *ngIf="prefixField.errors?.minlength" id="prefix-help-2" class="p-error">
+                  {{messageService.fieldMinLength(prefixField)}}
+                </small>
+                <small *ngIf="prefixField.errors?.maxlength" id="prefix-help-3" class="p-error">
+                  {{messageService.fieldMaxLength(prefixField)}}
                 </small>
               </div>
             </div>

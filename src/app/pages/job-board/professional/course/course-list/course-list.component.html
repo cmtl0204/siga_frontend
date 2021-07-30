@@ -1,4 +1,4 @@
-<app-skeleton *ngIf="flagCourses" [type]="'table'"></app-skeleton>
+<app-skeleton *ngIf="flagSkeletonCourses" [type]="'table'"></app-skeleton>
 <p-dialog [(visible)]="dialogUploadFiles" [style]="{width: '75%'}" header="Subir archivos" [modal]="true"
     styleClass="p-fluid" (onHide)="dialogUploadFiles=false">
     <app-upload-files (files)="upload($event,selectedCourse.id)"></app-upload-files>
@@ -9,17 +9,14 @@
     <app-view-files (files)="upload($event,selectedCourse.id)" [filesIn]="files" (searchOut)="searchFiles($event)"
         [paginatorIn]="paginatorFiles" (paginatorOut)="getFiles($event)"></app-view-files>
 </p-dialog>
-<div class="card" [hidden]="flagCourses">
+
+<div class="card" [hidden]="flagSkeletonCourses">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Crear" icon="pi pi-plus" class="p-button-success p-button-rounded"
+            <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success p-button-rounded"
                 (click)="openNewFormCourse()"></button>
             <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger p-button-rounded p-ml-2"
                 (click)="deleteCourses()" [disabled]="!selectedCourses || !selectedCourses.length"></button>
-        </ng-template>
-        <ng-template pTemplate="right">
-            <button pButton pRipple label="Actualizar" icon="pi pi-refresh" class="p-button-info"
-                (click)="paginatorOut.emit(paginatorIn)"></button>
         </ng-template>
     </p-toolbar>
     <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total" (onPageChange)="pageChange($event)">
@@ -42,44 +39,36 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="type">
-                    Tipo
+                <th pSortableColumn="type">Tipo
                     <p-sortIcon field="type"></p-sortIcon>
                 </th>
-                <th pSortableColumn=" institution">
-                    Institución
+                <th pSortableColumn=" institution">Institución
                     <p-sortIcon field=" institution"></p-sortIcon>
                 </th>
-                <th pSortableColumn="certification_type">
-                    tipo de
-                    certificado
+                <th pSortableColumn="certification_type">Tipo de Certificado
                     <p-sortIcon field="certification_type"></p-sortIcon>
                 </th>
-                <th pSortableColumn="area">
-                    Area
+                <th pSortableColumn="area"> Área
                     <p-sortIcon field="area"></p-sortIcon>
                 </th>
-                <th pSortableColumn="name">
-                    Nombre
+                <th pSortableColumn="name">Nombre
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="description">
-                    descripcion
+                <th pSortableColumn="description"> Descripción
                     <p-sortIcon field="description"></p-sortIcon>
                 </th>
-                <th pSortableColumn="start_date">
+                <!-- <th pSortableColumn="start_date">
                     fecha de inicio
                     <p-sortIcon field="start_date"></p-sortIcon>
                 </th>
                 <th pSortableColumn="end_date">
                     fecha de fin
                     <p-sortIcon field="end_date"></p-sortIcon>
-                </th>
+                </th> -->
                 <th pSortableColumn="hours">
-                    horas
+                    Horas
                     <p-sortIcon field="hours"></p-sortIcon>
                 </th>
-                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-course>
@@ -105,12 +94,12 @@
                 <td>
                     {{course.description}}
                 </td>
-                <td>
+                <!-- <td>
                     {{course.start_date}}
                 </td>
                 <td>
                     {{course.end_date}}
-                </td>
+                </td> -->
                 <td>
                     {{course.hours}}
                 </td>

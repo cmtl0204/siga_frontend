@@ -1,57 +1,64 @@
 <!-- {{formCourseIn.value|json}} -->
 <p-toast></p-toast>
-<div class="p-fluid">
-  <form [formGroup]="formCourseIn" (ngSubmit)="onSubmit($event)">
-    <div class="p-formgrid p-grid">
-      <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
-        <label for="area">
-          <i class="p-error">*</i> Area:
-          <i *ngIf="areaField.valid" class="pi pi-check-circle icon-valid"></i>
-          <i *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)"
-            class="pi pi-times-circle icon-invalid"></i>
-        </label>
-        <p-dropdown id="area" [options]="areas" formControlName="area" optionLabel="name" [filter]="true"
-          filterBy="name" placeholder="Seleccione...">
-          <ng-template pTemplate="selectedarea">
-            <div class="country-area country-area-value" *ngIf="areaField.value">
-              <div>{{area.name}}</div>
-            </div>
-          </ng-template>
-          <ng-template let-area pTemplate="area">
-            <div class="country-area">
-              <div>{{area.name}}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-      <div class="p-field p-col">
-        <i class="p-error">*</i>Nombre:
-
-        <label for="name"></label>
-        <input id="name" name="name" pInputText formControlName="name" />
-        <div *ngIf="nameField.errors && nameField.touched">
-          <small *ngIf="nameField.hasError('required')" id="name-help-1" class="p-error">
-            {{messageService.fieldRequired}}
-          </small>
-        </div>
-        <div class="p-field">
-          <label for="description">
-            <i class="p-error">*</i> Descripción:
-            <i *ngIf="descriptionField.valid" class="pi pi-check-circle icon-valid"></i>
-            <i *ngIf="descriptionField.invalid && (descriptionField.touched || descriptionField.dirty)"
+<p-card>
+  <div class="p-fluid">
+    <form [formGroup]="formCourseIn" (ngSubmit)="onSubmit()">
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+          <label for="area">
+            <i class="p-error">*</i> Area:
+            <i *ngIf="areaField.valid" class="pi pi-check-circle icon-valid"></i>
+            <i *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)"
               class="pi pi-times-circle icon-invalid"></i>
           </label>
-          <textarea pInputTextarea id="description" name="type" formControlName="description" rows="5"></textarea>
-          <div *ngIf="descriptionField.errors && (descriptionField.touched || descriptionField.dirty)">
-            <small *ngIf="descriptionField.hasError('required')" id="description-help-1" class="p-error">
+          <p-dropdown id="area" [options]="areas" formControlName="area" optionLabel="name" [filter]="true"
+            filterBy="name" placeholder="Seleccione...">
+            <ng-template pTemplate="selectedarea">
+              <div class="country-area country-area-value" *ngIf="areaField.value">
+                <div>{{area.name}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-area pTemplate="area">
+              <div class="country-area">
+                <div>{{area.name}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+          <label for="name">
+            <i class="p-error">*</i>Nombre:
+            <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
+            <i *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
+              class="pi pi-times-circle icon-invalid"></i>
+          </label>
+          <input id="name" formControlName="name" pInputText>
+          <div *ngIf="nameField.errors && (nameField.touched ||nameField.dirty)">
+            <small *ngIf="nameField.errors?.required" id="name-help-1" class="p-error">
               {{messageService.fieldRequired}}
-            </small>
-            <small *ngIf="descriptionField.hasError('minlength')" id="description-help-2" class="p-error">
-              Mínimo de caracteres es {{descriptionField.errors.minlength.requiredLength}}.
             </small>
           </div>
         </div>
-        <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
+      </div>
+      <div class="p-field">
+        <label for="description">
+          <i class="p-error">*</i> Descripción:
+          <i *ngIf="descriptionField.valid" class="pi pi-check-circle icon-valid"></i>
+          <i *ngIf="descriptionField.invalid && (descriptionField.touched || descriptionField.dirty)"
+            class="pi pi-times-circle icon-invalid"></i>
+        </label>
+        <textarea pInputTextarea id="description" formControlName="description" rows="5"></textarea>
+        <div *ngIf="descriptionField.errors && (descriptionField.touched || descriptionField.dirty)">
+          <small *ngIf="descriptionField.errors?.required" id="description-help-1" class="p-error">
+            {{messageService.fieldRequired}}
+          </small>
+          <small *ngIf="descriptionField.errors?.minlength" id="description-help-2" class="p-error">
+            {{messageService.fieldMinLength(descriptionField)}}
+          </small>
+        </div>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
           <label for="type">
             <i class="p-error">*</i> Tipo:
             <i *ngIf="typeField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -72,7 +79,7 @@
             </ng-template>
           </p-dropdown>
         </div>
-        <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
           <label for="institution">
             <i class="p-error">*</i> Institución:
             <i *ngIf="institutionField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -85,7 +92,6 @@
               <div class="country-institution country-institution-value" *ngIf="institutionField.value">
                 <div>{{institution.name}}</div>
               </div>
-
             </ng-template>
             <ng-template let-institution pTemplate="institution">
               <div class="country-institution">
@@ -94,7 +100,9 @@
             </ng-template>
           </p-dropdown>
         </div>
-        <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
           <label for="certificationTypes">
             <i class="p-error">*</i> Tipo de Certificación:
             <i *ngIf="certificationTypeField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -116,45 +124,64 @@
             </ng-template>
           </p-dropdown>
         </div>
-        <div class="p-field">
-          <label for="start_date">
-            <i class="p-error">*</i> Fecha de Inicio:
-            <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
-            <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
+        <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+          <label for="hours">
+            <i class="p-error">*</i>Horas:
+            <i *ngIf="hoursField.valid" class="pi pi-check-circle icon-valid"></i>
+            <i *ngIf="hoursField.invalid && (hoursField.touched || hoursField.dirty)"
               class="pi pi-times-circle icon-invalid"></i>
           </label>
-          <app-date formControlName="start_date" id="start_date">
-          </app-date>
-          <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
-            <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
+          <input id="hours" formControlName="hours" pInputText>
+          <div *ngIf="hoursField.errors && (hoursField.touched ||hoursField.dirty)">
+            <small *ngIf="hoursField.errors?.required" id="hours-help-1" class="p-error">
               {{messageService.fieldRequired}}
+            </small>
+            <small *ngIf="hoursField.errors?.minlength" id="hours-help-2" class="p-error">
+              {{messageService.fieldMinLength(hoursField)}}
             </small>
           </div>
         </div>
-        <div class="p-field">
-          <label for="end_date">Fecha Fin: </label>
-          <app-date formControlName="end_date" id="end_date">
-          </app-date>
+      </div>
+      <div class="p-field">
+        <label for="start_date">
+          <i class="p-error">*</i> Fecha de Inicio:
+          <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
+          <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
+            class="pi pi-times-circle icon-invalid"></i>
+        </label>
+        <app-date formControlName="start_date" id="start_date">
+        </app-date>
+        <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
+          <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
+            {{messageService.fieldRequired}}
+          </small>
         </div>
-
-        <div class="p-field ">
-          <label for="hours">Horas:</label>
-          <input id="hours" name="hours" pInputText formControlName="hours" />
-          <div *ngIf="hoursField.errors && hoursField.touched">
-            <small *ngIf="hoursField.hasError('required')" id="hours-help-1" class="p-error">
-              {{messageService.fieldRequired}}
-            </small>
-          </div>
+      </div>
+      <div class="p-field">
+        <label for="end_date">
+          <i class="p-error">*</i> Fecha Final:
+          <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
+          <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
+            class="pi pi-times-circle icon-invalid"></i>
+        </label>
+        <app-date formControlName="end_date" id="end_date">
+        </app-date>
+        <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
+          <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
+            {{messageService.fieldRequired}}
+          </small>
         </div>
-        <div class="p-formgrid p-grid">
-          <div class="p-field p-col">
-            <button type="submit" pButton pRipple label="Guardar y Salir" icon="pi pi-save"
-              class="p-button-success p-button-raised"></button>
-          </div>
-          <div *ngIf="!idField.value" class="p-field p-col">
-            <button type="button" pButton pRipple label="Guardar" icon="pi pi-arrow-right" class="p-button-raised"
-              (click)="onSubmit($event,true)"></button>
-          </div>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <button type="submit" pButton pRipple label="Guardar y Salir" icon="pi pi-save"
+            class="p-button-success p-button-raised"></button>
         </div>
-        <!-- </form>
-</div>-->
+        <div *ngIf="!idField.value" class="p-field p-col">
+          <button type="button" pButton pRipple label="Guardar" icon="pi pi-arrow-right" class="p-button-raised"
+            (click)="onSubmit(true)"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-card>

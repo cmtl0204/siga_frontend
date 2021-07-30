@@ -1,4 +1,4 @@
-<app-skeleton *ngIf="flagExperiences"></app-skeleton>
+<app-skeleton *ngIf="flagSkeletonExperiences"></app-skeleton>
 <p-dialog [(visible)]="dialogUploadFiles" [style]="{width: '75%'}" header="Subir archivos" [modal]="true"
     styleClass="p-fluid" (onHide)="dialogUploadFiles=false">
     <app-upload-files (files)="upload($event,selectedExperience.id)"></app-upload-files>
@@ -17,16 +17,8 @@
                 (click)="openNewFormExperience()"></button>
             <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger p-button-rounded p-ml-2"
                 (click)="deleteExperiences()" [disabled]="!selectedExperiences || !selectedExperiences.length"></button>
-            <button pButton pRipple label="Actualizar" icon="pi pi-refresh"
-                class="p-button-info p-button-rounded p-ml-2" (click)="paginatorOut.emit(paginatorIn)"></button>
         </ng-template>
 
-        <ng-template pTemplate="right">
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
-                class="p-mr-2 p-mb-2 p-d-inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
-                (click)="dt.exportCSV()"></button>
-        </ng-template>
     </p-toolbar>
     <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total" (onPageChange)="pageChange($event)">
     </p-paginator>
@@ -35,7 +27,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Referencias</h5>
+                <h5 class="p-m-0">Referencias Personales</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" (click)="searchExperiences($event,search.value)"></i>
                     <input #search pInputText type="text" (keyup)="searchExperiences($event,$event.target.value)"
@@ -57,7 +49,7 @@
                     <p-sortIcon field="employer"></p-sortIcon>
                 </th>
                 <th pSortableColumn="position">
-                    Posición
+                    Cargo
                     <p-sortIcon field="position"></p-sortIcon>
                 </th>
                 <th pSortableColumn="start_date">
@@ -69,7 +61,7 @@
                     <p-sortIcon field="activities"></p-sortIcon>
                 </th>
                 <th pSortableColumn="reason_leave">
-                    Razon
+                    Razón de Salida
                     <p-sortIcon field="reason_leave"></p-sortIcon>
                 </th>
                 <th pSortableColumn="is_working">

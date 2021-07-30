@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobBoardHttpService } from '../../../../services/job-board/job-board-http.service';
 import { Skill } from '../../../../models/job-board/skill';
@@ -6,7 +6,7 @@ import { Paginator } from '../../../../models/setting/paginator';
 import { HttpParams } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from '../../../shared/services/message.service';
-import {AppHttpService} from '../../../../services/app/app-http.service';
+import { AppHttpService } from '../../../../services/app/app-http.service';
 
 @Component({
     selector: 'app-skill',
@@ -15,6 +15,8 @@ import {AppHttpService} from '../../../../services/app/app-http.service';
 })
 
 export class SkillComponent implements OnInit {
+    @Input() description: string;
+    @Input() getPrueba: string;
     paginator: Paginator;
     skills: Skill[];
     formSkill: FormGroup;
@@ -34,6 +36,8 @@ export class SkillComponent implements OnInit {
     ngOnInit(): void {
         this.getSkills(this.paginator);
         this.buildFormSkill();
+        // this.description();
+        console.log(this.description);
     }
 
     // Build form skill
@@ -62,4 +66,5 @@ export class SkillComponent implements OnInit {
                 this.messageService.error(error);
             });
     }
+
 }
