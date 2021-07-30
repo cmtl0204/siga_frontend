@@ -36,9 +36,6 @@ export class InterceptorService implements HttpInterceptor {
             if (!req.params.has('per_page')) {
                 params = params.append('per_page', '10');
             }
-            if (this.authService.getInstitution()) {
-                params = params.append('institution', this.authService.getInstitution().id.toString());
-            }
             if (this.authService.getRole()) {
                 params = params.append('role', this.authService.getRole().id.toString());
             }
