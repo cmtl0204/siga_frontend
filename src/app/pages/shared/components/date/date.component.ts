@@ -1,8 +1,9 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
-import { format } from 'date-fns';
-import { SharedService } from '../../services/shared.service';
+import {Component, forwardRef, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import {SelectItem} from 'primeng/api';
+import {format} from 'date-fns';
+import {SharedService} from '../../services/shared.service';
+import {MessageService} from '../../services/message.service';
 
 @Component({
     selector: 'app-date',
@@ -27,7 +28,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
     isDisabled: boolean;
     formDate: FormGroup;
 
-    constructor(private sharedService: SharedService, private formBuilder: FormBuilder) {
+
+    constructor(private sharedService: SharedService, private formBuilder: FormBuilder, public messageService: MessageService) {
 
     }
 
@@ -49,14 +51,14 @@ export class DateComponent implements OnInit, ControlValueAccessor {
     generateDays(totalDays: number) {
         this.days = [];
         for (let i = 1; i <= totalDays; i++) {
-            this.days.push({ label: (i < 10 ? '0' : '') + i, value: (i < 10 ? '0' : '') + i });
+            this.days.push({label: (i < 10 ? '0' : '') + i, value: (i < 10 ? '0' : '') + i});
         }
     }
 
     generateMonths() {
         this.months = [];
         for (let i = 1; i <= 12; i++) {
-            this.months.push({ label: i.toString(), value: (i < 10 ? '0' : '') + i });
+            this.months.push({label: i.toString(), value: (i < 10 ? '0' : '') + i});
         }
     }
 
@@ -64,7 +66,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
         this.years = [];
         const currentYear = parseInt(format(new Date(), 'yyyy'), 10);
         for (let i = currentYear; i >= (currentYear - 100); i--) {
-            this.years.push({ label: i.toString(), value: i.toString() });
+            this.years.push({label: i.toString(), value: i.toString()});
         }
     }
 
@@ -124,7 +126,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
         this.value = value;
         if (this.value) {
             const [year, month, day] = this.value.split('-');
-            this.yearField.setValue(year);
+            this.yearField.setValue({label: year, value: year});
             this.monthField.setValue(month);
             this.dayField.setValue(day);
         }

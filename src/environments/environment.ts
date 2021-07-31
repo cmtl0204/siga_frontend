@@ -4,12 +4,11 @@
 
 export const URL_API = 'http://siga_backend.test/v1/';
 export const URL = 'http://siga_backend.test/';
-export const WEB = 'http://127.0.0.1:8000/';
+export const WEB = 'http://siga_backend.test/';
 
 export const environment = {
     production: false,
-    STORAGE_URL: 'http://127.0.0.1:8000/storage/',
-    //STORAGE_URL: URL + 'storage/',
+    STORAGE_URL: URL + 'storage/',
     WEB,
     API_URL_AUTHENTICATION: URL_API + 'authentication/',
     API_URL_APP: URL_API + 'app/',

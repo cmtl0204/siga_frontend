@@ -17,6 +17,11 @@ export class CustomValidators {
         return /[A-Z]/.test(value) ? null : {hasUpperCase: true};
     }
 
+    static isWeb(control: AbstractControl) {
+        const value = control.value;
+        return /^([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value) ? null : {isWeb: true};
+    }
+
     static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
         const password: string = control.get('password').value; // get password from our password form control
         const passwordConfirmation: string = control.get('password_confirmation').value; // get password from our confirmPassword form control

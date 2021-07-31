@@ -2,7 +2,7 @@
     <form [formGroup]="formUserIn" (ngSubmit)="onSubmit($event)">
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
-                <label for="identification">Identificación:</label>
+                <label for="identification">Número de documento:</label>
                 <input pInputText id="identification" type="text" formControlName="identification">
                 <div *ngIf="identificationField.errors && identificationField.touched">
                     <small *ngIf="identificationField.hasError('required')" id="identification-help-1" class="p-error">
