@@ -136,12 +136,14 @@ export class ProfileFormComponent implements OnInit {
             this.formProfessionalIn.markAllAsTouched();
         }
     }
+  
+    
 
 
     updateProfessional(professional: Professional) {
 
         this.spinnerService.show();
-        this.jobBoardHttpService.update('professionals/update', { professional })
+        this.jobBoardHttpService.update('professionals/'+professional.id, { professional })
             .subscribe(response => {
                 this.spinnerService.hide();
                 this.messageService.success(response);
