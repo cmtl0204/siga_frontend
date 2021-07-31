@@ -25,6 +25,7 @@ export interface User {
     status?: Status;
     birthdate?: Date;
     phone?: string;
+    cellphone?: string;
     email?: string;
     personal_email?: string;
     is_changed_password?: boolean;

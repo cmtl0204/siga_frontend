@@ -1,27 +1,34 @@
 <p-toast></p-toast>
 <div class="p-fluid">
     <form [formGroup]="formAddress">
-        <app-location [option]="option" [header]="headerLocation" id="location" formControlName="location"
-                      (formLocationOut)="emitFormLocation($event)"
-                      (click)="updateValue()"></app-location>
-        <br>
-        <p-card [header]="headerAddress+':  '">
-            <div class="p-field">
+        <div class="p-field">
+            <app-location [option]="option" [isEcuador]="isEcuador" [header]="headerLocation" id="location" formControlName="location"
+                          (formLocationOut)="emitFormLocation($event)"
+                          (click)="updateValue()"></app-location>
+        </div>
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-xl-4 p-lg-4 p-md-4 p-sm-12">
                 <label><i class="p-error">*</i> Sector:
                     <i *ngIf="sectorField.valid" class="pi pi-check-circle icon-valid"></i>
                     <i *ngIf="sectorField.invalid && (sectorField.touched || sectorField.dirty)"
                        class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <div class="p-formgrid p-grid">
-                    <div *ngFor="let sector of sectors">
-                        <div class="p-field p-col">
-                            <p-radioButton name="sector" [value]="sector"
-                                           [label]="sector.name"
-                                           formControlName="sector"
-                                           (click)="updateValue()"></p-radioButton>
+                <p-dropdown id="province" [options]="sectors"
+                            formControlName="sector"
+                            (onChange)="updateValue()"
+                            optionLabel="name"
+                            placeholder="Seleccione">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="sectorField.value">
+                            <div>{{sectorField.value.name}}</div>
                         </div>
-                    </div>
-                </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
                 <div *ngIf="sectorField.errors && (sectorField.touched || sectorField.dirty)">
                     <small *ngIf="sectorField.hasError('required')"
                            id="sector-help-1" class="p-error">
@@ -29,40 +36,40 @@
                     </small>
                 </div>
             </div>
-            <div class="p-formgrid p-grid">
-                <div class="p-field p-col">
-                    <label><i class="p-error">*</i>
-                        Calle Principal:
-                        <i *ngIf="mainStreetField.valid" class="pi pi-check-circle icon-valid"></i>
-                        <i *ngIf="mainStreetField.invalid && (mainStreetField.touched || mainStreetField.dirty)"
-                           class="pi pi-times-circle icon-invalid"></i>
-                    </label>
-                    <input name="main-street" type="text" pInputText
-                           formControlName="main_street"
-                           (keypress)="updateValue()"/>
-                    <div *ngIf="mainStreetField.errors && (mainStreetField.touched || mainStreetField.dirty)">
-                        <small *ngIf="mainStreetField.hasError('required')"
-                               id="main-street-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
-                </div>
-                <div class="p-field p-col">
-                    <label><i class="p-error">*</i> Calle Secundaria:
-                        <i *ngIf="secondaryStreet.valid" class="pi pi-check-circle icon-valid"></i>
-                        <i *ngIf="secondaryStreet.invalid && (secondaryStreet.touched || secondaryStreet.dirty)"
-                           class="pi pi-times-circle icon-invalid"></i>
-                    </label>
-                    <input name="secondary-street" type="text" pInputText formControlName="secondary_street"
-                           (keypress)="updateValue()"/>
-                    <div *ngIf="secondaryStreet.invalid && (secondaryStreet.touched || secondaryStreet.dirty)">
-                        <small *ngIf="secondaryStreet.errors?.required"
-                               id="secondary-street-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
+            <div class="p-field p-xl-4 p-lg-4 p-md-4 p-sm-12">
+                <label><i class="p-error">*</i>
+                    Calle Principal:
+                    <i *ngIf="mainStreetField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="mainStreetField.invalid && (mainStreetField.touched || mainStreetField.dirty)"
+                       class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <input name="main-street" type="text" pInputText
+                       formControlName="main_street"
+                       (keypress)="updateValue()"/>
+                <div *ngIf="mainStreetField.errors && (mainStreetField.touched || mainStreetField.dirty)">
+                    <small *ngIf="mainStreetField.hasError('required')"
+                           id="main-street-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
                 </div>
             </div>
+            <div class="p-field p-xl-4 p-lg-4 p-md-4 p-sm-12">
+                <label><i class="p-error">*</i> Calle Secundaria:
+                    <i *ngIf="secondaryStreet.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="secondaryStreet.invalid && (secondaryStreet.touched || secondaryStreet.dirty)"
+                       class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <input name="secondary-street" type="text" pInputText formControlName="secondary_street"
+                       (keypress)="updateValue()"/>
+                <div *ngIf="secondaryStreet.invalid && (secondaryStreet.touched || secondaryStreet.dirty)">
+                    <small *ngIf="secondaryStreet.errors?.required"
+                           id="secondary-street-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="p-field">
             <p-fieldset legend="Detalle dirección (opcional)" [toggleable]="true" [collapsed]="true">
                 <div class="p-field">
                     <label>Referencia:</label>
@@ -95,6 +102,6 @@
                            (keypress)="updateValue()"/>
                 </div>
             </p-fieldset>
-        </p-card>
+        </div>
     </form>
 </div>

@@ -29,7 +29,8 @@ import {SharedService} from '../../services/shared.service';
 
 export class LocationAddressComponent implements OnInit, ControlValueAccessor {
     @Input() option = 1;
-    @Input() headerLocation = 'Localización';
+    @Input() isEcuador = true;
+    @Input() headerLocation = 'Ubicación';
     @Input() headerAddress = 'Dirección';
     @Output() formAddressOut = new EventEmitter<FormGroup>();
     @Output() formLocationOut = new EventEmitter<FormGroup>();
@@ -55,11 +56,11 @@ export class LocationAddressComponent implements OnInit, ControlValueAccessor {
     buildFormAddress() {
         this.formAddress = this.formBuilder.group({
             location: [null, Validators.required],
+            sector: [null, Validators.required],
             main_street: [null, Validators.required],
             secondary_street: [null, Validators.required],
             number: [null],
             post_code: [null],
-            sector: [null, Validators.required],
             reference: [null],
             latitude: [null],
             longitude: [null]
@@ -79,6 +80,7 @@ export class LocationAddressComponent implements OnInit, ControlValueAccessor {
     }
 
     writeValue(value: Address): void {
+        console.log(value);
         this.value = value;
         if (this.value) {
             this.formAddress.patchValue(this.value);

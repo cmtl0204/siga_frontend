@@ -1,88 +1,116 @@
 <p-toast></p-toast>
 <div class="p-fluid">
     <form [formGroup]="formLocation">
-        <div>
-            <h3>Localización:</h3>
-            <div class="p-formgrid p-grid">
-                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                    <p-autoComplete formControlName="country" [suggestions]="filteredCountries"
-                                    (completeMethod)="filterCountry($event)"
-                                    field="name" [dropdown]="true"
-                                    (onSelect)="updateValue(countryField);loadProvinces()"
-                                    (onKeyUp)="updateValue(countryField)"
-                                    placeholder="* País">
-                        <ng-template let-country pTemplate="item">
-                            <div class="country-item">
-                                <div>{{country.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-autoComplete>
-                    <div *ngIf="countryField.invalid && (countryField.touched || countryField.dirty)">
-                        <small *ngIf="countryField.errors?.required"
-                               id="country-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
-                </div>
-                <div *ngIf="option>1" class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                    <p-autoComplete formControlName="province" [suggestions]="filteredProvinces"
-                                    (completeMethod)="filterProvince($event)"
-                                    field="name" [dropdown]="true"
-                                    (onSelect)="updateValue(provinceField);loadCantons()"
-                                    (onKeyUp)="updateValue(provinceField)"
-                                    placeholder="* Provincia">
-                        <ng-template let-province pTemplate="item">
-                            <div class="country-item">
-                                <div>{{province.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-autoComplete>
-                    <div *ngIf="provinceField.invalid && (provinceField.touched || provinceField.dirty)">
-                        <small *ngIf="provinceField.errors?.required"
-                               id="province-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
+        <div *ngIf="selectedLocation">
+            {{selectedLocation}}
+        </div>
+        <div class="p-formgrid p-grid">
+            <div *ngIf="!isEcuador" class="p-field p-xl-8 p-lg-8 p-md-12 p-sm-12">
+                <p-dropdown id="country" [options]="countries"
+                            formControlName="country"
+                            (onChange)="loadProvinces();updateValue(countryField)"
+                            optionLabel="name" [filter]="true" filterBy="name"
+                            placeholder="País">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="countryField.value">
+                            <div>{{countryField.value.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="countryField.invalid && (countryField.touched || countryField.dirty)">
+                    <small *ngIf="countryField.errors?.required"
+                           id="country-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
                 </div>
             </div>
-            <div class="p-formgrid p-grid">
-                <div *ngIf="option>2" class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                    <p-autoComplete formControlName="canton" [suggestions]="filteredCantons"
-                                    (completeMethod)="filterCanton($event)"
-                                    field="name" [dropdown]="true" placeholder="* Cantón"
-                                    (onSelect)="updateValue(cantonField);loadParishes()"
-                                    (onKeyUp)="updateValue(cantonField)">
-                        <ng-template let-canton pTemplate="item">
-                            <div class="country-item">
-                                <div>{{canton.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-autoComplete>
-                    <div *ngIf="cantonField.invalid && (cantonField.touched || cantonField.dirty)">
-                        <small *ngIf="cantonField.errors?.required"
-                               id="canton-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
+        </div>
+        <div class="p-formgrid p-grid">
+            <div *ngIf="option>1" class="p-field p-xl-4 p-lg-4 p-md-6 p-sm-12">
+                <label><i class="p-error">*</i> Provincia:
+                    <i *ngIf="provinceField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="provinceField.invalid && (provinceField.touched || provinceField.dirty)"
+                       class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <p-dropdown dataKey="id" id="province" [options]="provinces"
+                            formControlName="province"
+                            (onChange)="loadCantons();updateValue(provinceField)"
+                            optionLabel="name" [filter]="true" filterBy="name"
+                            placeholder="Provincia">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="provinceField.value">
+                            <div>{{provinceField.value.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="provinceField.invalid && (provinceField.touched || provinceField.dirty)">
+                    <small *ngIf="provinceField.errors?.required"
+                           id="province-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
                 </div>
-                <div *ngIf="option>3" class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
-                    <p-autoComplete formControlName="parish" [suggestions]="filteredParishes"
-                                    (completeMethod)="filterParish($event)"
-                                    field="name" [dropdown]="true" placeholder="* Parroquia"
-                                    (onSelect)="updateValue(parishField);"
-                                    (onKeyUp)="updateValue(parishField)">
-                        <ng-template let-parish pTemplate="item">
-                            <div class="country-item">
-                                <div>{{parish.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-autoComplete>
-                    <div *ngIf="parishField.errors && (parishField.touched || parishField.dirty)">
-                        <small *ngIf="parishField.errors?.required"
-                               id="parish-help-1" class="p-error">
-                            {{messageService.fieldRequired}}
-                        </small>
-                    </div>
+            </div>
+            <div *ngIf="option>2" class="p-field p-xl-4 p-lg-4 p-md-6 p-sm-12">
+                <label><i class="p-error">*</i> Cantón:
+                    <i *ngIf="cantonField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="cantonField.invalid && (cantonField.touched || cantonField.dirty)"
+                       class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <p-dropdown dataKey="id" id="canton" [options]="cantons"
+                            formControlName="canton"
+                            (onChange)="loadParishes();updateValue(cantonField)"
+                            optionLabel="name" [filter]="true" filterBy="name"
+                            placeholder="Cantón">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="cantonField.value">
+                            <div>{{cantonField.value.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="cantonField.invalid && (cantonField.touched || cantonField.dirty)">
+                    <small *ngIf="cantonField.errors?.required"
+                           id="canton-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+            <div *ngIf="option>3" class="p-field p-xl-4 p-lg-4 p-md-6 p-sm-12">
+                <p-dropdown id="parish" [options]="parishes"
+                            formControlName="parish"
+                            (onChange)="updateValue(parishField)"
+                            optionLabel="name" [filter]="true" filterBy="name"
+                            placeholder="Parroquia">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="parishField.value">
+                            <div>{{parishField.value.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="country-item">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="parishField.errors && (parishField.touched || parishField.dirty)">
+                    <small *ngIf="parishField.errors?.required"
+                           id="parish-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
                 </div>
             </div>
         </div>

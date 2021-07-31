@@ -72,7 +72,11 @@ export class MessageService {
     }
 
     get fieldEmail(): string {
-        return 'El campo debe tener un fomato de correo válido.';
+        return 'Correo electrónico no válido.';
+    }
+
+    get fieldWeb(): string {
+        return 'Página web no válida.';
     }
 
     get fieldNumber(): string {
