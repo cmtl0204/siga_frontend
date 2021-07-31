@@ -29,9 +29,9 @@ export class AppHttpService {
         return this.httpClient.put(url, data, {headers: this.headers});
     }
 
-    delete(url: string, data:any) {
+    delete(url: string, data: any) {
         url = environment.API_URL_APP + url;
-        return this.httpClient.put(url, data,{headers: this.headers});
+        return this.httpClient.put(url, data, {headers: this.headers});
     }
 
     updateFile(file: File, params = new HttpParams()) {
