@@ -1,8 +1,25 @@
+<!-- <p-table [columns]="skill" [value]="skill">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
 <div id="header"></div>
 <div class="title">
     <h2>DATOS PERSONALES</h2>
 </div>
-<div class="card" *ngFor="let profesional of professional">
+<div class="card">
     <table class="default">
         <tr>
             <td>Identificación</td>
@@ -14,13 +31,13 @@
             <td>Cumpleaños</td>
         </tr>
         <tr>
-            <td>{{profesional.identification.name}}</td>
+            <!-- <td>{{profesional.identification.name}}</td>
             <td>{{profesional.email.name}}</td>
             <td>{{profesional.names.name}}</td>
-            <td>{{profesional.first_lastname.name}}</td>
+            <td>{{profesional.first_lastnam.name}}</td>
             <td>{{profesional.second_lastname.name}}</td>
             <td>{{profesional.phone.name}}</td>
-            <td>{{profesional.birthdate.name}}</td>
+            <td>{{profesional.birthdate.name}}</td> -->
         </tr>
     </table>
 </div>

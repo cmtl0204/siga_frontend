@@ -45,9 +45,6 @@ export class ReferenceListComponent implements OnInit {
         this.paginatorIn = { current_page: 1, per_page: 5 };
     }
 
-    // resetPaginatorFiles() {
-    //     this.paginatorFiles = {current_page: 1, per_page: 5};
-    //  }
 
     ngOnInit(): void {
     }

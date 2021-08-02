@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Paginator } from '../../../../../models/setting/paginator';
 import { MessageService } from '../../../../shared/services/message.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
 import { File } from "../../../../../models/app/file";
@@ -16,6 +15,8 @@ import { User } from 'src/app/models/auth/user';
 import { Catalogue } from 'src/app/models/app/catalogue';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
+import { Col } from 'src/app/models/setting/col';
+
 
 @Component({
     selector: 'app-curriculum-list',
@@ -44,15 +45,13 @@ export class CurriculumListComponent implements OnInit {
     experience: Experience[];
     language: Language[];
     reference: Reference[];
-
-
     auth: User;
     sexs: Catalogue[];
     genders: Catalogue[];
+    colsSkill: Col[];
 
 
     constructor(private messageService: MessageService,
-        private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
         private authServices: AuthService,
         private jobBoardHttpService: JobBoardHttpService) {
@@ -67,24 +66,25 @@ export class CurriculumListComponent implements OnInit {
         this.getReferences();
     }
     getSexs() {
-        this.appHttpService.getCatalogues('PROFESSIONAL_SEX_TYPE').subscribe(response => {
+        this.appHttpService.getCatalogues('SEX_TYPE').subscribe(response => {
             this.sexs = response['data'];
         }, error => {
             this.messageService.error(error);
         });
     }
     getGenders() {
-        this.appHttpService.getCatalogues('PROFESSIONAL_GENDER_TYPE').subscribe(response => {
+        this.appHttpService.getCatalogues('GENDER_TYPE').subscribe(response => {
             this.genders = response['data'];
         }, error => {
             this.messageService.error(error);
         });
     }
     getProfessional() {
-        this.jobBoardHttpService.get('professional/show')
+        const params = new HttpParams()
+        this.jobBoardHttpService.get('professional/show', params)
             .subscribe(response => {
                 this.professional = response['data'];
-                console.log(this.professional);
+                //console.log(this.professional);
             }, error => {
                 this.messageService.error(error);
             });
@@ -98,6 +98,10 @@ export class CurriculumListComponent implements OnInit {
             }, error => {
                 this.messageService.error(error);
             });
+        this.colsSkill = [
+            { field: 'type', header: 'Code' },
+            { field: 'description', header: 'Name' },
+        ]
     }
 
     getCourses() {
