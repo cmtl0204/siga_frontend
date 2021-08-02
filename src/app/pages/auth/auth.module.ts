@@ -27,7 +27,7 @@ import {UnlockUserComponent} from './unlock-user/unlock-user.component';
 import {AppUnderMaintenanceComponent} from './app.under-maintenance.component';
 import {SecurityQuestionComponent} from './security-question/security-question.component';
 import {ChangePasswordComponent} from './login/change-password/change-password.component';
-import {SelectRoleComponent} from './login/select-institution-role/select-role.component';
+import {SelectRoleComponent} from './login/select-role/select-role.component';
 import {RegisterSocialiteUserComponent} from './register-socialite-user/register-socialite-user.component';
 import {AppUnregisteredUserComponent} from './app.unregistered-user.component';
 import {SharedModule} from '../shared/shared.module';

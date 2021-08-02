@@ -110,6 +110,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="gender">
                               <i class="p-error">*</i> Genero:
@@ -132,8 +134,6 @@
                               </ng-template>
                             </p-dropdown>
                           </div>
-                  
-                   
                             <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                                 <label for="sex">
                                     <i class="p-error">*</i> Sexo:
@@ -155,8 +155,7 @@
                                     </ng-template>
                                 </p-dropdown>
                             </div>
-                       
-                   
+                        </div>         
                         <div class="p-field">
                             <label for="birthdate">
                                 <i class="p-error">*</i> Fecha de Nacimiento:
@@ -172,14 +171,15 @@
                                 </small>
                             </div>
                         </div>
-                      
-                      
                     </p-card>
-                    <div class="p-field">
-                        <app-location-address [option]="1" (formAddressOut)="formAddress=$event"
+                    <br>
+                    <p-card header="Ubicación:">
+                        <div class="p-field">
+                            <app-location-address [option]="1" (formAddressOut)="formAddress=$event"
                             (formLocationOut)="setFormLocation($event)" id="address" formControlName="address">
                         </app-location-address>
-                    </div>
+                        </div>
+                    </p-card>
                 </div>
             </div>
             <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
@@ -204,7 +204,7 @@
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isTravel">
-                                <i class="p-error">*</i>Esta trabajando:
+                                <i class="p-error">*</i>¿ Se encuentra trabajando?:
                                 <i *ngIf="isTravelField.valid" class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="isTravelField.invalid && (isTravelField.touched || isTravelField.dirty)"
                                     class="pi pi-times-circle icon-invalid"></i>
@@ -224,7 +224,7 @@
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isDisability">
-                                <i class="p-error">*</i>Es Discapacitado:
+                                <i class="p-error">*</i>¿ Tiene alguna discapacidad?:
                                 <i *ngIf="isDisabilityField.valid" class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="isDisabilityField.invalid && (isDisabilityField.touched || isDisabilityField.dirty)"
                                     class="pi pi-times-circle icon-invalid"></i>
@@ -242,7 +242,7 @@
                         </div>
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isCatastrophicIllness">
-                                <i class="p-error">*</i> Tiene Enfermedad Catastrófica:
+                                <i class="p-error">*</i>¿ Tiene Alguna Enfermedad Catastrófica?:
                                 <i *ngIf="isCatastrophicIllnessField.valid" class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="isCatastrophicIllnessField.invalid && (isCatastrophicIllnessField.touched || isCatastrophicIllnessField.dirty)"
                                     class="pi pi-times-circle icon-invalid"></i>
@@ -262,7 +262,7 @@
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isFamiliarDisability">
-                                <i class="p-error">*</i> Familiar con Discapacidad:
+                                <i class="p-error">*</i>¿ Tiene Algun Familiar con Discapacidad?:
                                 <i *ngIf="isFamiliarDisabilityField.valid" class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="isFamiliarDisabilityField.invalid && (isFamiliarDisabilityField.touched || isFamiliarDisabilityField.dirty)"
                                     class="pi pi-times-circle icon-invalid"></i>
@@ -300,7 +300,7 @@
                     <div class="p-formgrid p-grid">
                         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                             <label for="isFamiliarCatastrophicIllness">
-                                <i class="p-error">*</i> Su Familiar Tiene Enfermedad Catastrófica:
+                                <i class="p-error">*</i>¿ Tiene Algun Familiar con Enfermedad Catastrófica?:
                                 <i *ngIf="isFamiliarCatastrophicIllnessField.valid"
                                     class="pi pi-check-circle icon-valid"></i>
                                 <i *ngIf="isFamiliarCatastrophicIllnessField.invalid && (isFamiliarCatastrophicIllnessField.touched || isFamiliarCatastrophicIllnessField.dirty)"

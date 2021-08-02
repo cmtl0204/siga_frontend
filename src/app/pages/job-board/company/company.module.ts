@@ -47,6 +47,8 @@ import { ProfessionalComponent } from './professional/professional.component';
 import { ProfessionalListComponent } from './professional/professional-list/professional-list.component';
 import { RegisterComponent } from './register/register.component';
 import { RegisterFormComponent } from './register/register-form/register-form.component';
+import {DividerModule} from 'primeng/divider';
+import {MessageModule} from 'primeng/message';
 
 @NgModule({
     imports: [
@@ -84,6 +86,8 @@ import { RegisterFormComponent } from './register/register-form/register-form.co
         SkeletonModule,
         RippleModule,
         CalendarModule,
+        DividerModule,
+        MessageModule,
     ],
     declarations: [
         CompanyComponent,

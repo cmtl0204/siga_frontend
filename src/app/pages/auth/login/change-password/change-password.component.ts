@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit {
         this.authHttpService.changePassword(this.formChangePassword.value).subscribe(
             response => {
                 this.spinnerService.hide();
-                this.flagLogin.emit('selectInstitutionRole');
+                this.flagLogin.emit('selectRole');
             },
             error => {
                 this.spinnerService.hide();

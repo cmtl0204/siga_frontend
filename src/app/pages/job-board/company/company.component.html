@@ -1,14 +1,14 @@
 <div class="card">
     <h5>Mi Empresa</h5>
-    <p-tabView>
+    <p-tabView [(activeIndex)]="index" (onChange)="changeTab($event)">
         <p-tabPanel header="Mi Perfil" leftIcon="pi pi-id-card" tooltip="">
-            <app-profile></app-profile>
+            <app-profile *ngIf="index===0"></app-profile>
         </p-tabPanel>
         <p-tabPanel header="Ofertas" leftIcon="pi pi-briefcase" tooltip="">
-            <app-offer></app-offer>
+            <app-offer *ngIf="index===1"></app-offer>
         </p-tabPanel>
         <p-tabPanel header="Profesional" leftIcon="pi pi-users" tooltip="">
-            <app-professional></app-professional>
+            <app-professional *ngIf="index===2"></app-professional>
         </p-tabPanel>
     </p-tabView>
 </div>

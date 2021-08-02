@@ -27,7 +27,11 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+<<<<<<< HEAD
                 <h5 class="p-m-0">Experiencias Profesionales</h5>
+=======
+                <h5 class="p-m-0">Experiencias Personales</h5>
+>>>>>>> 52d7fee269d4fa9b39d47a7d8b64091aa4ce8560
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" (click)="searchExperiences($event,search.value)"></i>
                     <input #search pInputText type="text" (keyup)="searchExperiences($event,$event.target.value)"
@@ -40,37 +44,21 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="area">
-                    Area
-                    <p-sortIcon field="area"></p-sortIcon>
-                </th>
                 <th pSortableColumn="employer">
-                    Empleador
-                    <p-sortIcon field="employer"></p-sortIcon>
+                Empleador
+                    <p-sortIcon field="employere"></p-sortIcon>
                 </th>
                 <th pSortableColumn="position">
                     Cargo
                     <p-sortIcon field="position"></p-sortIcon>
                 </th>
                 <th pSortableColumn="start_date">
-                    Fecha Inicio
+                    Fecha
                     <p-sortIcon field="start_date"></p-sortIcon>
-                </th>
-                <th pSortableColumn="activities">
-                    Actividades
-                    <p-sortIcon field="activities"></p-sortIcon>
-                </th>
-                <th pSortableColumn="reason_leave">
-                    Razón de Salida
-                    <p-sortIcon field="reason_leave"></p-sortIcon>
                 </th>
                 <th pSortableColumn="is_working">
                     Esta trabajando
                     <p-sortIcon field="is_working"></p-sortIcon>
-                </th>
-                <th pSortableColumn="is_disability">
-                    Es discapacitado
-                    <p-sortIcon field="is_disability"></p-sortIcon>
                 </th>
                 <th></th>
             </tr>
@@ -79,9 +67,6 @@
             <tr>
                 <td>
                     <p-tableCheckbox [value]="experience"></p-tableCheckbox>
-                </td>
-                <td>
-                    {{experience.area.name}}
                 </td>
                 <td>
                     {{experience.employer}}
@@ -93,16 +78,7 @@
                     {{experience.start_date}}
                 </td>
                 <td>
-                    {{experience.activities}}
-                </td>
-                <td>
-                    {{experience.reason_leave}}
-                </td>
-                <td>
                     {{experience.is_working}}
-                </td>
-                <td>
-                    {{experience.is_disability}}
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning"

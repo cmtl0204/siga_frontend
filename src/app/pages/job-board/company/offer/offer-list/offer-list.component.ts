@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormGroup,  FormBuilder, Validators} from '@angular/forms';
+import {FormArray, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Col} from '../../../../../models/setting/col';
 import {Paginator} from '../../../../../models/setting/paginator';
 import {MessageService} from '../../../../../pages/shared/services/message.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
-import { Offer } from 'src/app/models/job-board/offer';
-import { Professional } from '../../../../../models/job-board/professional';
+import {Offer} from 'src/app/models/job-board/offer';
+import {Professional} from '../../../../../models/job-board/professional';
 import {HttpParams} from '@angular/common/http';
 
 @Component({
@@ -34,8 +34,8 @@ export class OfferListComponent implements OnInit {
     constructor(private messageService: MessageService,
                 private spinnerService: NgxSpinnerService,
                 private jobBoardHttpService: JobBoardHttpService,
-                private formBuilder: FormBuilder,) {
-        this.paginator = { current_page: 1, per_page: 10 };
+                private formBuilder: FormBuilder) {
+        this.paginator = {current_page: 1, per_page: 10};
     }
 
     ngOnInit(): void {
@@ -45,6 +45,7 @@ export class OfferListComponent implements OnInit {
     get activitiesField() {
         return this.formOfferIn.get('activities') as FormArray;
     }
+
     get requirementsField() {
         return this.formOfferIn.get('requirements') as FormArray;
     }
@@ -81,22 +82,23 @@ export class OfferListComponent implements OnInit {
 
     openEditFormOffer(offer: Offer) {
         this.formOfferIn.patchValue(offer);
-            this.activitiesField.clear();
-            this.requirementsField.clear();
-            for(const activity of offer.activities){
-              this.addActivities(activity);
-            }
-            for(const requirement of offer.requirements){
-                this.addRequirements(requirement);
-              }
+        this.activitiesField.clear();
+        this.requirementsField.clear();
+        for (const activity of offer.activities) {
+            this.addActivities(activity);
+        }
+        for (const requirement of offer.requirements) {
+            this.addRequirements(requirement);
+        }
         this.formOfferOut.emit(this.formOfferIn);
         this.displayOut.emit(true);
     }
 
-    addActivities(data = null){
+    addActivities(data = null) {
         this.activitiesField.push(this.formBuilder.control(data, Validators.required));
     }
-    addRequirements(data = null){
+
+    addRequirements(data = null) {
         this.requirementsField.push(this.formBuilder.control(data, Validators.required));
     }
 
@@ -158,26 +160,26 @@ export class OfferListComponent implements OnInit {
             this.offersIn = this.offersIn.filter(element => element.id !== id);
         }
         this.offersOut.emit(this.offersIn);
-    } 
+    }
 
-    showProfessionals(offerId){
+    showProfessionals(offerId) {
         this.professionalsDialog = true;
         this.getProfessionals(this.paginator, offerId);
     }
 
     getProfessionals(paginator: Paginator, offerId) {
         const params = new HttpParams()
-          .append('page', paginator.current_page.toString())
-          .append('per_page', paginator.per_page.toString());
+            .append('page', paginator.current_page.toString())
+            .append('per_page', paginator.per_page.toString());
         this.flagProfessionals = true;
-        this.jobBoardHttpService.get('offer/'+ offerId +'/proffesionals', params).subscribe(
-          response => {
-            this.flagProfessionals = false;
-            this.professionals = response['data'];
-            this.paginator = response as Paginator;
-          }, error => {
-            this.flagProfessionals = false;
-            this.messageService.error(error);
-          });
-      }
+        this.jobBoardHttpService.get('offer/' + offerId + '/proffesionals', params).subscribe(
+            response => {
+                this.flagProfessionals = false;
+                this.professionals = response['data'];
+                this.paginator = response as Paginator;
+            }, error => {
+                this.flagProfessionals = false;
+                this.messageService.error(error);
+            });
+    }
 }

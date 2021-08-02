@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Company } from 'src/app/models/job-board/company';
-import { MessageService } from '../../../../shared/services/message.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Catalogue } from '../../../../../models/app/catalogue';
-import { AppHttpService } from '../../../../../services/app/app-http.service';
-import { User } from 'src/app/models/auth/user';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Company} from 'src/app/models/job-board/company';
+import {MessageService} from '../../../../shared/services/message.service';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Catalogue} from '../../../../../models/app/catalogue';
+import {AppHttpService} from '../../../../../services/app/app-http.service';
+import {User} from 'src/app/models/auth/user';
+import {AuthService} from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -30,6 +30,7 @@ export class ProfileFormComponent implements OnInit {
     formAddress: FormGroup;
     formLocation: FormGroup;
     auth: User;
+    skeletonCompany: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -54,12 +55,28 @@ export class ProfileFormComponent implements OnInit {
         return this.formCompanyIn['controls']['user'].get('identification');
     }
 
+    get namesField() {
+        return this.formCompanyIn['controls']['user'].get('names');
+    }
+
+    get firstLastnameField() {
+        return this.formCompanyIn['controls']['user'].get('first_lastname');
+    }
+
+    get secondLastnameField() {
+        return this.formCompanyIn['controls']['user'].get('first_lastname');
+    }
+
     get emailField() {
         return this.formCompanyIn['controls']['user'].get('email');
     }
 
     get phoneField() {
         return this.formCompanyIn['controls']['user'].get('phone');
+    }
+
+    get cellphoneField() {
+        return this.formCompanyIn['controls']['user'].get('cellphone');
     }
 
     get identificationTypeField() {
@@ -82,14 +99,6 @@ export class ProfileFormComponent implements OnInit {
         return this.formCompanyIn.get('comercial_activities') as FormArray;
     }
 
-    addComercialActivity(data = null) {
-        this.comercialActivitiesField.push(this.formBuilder.control(data, Validators.required));
-    }
-
-    removeComercialActivity(index) {
-        this.comercialActivitiesField.removeAt(index);
-    }
-
     get webField() {
         return this.formCompanyIn.get('web');
     }
@@ -107,6 +116,7 @@ export class ProfileFormComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log(this.formCompanyIn);
         if (this.formCompanyIn.valid) {
             this.updateCompany(this.formCompanyIn.value);
         } else {
@@ -116,7 +126,7 @@ export class ProfileFormComponent implements OnInit {
 
     updateCompany(company: Company) {
         this.spinnerService.show();
-        this.jobBoardHttpService.update('company/update', { company })
+        this.jobBoardHttpService.update('company/update', {company})
             .subscribe(response => {
                 this.spinnerService.hide();
                 this.messageService.success(response);
@@ -128,19 +138,19 @@ export class ProfileFormComponent implements OnInit {
     }
 
     getCompany() {
-        this.spinnerService.show();
+        this.skeletonCompany = false;
         this.jobBoardHttpService.get('company/show')
             .subscribe(response => {
-                this.spinnerService.hide();
+                this.skeletonCompany = true;
                 this.formCompanyIn.patchValue(response['data']);
                 if (response['data']['comercial_activities']?.length > 0) {
                     this.comercialActivitiesField.removeAt(0);
-                }
-                for (const comercialActivity of response['data']['comercial_activities']) {
-                    this.addComercialActivity(comercialActivity);
+                    for (const comercialActivity of response['data']['comercial_activities']) {
+                        this.addComercialActivity(comercialActivity);
+                    }
                 }
             }, error => {
-                this.spinnerService.hide();
+                this.skeletonCompany = true;
                 this.messageService.error(error);
             });
     }
@@ -182,7 +192,30 @@ export class ProfileFormComponent implements OnInit {
         });
     }
 
+    addComercialActivity(data = null) {
+        this.comercialActivitiesField.push(this.formBuilder.control(data, Validators.required));
+    }
+
+    removeComercialActivity(index) {
+        this.comercialActivitiesField.removeAt(index);
+    }
+
     setFormLocation(event) {
         this.formLocation = event;
+    }
+
+    validateIdentificationType() {
+        this.identificationField.setValue(null);
+        switch (this.identificationTypeField.value?.code) {
+            case 'RUC':
+                this.identificationField.setValidators([Validators.minLength(13), Validators.maxLength(13)]);
+                break;
+            case 'CC':
+                this.identificationField.setValidators([Validators.minLength(9), Validators.maxLength(10)]);
+                break;
+            case 'PASSPORT':
+                this.identificationField.setValidators([Validators.maxLength(20)]);
+                break;
+        }
     }
 }

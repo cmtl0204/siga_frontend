@@ -140,7 +140,7 @@ export class ProfileFormComponent implements OnInit {
     updateProfessional(professional: Professional) {
 
         this.spinnerService.show();
-        this.jobBoardHttpService.update('professionals/update', { professional })
+        this.jobBoardHttpService.update('professional/update', { professional })
             .subscribe(response => {
                 this.spinnerService.hide();
                 this.messageService.success(response);
