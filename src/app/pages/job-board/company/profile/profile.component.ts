@@ -29,6 +29,9 @@ export class ProfileComponent implements OnInit {
         this.formCompany = this.formBuilder.group({
             user: this.formBuilder.group({
                 identification: [null, [Validators.required]],
+                names: [null, [Validators.required]],
+                first_lastname: [null, [Validators.required]],
+                second_lastname: [null, [Validators.required]],
                 email: [null, [Validators.required, Validators.email, Validators.maxLength(320)]],
                 phone: [null, [Validators.required]],
                 cellphone: [null, [Validators.required]],

@@ -12,6 +12,53 @@
                 <div formGroupName="user">
                     <p-card header="Datos de Usuario:">
                         <div class="p-formgrid p-grid">
+                            <div class="p-field p-xl-4 p-lg-4 p-md-12 p-sm-12">
+                                <label for="names">
+                                    <i class="p-error">*</i> Nombres:
+                                    <i *ngIf="namesField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="namesField.invalid && (namesField.touched || namesField.dirty)"
+                                       class="pi pi-times-circle icon-invalid"></i>
+                                </label>
+                                <input pInputText id="names" formControlName="names">
+                                <div *ngIf="namesField.invalid && (namesField.touched || namesField.dirty)">
+                                    <small *ngIf="namesField.errors?.required" id="names-help-1" class="p-error">
+                                        {{messageService.fieldRequired}}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="p-field p-xl-4 p-lg-4 p-md-12 p-sm-12">
+                                <label for="first_lastname">
+                                    <i class="p-error">*</i> Primer Apellido:
+                                    <i *ngIf="firstLastnameField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="firstLastnameField.invalid && (firstLastnameField.touched || firstLastnameField.dirty)"
+                                       class="pi pi-times-circle icon-invalid"></i>
+                                </label>
+                                <input pInputText id="first_lastname" formControlName="first_lastname">
+                                <div *ngIf="firstLastnameField.invalid && (firstLastnameField.touched || firstLastnameField.dirty)">
+                                    <small *ngIf="firstLastnameField.errors?.required" id="first-lastname-help-1"
+                                           class="p-error">
+                                        {{messageService.fieldRequired}}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="p-field p-xl-4 p-lg-4 p-md-12 p-sm-12">
+                                <label for="second_lastname">
+                                    <i class="p-error">*</i> Segundo Apellido:
+                                    <i *ngIf="secondLastnameField.valid" class="pi pi-check-circle icon-valid"></i>
+                                    <i *ngIf="secondLastnameField.invalid && (secondLastnameField.touched || secondLastnameField.dirty)"
+                                       class="pi pi-times-circle icon-invalid"></i>
+                                </label>
+                                <input pInputText id="second_lastname" formControlName="second_lastname">
+                                <div *ngIf="secondLastnameField.invalid && (secondLastnameField.touched || secondLastnameField.dirty)">
+                                    <small *ngIf="secondLastnameField.errors?.required" id="second-lastname-help-1"
+                                           class="p-error">
+                                        {{messageService.fieldRequired}}
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="p-formgrid p-grid">
                             <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                                 <label for="identification_type">
                                     <i class="p-error">*</i> Tipo de documento:
@@ -45,7 +92,7 @@
                                     </small>
                                 </div>
                             </div>
-                            <div *ngIf="identificationTypeField.valid" class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                            <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                                 <label for="identification">
                                     <i class="p-error">*</i> Número de documento:
                                     <i *ngIf="identificationField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -77,7 +124,8 @@
                                     <i *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)"
                                        class="pi pi-times-circle icon-invalid"></i>
                                 </label>
-                                <input id="email" formControlName="email" pInputText>
+                                <input pInputText id="email" formControlName="email"
+                                       placeholder="Ej. ejemplo@ejemplo.com">
                                 <div *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)">
                                     <small *ngIf="emailField.errors?.required" id="email-help-1" class="p-error">
                                         {{messageService.fieldRequired}}
@@ -265,21 +313,17 @@
                         </div>
                     </div>
                     <div class="p-fluid p-formgrid p-grid">
-                        <div class="p-field p-xl-3 p-lg-3 p-md-3 p-sm-12">
-                            <label>
-                                Actividades Comerciales:
-                            </label>
-                        </div>
-                        <div class="p-field p-xl-3 p-lg-3 p-md-2 p-sm-12">
+                        <div class="p-field p-xl-6 p-lg-6 p-md-12 p-sm-12">
                             <button pButton pRipple type="button" (click)="addComercialActivity()" iconPos="right"
                                     icon="pi pi-plus"
-                                    class="p-button-success p-button-raised" label="Añadir"></button>
+                                    class="p-button-success p-button-raised"
+                                    label="Añadir Actividades Comerciales"></button>
                         </div>
                     </div>
                     <div formArrayName="comercial_activities">
                         <div *ngFor="let comercial_activity of comercialActivitiesField.controls let i = index;">
                             <div class="p-fluid p-formgrid p-grid">
-                                <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+                                <div class="p-field p-xl-11 p-lg-11 p-md-11 p-sm-12">
                                     <input [formControlName]="i" pInputText>
                                 </div>
                                 <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
@@ -287,6 +331,8 @@
                                             iconPos="right"
                                             icon="pi pi-trash" class="p-button-danger p-button-rounded"></button>
                                 </div>
+                            </div>
+                            <div class="p-fluid p-formgrid p-grid">
                                 <div class="p-field p-xl-12 p-lg-12 p-md-12 p-sm-12">
                                     <div *ngIf="comercialActivitiesField.invalid
                                                 && (comercialActivitiesField.touched || comercialActivitiesField.dirty)">

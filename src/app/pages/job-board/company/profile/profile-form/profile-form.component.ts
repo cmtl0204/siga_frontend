@@ -55,6 +55,18 @@ export class ProfileFormComponent implements OnInit {
         return this.formCompanyIn['controls']['user'].get('identification');
     }
 
+    get namesField() {
+        return this.formCompanyIn['controls']['user'].get('names');
+    }
+
+    get firstLastnameField() {
+        return this.formCompanyIn['controls']['user'].get('first_lastname');
+    }
+
+    get secondLastnameField() {
+        return this.formCompanyIn['controls']['user'].get('first_lastname');
+    }
+
     get emailField() {
         return this.formCompanyIn['controls']['user'].get('email');
     }

@@ -59,5 +59,13 @@
                 </div>
             </div>
         </div>
+        <div class="p-field">
+            <div *ngIf="formDate.invalid && (formDate.touched || formDate.dirty)">
+                <small *ngIf="formDate.errors?.min"
+                       id="form-date-help-1" class="p-error">
+                    asdasd
+                </small>
+            </div>
+        </div>
     </form>
 </div>

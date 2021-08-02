@@ -1,9 +1,12 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import {SelectItem} from 'primeng/api';
 import {format} from 'date-fns';
 import {SharedService} from '../../services/shared.service';
 import {MessageService} from '../../services/message.service';
+import {formatDate} from '@angular/common';
+import {CustomValidators} from '../../validators/custom-validators';
+import {DateValidators} from '../../validators/date.validators';
 
 @Component({
     selector: 'app-date',
@@ -19,6 +22,8 @@ import {MessageService} from '../../services/message.service';
 })
 
 export class DateComponent implements OnInit, ControlValueAccessor {
+    @Input() minDate: Date;
+    @Input() maxDate: Date;
     days: SelectItem[];
     months: SelectItem[];
     years: SelectItem[];
@@ -46,6 +51,11 @@ export class DateComponent implements OnInit, ControlValueAccessor {
             month: [null, Validators.required],
             day: [null, Validators.required],
         });
+
+        console.log(this.minDate);
+        if (this.minDate) {
+            this.formDate.setValidators(DateValidators.min(this.minDate.toDateString()));
+        }
     }
 
     generateDays(totalDays: number) {
@@ -136,6 +146,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
         if (this.formDate.valid) {
             this.value = `${this.yearField.value}-${this.monthField.value}-${this.dayField.value}`;
             this.onChange(this.value);
+        }else{
+            this.formDate.markAllAsTouched();
         }
     }
 
