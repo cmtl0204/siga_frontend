@@ -4,7 +4,7 @@
     <div class="p-fluid">
         <form [formGroup]="formExperienceIn" (ngSubmit)="onSubmit()">
             <div class="p-formgrid p-grid">
-                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
+                <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
                     <label for="area">
                         <i class="p-error">*</i> Area:
                         <i *ngIf="areaField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -30,7 +30,9 @@
                         </small>
                     </div>
                 </div>
-                <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-15">
+            </div>
+                <div class="p-formgrid p-grid">
+                <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
                     <label for="employer">
                         <i class="p-error">*</i>Nombre Empleador:
                         <i *ngIf="employerField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -65,7 +67,7 @@
                 </div>
                 <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
                     <label for="isWorking">
-                        <i class="p-error">*</i>Esta trabajando aquí:
+                        <i class="p-error">*</i>¿ Esta trabajando aquí?:
                         <i *ngIf="isWorkingField.valid" class="pi pi-check-circle icon-valid"></i>
                         <i *ngIf="isWorkingField.invalid && (isWorkingField.touched || isWorkingField.dirty)"
                             class="pi pi-times-circle icon-invalid"></i>
@@ -112,6 +114,24 @@
                     </small>
                 </div>
             </div>
+          
+            <div class="p-field">
+                <label for="reason_leave">
+                    <i class="p-error">*</i>Motivo de salida:
+                    <i *ngIf="reasonLeaveField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="reasonLeaveField.invalid && (reasonLeaveField.touched || reasonLeaveField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <input id="reason_leave" pInputText formControlName="reason_leave" />
+                <div *ngIf="reasonLeaveField.errors && reasonLeaveField.touched">
+                    <small *ngIf="reasonLeaveField.errors?.required" id="reason_leave-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                    <small *ngIf="reasonLeaveField.errors?.minlength" id="reason_leave-help-2" class="p-error">
+                        {{messageService.fieldMinLength(reasonLeaveField)}}
+                    </small>
+                </div>
+            </div>
             <div formArrayName="activities">
                 <div>
                     <button pButton pRipple type="button" label="Añadir Activities" iconPos="right" icon="pi pi-plus"
@@ -138,25 +158,8 @@
                     </div>
                 </div>
             </div>
-            <div class="p-field">
-                <label for="reason_leave">
-                    <i class="p-error">*</i>Razón que se fue:
-                    <i *ngIf="reasonLeaveField.valid" class="pi pi-check-circle icon-valid"></i>
-                    <i *ngIf="reasonLeaveField.invalid && (reasonLeaveField.touched || reasonLeaveField.dirty)"
-                        class="pi pi-times-circle icon-invalid"></i>
-                </label>
-                <input id="reason_leave" pInputText formControlName="reason_leave" />
-                <div *ngIf="reasonLeaveField.errors && reasonLeaveField.touched">
-                    <small *ngIf="reasonLeaveField.errors?.required" id="reason_leave-help-1" class="p-error">
-                        {{messageService.fieldRequired}}
-                    </small>
-                    <small *ngIf="reasonLeaveField.errors?.minlength" id="reason_leave-help-2" class="p-error">
-                        {{messageService.fieldMinLength(reasonLeaveField)}}
-                    </small>
-                </div>
-            </div>
             <label for="isDisability">
-                <i class="p-error">*</i>Es discapacitado:
+                <i class="p-error">*</i>Tiene discapacidad:
                 <i *ngIf="isDisabilityField.valid" class="pi pi-check-circle icon-valid"></i>
                 <i *ngIf="isDisabilityField.invalid && (isDisabilityField.touched || isDisabilityField.dirty)"
                     class="pi pi-times-circle icon-invalid"></i>
