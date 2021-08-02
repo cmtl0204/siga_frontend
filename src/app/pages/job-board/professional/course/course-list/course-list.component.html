@@ -39,32 +39,16 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="type">Tipo
-                    <p-sortIcon field="type"></p-sortIcon>
-                </th>
+            
                 <th pSortableColumn=" institution">Institución
                     <p-sortIcon field=" institution"></p-sortIcon>
                 </th>
                 <th pSortableColumn="certification_type">Tipo de Certificado
                     <p-sortIcon field="certification_type"></p-sortIcon>
                 </th>
-                <th pSortableColumn="area"> Área
-                    <p-sortIcon field="area"></p-sortIcon>
-                </th>
                 <th pSortableColumn="name">Nombre
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="description"> Descripción
-                    <p-sortIcon field="description"></p-sortIcon>
-                </th>
-                <!-- <th pSortableColumn="start_date">
-                    fecha de inicio
-                    <p-sortIcon field="start_date"></p-sortIcon>
-                </th>
-                <th pSortableColumn="end_date">
-                    fecha de fin
-                    <p-sortIcon field="end_date"></p-sortIcon>
-                </th> -->
                 <th pSortableColumn="hours">
                     Horas
                     <p-sortIcon field="hours"></p-sortIcon>
@@ -77,29 +61,14 @@
                     <p-tableCheckbox [value]="course"></p-tableCheckbox>
                 </td>
                 <td>
-                    {{course.type.name}}
-                </td>
-                <td>
                     {{course.institution.name}}
                 </td>
                 <td>
                     {{course.certification_type.name}}
                 </td>
                 <td>
-                    {{course.area.name}}
-                </td>
-                <td>
                     {{course.name}}
                 </td>
-                <td>
-                    {{course.description}}
-                </td>
-                <!-- <td>
-                    {{course.start_date}}
-                </td>
-                <td>
-                    {{course.end_date}}
-                </td> -->
                 <td>
                     {{course.hours}}
                 </td>
