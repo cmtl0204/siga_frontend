@@ -1,6 +1,8 @@
 import { User } from '../auth/user';
 import { Catalogue } from '../app/catalogue';
 import { Address } from '../app/address';
+import { Course } from './course';
+
 
 export interface Professional {
     id?: number;
@@ -16,4 +18,5 @@ export interface Professional {
     sex?: Catalogue;
     gender?: Catalogue;
     nationality?: Catalogue;
+    courses?: Course[];
 }

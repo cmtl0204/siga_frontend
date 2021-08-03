@@ -39,7 +39,7 @@ export class CurriculumListComponent implements OnInit {
     dialogViewFiles: boolean;
     files: File[];
     paginatorFiles: Paginator;
-    professional: Professional[];
+    professional: Professional;
     skill: Skill[];
     course: Course[];
     experience: Experience[];
@@ -58,7 +58,7 @@ export class CurriculumListComponent implements OnInit {
         this.auth = this.authServices.getAuth();
     }
     ngOnInit(): void {
-        this.getProfessional();
+        this.getCurriculum();
         this.getSkills();
         this.getCourses();
         this.getExperiences();
@@ -79,9 +79,8 @@ export class CurriculumListComponent implements OnInit {
             this.messageService.error(error);
         });
     }
-    getProfessional() {
-        const params = new HttpParams()
-        this.jobBoardHttpService.get('professional/show', params)
+    getCurriculum() {
+        this.jobBoardHttpService.get('professional/curriculum')
             .subscribe(response => {
                 this.professional = response['data'];
                 //console.log(this.professional);
