@@ -2,7 +2,7 @@
 <div class="title">
     <h2>DATOS PERSONALES</h2>
 </div>
-<div class="card" *ngFor="let profesional of professional">
+<div class="card" *ngFor="let skill of professional.skills">
     <table class="default">
         <tr>
             <td>Identificación</td>
@@ -14,21 +14,21 @@
             <td>Cumpleaños</td>
         </tr>
         <tr>
-            <td>{{profesional.identification.name}}</td>
-            <td>{{profesional.email.name}}</td>
-            <td>{{profesional.names.name}}</td>
-            <td>{{profesional.first_lastname.name}}</td>
-            <td>{{profesional.second_lastname.name}}</td>
-            <td>{{profesional.phone.name}}</td>
-            <td>{{profesional.birthdate.name}}</td>
+            <td>{{profesional.user.identification}}</td>
+            <td>{{profesional.user.email}}</td>
+            <td>{{profesional.user.names}}</td>
+            <td>{{profesional.user.first_lastname}}</td>
+            <td>{{profesional.user.second_lastname}}</td>
+            <td>{{profesional.user.phone}}</td>
+            <td>{{profesional.user.birthdate}}</td>
         </tr>
     </table>
 </div>
 <p-card >
-<div class="title">
+<!-- <div class="title">
     <h2>HABILIDADES</h2>
 </div>
-<div class="card" *ngFor="let habilidades of skill">
+<div class="card" *ngFor="let habilidad of skills">
     <table class="default">
         <tr>
             <th>Tipo</th>
@@ -130,4 +130,4 @@
             <td>{{referencia.contact_email}}</td>
         </tr>
     </table>
-</div>
+</div> -->

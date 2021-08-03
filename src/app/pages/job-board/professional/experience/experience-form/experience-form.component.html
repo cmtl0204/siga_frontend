@@ -73,7 +73,7 @@
                             class="pi pi-times-circle icon-invalid"></i>
                     </label>
                     <div>
-                        <p-inputSwitch formControlName="is_working" (onChange)="clickIsWorking($event)" onLabel="yes"
+                        <p-inputSwitch formControlName="is_working" (onChange)="validate($event)" onLabel="yes"
                             offLabel="no">
                             <ng-template let-isWorking pTemplate="isWorking">
                                 <div class="country-isWorking">
@@ -99,7 +99,8 @@
                     </small>
                 </div>
             </div>
-            <div class="p-field">
+           
+            <div *ngIf="isWorkingField.value==false" class="p-field">
                 <label for="end_date">
                     <i class="p-error">*</i> Fecha se Salida:
                     <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
@@ -115,7 +116,7 @@
                 </div>
             </div>
           
-            <div class="p-field">
+            <div *ngIf="isWorkingField.value==false" class="p-field">
                 <label for="reason_leave">
                     <i class="p-error">*</i>Motivo de salida:
                     <i *ngIf="reasonLeaveField.valid" class="pi pi-check-circle icon-valid"></i>
