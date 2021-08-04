@@ -2,7 +2,8 @@
 <div class="title">
     <h2>DATOS PERSONALES</h2>
 </div>
-<div class="card" *ngFor="let skill of professional.skills">
+<div class="card" *ngFor="let user of professional.user">
+
     <table class="default">
         <tr>
             <td>Identificación</td>
@@ -14,37 +15,37 @@
             <td>Cumpleaños</td>
         </tr>
         <tr>
-            <td>{{profesional.user.identification}}</td>
-            <td>{{profesional.user.email}}</td>
-            <td>{{profesional.user.names}}</td>
-            <td>{{profesional.user.first_lastname}}</td>
-            <td>{{profesional.user.second_lastname}}</td>
-            <td>{{profesional.user.phone}}</td>
-            <td>{{profesional.user.birthdate}}</td>
+            <td>{{user.identification}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.names}}</td>
+            <td>{{user.first_lastname}}</td>
+            <td>{{user.second_lastname}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.birthdate}}</td>
         </tr>
     </table>
 </div>
 <p-card>
-    <!-- <div class="title">
-    <h2>HABILIDADES</h2>
-</div>
-<div class="card" *ngFor="let habilidad of skills">
-    <table class="default">
-        <tr>
-            <th>Tipo</th>
-            <th>Descripción</th>
-        </tr>
-        <tr>
-            <td>{{habilidades.type.name}}</td>
-            <td>{{habilidades.description}}</td>
-        </tr>
-    </table>
-</div>
+    <div class="title">
+        <h2>HABILIDADES</h2>
+    </div>
+    <div class="card" *ngFor="let skill of professional.skills">
+        <table class="default">
+            <tr>
+                <th>Tipo</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td>{{skill.type.name}}</td>
+                <td>{{skill.description}}</td>
+            </tr>
+        </table>
+    </div>
 </p-card>
 <div class="title">
     <h2>CURSOS Y CAPACITACIONES</h2>
 </div>
-<div class="card" *ngFor="let curso of course">
+<div class="card" *ngFor="let course of professional.courses">
     <table class="default">
         <tr>
             <th>Tipo</th>
@@ -56,20 +57,20 @@
             <th>Horas</th>
         </tr>
         <tr>
-            <td>{{curso.type.name}}</td>
-            <td>{{curso.institution.name}}</td>
-            <td>{{curso.certification_type.name}}</td>
-            <td>{{curso.area.name}}</td>
-            <td>{{curso.name}}</td>
-            <td>{{curso.description}}</td>
-            <td>{{curso.hours}}</td>
+            <td>{{course.type.name}}</td>
+            <td>{{course.institution.name}}</td>
+            <td>{{course.certification_type.name}}</td>
+            <td>{{course.area.name}}</td>
+            <td>{{course.name}}</td>
+            <td>{{course.description}}</td>
+            <td>{{course.hours}}</td>
         </tr>
     </table>
 </div>
 <div class="title">
     <h2>EXPERIENCIA PROFESIONAL</h2>
 </div>
-<div class="card" *ngFor="let experiencia of experience">
+<div class="card" *ngFor="let experience of professional.experiences">
     <table class="default">
         <tr>
             <th>Area</th>
@@ -81,20 +82,20 @@
             <th>Actividad</th>
         </tr>
         <tr>
-            <td>{{experiencia.area.name}}</td>
-            <td>{{experiencia.employer}}</td>
-            <td>{{experiencia.position}}</td>
-            <td>{{experiencia.start_date}}</td>
-            <td>{{experiencia.end_date}}</td>
-            <td>{{experiencia.reason_leave}}</td>
-            <td>{{experiencia.activities}}</td>
+            <td>{{experience.area.name}}</td>
+            <td>{{experience.employer}}</td>
+            <td>{{experience.position}}</td>
+            <td>{{experience.start_date}}</td>
+            <td>{{experience.end_date}}</td>
+            <td>{{experience.reason_leave}}</td>
+            <td>{{experience.activities}}</td>
         </tr>
     </table>
 </div>
 <div class="title">
     <h2>IDIOMAS</h2>
 </div>
-<div class="card" *ngFor="let idioma of language">
+<div class="card" *ngFor="let language of professional.languages">
     <table class="default">
         <tr>
             <th>Idioma</th>
@@ -103,17 +104,17 @@
             <th>Nivel de Escritura</th>
         </tr>
         <tr>
-            <td>{{idioma.idiom.name}}</td>
-            <td>{{idioma.written_level.name}}</td>
-            <td>{{idioma.spoken_level.name}}</td>
-            <td>{{idioma.read_level.name}}</td>
+            <td>{{language.idiom.name}}</td>
+            <td>{{language.written_level.name}}</td>
+            <td>{{language.spoken_level.name}}</td>
+            <td>{{language.read_level.name}}</td>
         </tr>
     </table>
 </div>
 <div class="title">
     <h2>REFERENCIAS PERSONALES</h2>
 </div>
-<div class="card" *ngFor="let referencia of reference">
+<div class="card" *ngFor="let reference of professional.references">
     <table class="default">
         <tr>
             <th>Istitución</th>
@@ -123,11 +124,11 @@
             <th>Correo Electrónico</th>
         </tr>
         <tr>
-            <td>{{referencia.institution.name}}</td>
-            <td>{{referencia.position}}</td>
-            <td>{{referencia.contact_name}}</td>
-            <td>{{referencia.contact_phone}}</td>
-            <td>{{referencia.contact_email}}</td>
+            <td>{{reference.institution.name}}</td>
+            <td>{{reference.position}}</td>
+            <td>{{reference.contact_name}}</td>
+            <td>{{reference.contact_phone}}</td>
+            <td>{{reference.contact_email}}</td>
         </tr>
     </table>
-</div> -->
+</div>

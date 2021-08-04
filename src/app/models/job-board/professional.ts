@@ -2,6 +2,10 @@ import { User } from '../auth/user';
 import { Catalogue } from '../app/catalogue';
 import { Address } from '../app/address';
 import { Course } from './course';
+import { Skill } from './skill';
+import { Language } from './language';
+import { Reference } from './reference';
+import { Experience } from './experience';
 
 
 export interface Professional {
@@ -19,4 +23,8 @@ export interface Professional {
     gender?: Catalogue;
     nationality?: Catalogue;
     courses?: Course[];
+    skills?: Skill[];
+    languages?: Language[];
+    references?: Reference[];
+    experiences?: Experience[];
 }
