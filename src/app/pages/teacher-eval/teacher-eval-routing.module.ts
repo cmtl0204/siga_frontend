@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoevaluationCoordinatorAreaComponent } from './coevaluation-coordinator-area/coevaluation-coordinator-area.component';
 import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
 import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.component';
 //import { GeneratePDFComponent } from './generate-pdf/generate-pdf.component';
-
 //import { ManagementComponent } from './management/management.component';
 import { PairEvaluationsComponent } from './pair-evaluations/pair-evaluations.component';
+import { ResultEvaluationComponent } from './result-evaluation/result-evaluation.component';
 import { TeacherListComponent } from './teacher-list/teacher-list.component';
 
 const routes: Routes = [
@@ -24,11 +25,11 @@ const routes: Routes = [
     component: TeacherListComponent
   },
   {
-    path: 'pair-evaluations/:id',
+    path: 'pair-evaluations/',
     component: PairEvaluationsComponent
   },
   {
-    path: 'heteroevaluation/:id',
+    path: 'heteroevaluation',
     component: HeteroevaluationComponent
   },
   {
@@ -42,6 +43,14 @@ const routes: Routes = [
   {
     path: 'evaluation-teacher',
     component: EvaluationTeacherComponent
+  },
+  {
+    path: 'result-evaluation',
+    component: ResultEvaluationComponent
+  },
+  {
+    path: 'evaluation',
+    component: EvaluationComponent
   }
 
 

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { QuestionComponent } from './question/question.component';
-
 import { TeacherEvalRoutingModule } from './teacher-eval-routing.module';
 //import { ManagementComponent } from './management/management.component';
 import {TableModule} from 'primeng/table';
@@ -28,6 +26,7 @@ import { HeteroevaluationComponent } from './heteroevaluation/heteroevaluation.c
 import { CoevaluationCoordinatorAreaComponent } from './coevaluation-coordinator-area/coevaluation-coordinator-area.component';
 import { CoevaluationCoordinatorComponent } from './coevaluation-coordinator/coevaluation-coordinator.component';
 import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teacher.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 
 
 @NgModule({
@@ -39,6 +38,7 @@ import { EvaluationTeacherComponent } from './evaluation-teacher/evaluation-teac
     CoevaluationCoordinatorAreaComponent,
     CoevaluationCoordinatorComponent,
     EvaluationTeacherComponent,
+    EvaluationComponent,
     
   ],
   providers:[
