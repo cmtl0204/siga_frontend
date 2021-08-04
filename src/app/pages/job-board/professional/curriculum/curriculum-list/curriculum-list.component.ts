@@ -10,12 +10,11 @@ import { Paginator } from '../../../../../models/setting/paginator';
 import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
-import { HttpParams } from '@angular/common/http';
-import { File } from "../../../../../models/app/file";
 import { User } from 'src/app/models/auth/user';
 import { Catalogue } from 'src/app/models/app/catalogue';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
+import { Col } from '../../../../../models/setting/col';
 
 @Component({
     selector: 'app-curriculum-list',
@@ -23,6 +22,8 @@ import { AppHttpService } from '../../../../../services/app/app-http.service';
     styleUrls: ['./curriculum-list.component.scss']
 })
 export class CurriculumListComponent implements OnInit {
+    @Input() flagSkeletonListSkills: boolean;
+    @Input() flagSkeletonListCourses: boolean;
     @Input() flagSkeletonLanguages: boolean;
     @Input() languagesIn: Language[];
     @Input() paginatorIn: Paginator;
@@ -32,6 +33,8 @@ export class CurriculumListComponent implements OnInit {
     @Output() formLanguageOut = new EventEmitter<FormGroup>();
     @Output() displayOut = new EventEmitter<boolean>();
     @Output() paginatorOut = new EventEmitter<Paginator>();
+    colsSkill: Col[];
+    colsCourse: Col[];
     selectedLanguages: any[];
     selectedLanguage: Language;
     dialogUploadFiles: boolean;
@@ -56,73 +59,33 @@ export class CurriculumListComponent implements OnInit {
     }
     ngOnInit(): void {
         this.getCurriculum();
-        // this.getSkills();
-        // this.getCourses();
-        // this.getExperiences();
-        // this.getLanguages();
-        // this.getReferences();
+        this.loadColsSkill();
     }
+    loadColsSkill() {
+        this.colsSkill = [
+            { field: 'type', header: 'Tipo' },
+            { field: 'description', header: 'Descripción' },
+        ];
+    }
+    loadColsCourse() {
+        this.colsCourse = [
+            { field: 'institution', header: 'Institución' },
+            { field: 'certification_type', header: 'Tipo de Certificado' },
+            { field: 'name', header: 'Nombre' },
+            { field: 'hours', header: 'Horas' },
+        ];
+    }
+
     getCurriculum() {
         this.jobBoardHttpService.get('professional/curriculum')
             .subscribe(response => {
                 this.professional = response['data'];
-                console.log(this.professional);
+                console.log(this.professional.skills);
             }, error => {
                 this.messageService.error(error);
             });
     }
 
-    // getSkills() {
-    //     const params = new HttpParams()
-    //     this.jobBoardHttpService.get('skills', params).subscribe(
-    //         response => {
-    //             this.skill = response['data'];
-    //         }, error => {
-    //             this.messageService.error(error);
-    //         });
-    // }
-
-    // getCourses() {
-    //     const params = new HttpParams()
-    //     this.jobBoardHttpService.get('courses').subscribe(
-    //         response => {
-    //             this.course = response['data'];
-    //             //console.log(this.course);
-    //         }, error => {
-    //             this.messageService.error(error);
-    //         });
-
-    // }
-
-    // getExperiences() {
-    //     const params = new HttpParams()
-    //     this.jobBoardHttpService.get('experiences', params).subscribe(
-    //         response => {
-    //             this.experience = response['data'];
-    //         }, error => {
-    //             this.messageService.error(error);
-    //         });
-    // }
-
-    // getLanguages() {
-    //     const params = new HttpParams()
-    //     this.jobBoardHttpService.get('languages', params).subscribe(
-    //         response => {
-    //             this.language = response['data'];
-    //         }, error => {
-    //             this.messageService.error(error);
-    //         });
-    // }
-    // getReferences() {
-    //     const params = new HttpParams()
-    //         .append('professional_id', "1")
-    //     this.jobBoardHttpService.get('references', params).subscribe(
-    //         response => {
-    //             this.reference = response['data'];
-    //         }, error => {
-    //             this.messageService.error(error);
-    //         });
-    // }
 }
 
 

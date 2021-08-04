@@ -1,4 +1,93 @@
-<div id="header"></div>
+<!-- <app-skeleton *ngIf="flagSkeletonListSkills"></app-skeleton>
+<div class="card" [hidden]="flagSkeletonListSkills">
+    {{professional.skills|json}}
+    <p-table #dt [value]="" [columns]="loadColsSkill" [paginator]="false" [rowHover]="true" dataKey="id"
+        styleClass="p-datatable-customers"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                <h5 class="p-m-0">Mis Ofertas</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" (click)="searchOffers($event,search.value)"></i>
+                    <input pInputText #search type="text" (keyup)="searchOffers($event,$event.target.value)"
+                        placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+    </p-table>
+</div> -->
+
+<app-skeleton *ngIf="flagSkeletonListSkills"></app-skeleton>
+<div class="card">
+    <p-table #dt [value]="professional.skills" [columns]="loadColsSkill" [rowHover]="true" dataKey="id"
+        styleClass="p-datatable-customers">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                <h5 class="p-m-0">HABILIDADES</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <!-- {{loadColsSkill.field|json}} -->
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Skill>
+            <tr>
+                <td>
+                    {{Skill.type.name}}
+                </td>
+                <td>
+                    {{Skill.description}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<app-skeleton *ngIf="flagSkeletonListCourses"></app-skeleton>
+<div class="card">
+    <p-table #dt [value]="professional.courses" [columns]="loadColsCourse" [rowHover]="true" dataKey="id"
+        styleClass="p-datatable-customers">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                <h5 class="p-m-0">CURSOS Y CAPACITACIONES</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <!-- {{loadColsCourse.field|json}} -->
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Course>
+            <tr>
+                <td>
+                    {{Professional.course.institution}}
+                </td>
+                <td>
+                    {{Course.type}}
+                </td>
+                <td>
+                    {{Course.certification_type}}
+                </td>
+                <td>
+                    {{Course.name}}
+                </td>
+                <td>
+                    {{Course.hours.name}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- <div id="header"></div>
 <div class="title">
     <h2>DATOS PERSONALES</h2>
 </div>
@@ -131,4 +220,4 @@
             <td>{{reference.contact_email}}</td>
         </tr>
     </table>
-</div>
+</div> -->
