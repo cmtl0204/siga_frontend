@@ -10,7 +10,7 @@ import { Experience } from './experience';
 
 export interface Professional {
     id?: number;
-    user?: User;
+    user?: User[];
     is_travel?: boolean;
     is_disability?: boolean;
     is_familiar_disability?: boolean;

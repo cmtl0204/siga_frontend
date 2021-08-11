@@ -1,9 +1,9 @@
-import {Professional} from './professional';
-import {Catalogue} from '../app/catalogue';
+import { Professional } from './professional';
+import { Catalogue } from '../app/catalogue';
 
 export interface Skill {
     id?: number;
-    professional?: Professional;
+    // professional?: Professional;
     type?: Catalogue;
     description?: string;
 }

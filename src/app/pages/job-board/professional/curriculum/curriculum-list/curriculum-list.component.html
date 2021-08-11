@@ -1,223 +1,248 @@
-<!-- <app-skeleton *ngIf="flagSkeletonListSkills"></app-skeleton>
-<div class="card" [hidden]="flagSkeletonListSkills">
-    {{professional.skills|json}}
-    <p-table #dt [value]="" [columns]="loadColsSkill" [paginator]="false" [rowHover]="true" dataKey="id"
-        styleClass="p-datatable-customers"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Mis Ofertas</h5>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" (click)="searchOffers($event,search.value)"></i>
-                    <input pInputText #search type="text" (keyup)="searchOffers($event,$event.target.value)"
-                        placeholder="Buscar..." />
-                </span>
-            </div>
-        </ng-template>
-    </p-table>
-</div> -->
+ <app-skeleton *ngIf="flagSkeletonListUsers"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.user" [columns]="colsUser" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">DATOS USUARIO</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-User>
+             <tr>
+                 <td>
+                     {{User.name}}
+                 </td>
+                 <td>
+                     {{User.email}}
+                 </td>
+                 <td>
+                     {{User.names}}
+                 </td>
+                 <td>
+                     {{User.first_lastname}}
+                 </td>
+                 <td>
+                     {{User.second_lastname}}
+                 </td>
+                 <td>
+                     {{User.phone}}
+                 </td>
+                 <td>
+                     {{User.birthdate}}
+                 </td>
+                 <td>
+                     {{User.sex.name}}
+                 </td>
+                 <td>
+                     {{User.gender.name}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
+ <app-skeleton *ngIf="flagSkeletonListSkills"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.skills" [columns]="colsSkill" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">HABILIDADES</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-Skill>
+             <tr>
+                 <td>
+                     {{Skill.type.name}}
+                 </td>
+                 <td>
+                     {{Skill.description}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
+ <app-skeleton *ngIf="flagSkeletonListCourses"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.courses" [columns]="colsCourse" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">CURSOS Y CAPACITACIONES</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
 
-<app-skeleton *ngIf="flagSkeletonListSkills"></app-skeleton>
-<div class="card">
-    <p-table #dt [value]="professional.skills" [columns]="loadColsSkill" [rowHover]="true" dataKey="id"
-        styleClass="p-datatable-customers">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">HABILIDADES</h5>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    {{col.header}}
-                    <!-- {{loadColsSkill.field|json}} -->
-                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-Skill>
-            <tr>
-                <td>
-                    {{Skill.type.name}}
-                </td>
-                <td>
-                    {{Skill.description}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
-<app-skeleton *ngIf="flagSkeletonListCourses"></app-skeleton>
-<div class="card">
-    <p-table #dt [value]="professional.courses" [columns]="loadColsCourse" [rowHover]="true" dataKey="id"
-        styleClass="p-datatable-customers">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">CURSOS Y CAPACITACIONES</h5>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    {{col.header}}
-                    <!-- {{loadColsCourse.field|json}} -->
-                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-Course>
-            <tr>
-                <td>
-                    {{Professional.course.institution}}
-                </td>
-                <td>
-                    {{Course.type}}
-                </td>
-                <td>
-                    {{Course.certification_type}}
-                </td>
-                <td>
-                    {{Course.name}}
-                </td>
-                <td>
-                    {{Course.hours.name}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-Course>
+             <tr>
+                 <td>
+                     {{Course.institution.name}}
+                 </td>
+                 <td>
+                     {{Course.type.name}}
+                 </td>
+                 <td>
+                     {{Course.certification_type.name}}
+                 </td>
+                 <td>
+                     {{Course.area.name}}
+                 </td>
+                 <td>
+                     {{Course.name}}
+                 </td>
+                 <td>
+                     {{Course.description}}
+                 </td>
+                 <td>
+                     {{Course.start_date}}
+                 </td>
+                 <td>
+                     {{Course.end_date}}
+                 </td>
+                 <td>
+                     {{Course.hours.name}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
+ <app-skeleton *ngIf="flagSkeletonListExperiences"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.experiences" [columns]="colsExperience" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">EXPERIENCIAS PROFESIONALES</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-Experience>
+             <tr>
+                 <td>
+                     {{Experience.area.name}}
+                 </td>
+                 <td>
+                     {{Experience.employer}}
+                 </td>
+                 <td>
+                     {{Experience.position}}
+                 </td>
+                 <td>
+                     {{Experience.start_date}}
+                 </td>
+                 <td>
+                     {{Experience.activities}}
+                 </td>
+                 <td>
+                     {{Experience.is_working}}
+                 </td>
+                 <td>
+                     {{Experience.is_disability}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
+ <app-skeleton *ngIf="flagSkeletonListLanguages"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.languages" [columns]="colsLanguage" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">IDIOMAS</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-Language>
+             <tr>
+                 <td>
+                     {{Language.idiom.name}}
+                 </td>
+                 <td>
+                     {{Language.written_level.name}}
+                 </td>
+                 <td>
+                     {{Language.spoken_level.name}}
+                 </td>
+                 <td>
+                     {{Language.read_level.name}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
 
-<!-- <div id="header"></div>
-<div class="title">
-    <h2>DATOS PERSONALES</h2>
-</div>
-<div class="card" *ngFor="let user of professional.user">
-
-    <table class="default">
-        <tr>
-            <td>Identificación</td>
-            <td>Correo Electrónico</td>
-            <td>Nombre</td>
-            <td>Primer Apellido</td>
-            <td>Segundo Apellido</td>
-            <td>Teléfono</td>
-            <td>Cumpleaños</td>
-        </tr>
-        <tr>
-            <td>{{user.identification}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.names}}</td>
-            <td>{{user.first_lastname}}</td>
-            <td>{{user.second_lastname}}</td>
-            <td>{{user.phone}}</td>
-            <td>{{user.birthdate}}</td>
-        </tr>
-    </table>
-</div>
-<p-card>
-    <div class="title">
-        <h2>HABILIDADES</h2>
-    </div>
-    <div class="card" *ngFor="let skill of professional.skills">
-        <table class="default">
-            <tr>
-                <th>Tipo</th>
-                <th>Descripción</th>
-            </tr>
-            <tr>
-                <td>{{skill.type.name}}</td>
-                <td>{{skill.description}}</td>
-            </tr>
-        </table>
-    </div>
-</p-card>
-<div class="title">
-    <h2>CURSOS Y CAPACITACIONES</h2>
-</div>
-<div class="card" *ngFor="let course of professional.courses">
-    <table class="default">
-        <tr>
-            <th>Tipo</th>
-            <th>Nombre Institución</th>
-            <th>Tipo de Certificado</th>
-            <th>Nombre de Área</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Horas</th>
-        </tr>
-        <tr>
-            <td>{{course.type.name}}</td>
-            <td>{{course.institution.name}}</td>
-            <td>{{course.certification_type.name}}</td>
-            <td>{{course.area.name}}</td>
-            <td>{{course.name}}</td>
-            <td>{{course.description}}</td>
-            <td>{{course.hours}}</td>
-        </tr>
-    </table>
-</div>
-<div class="title">
-    <h2>EXPERIENCIA PROFESIONAL</h2>
-</div>
-<div class="card" *ngFor="let experience of professional.experiences">
-    <table class="default">
-        <tr>
-            <th>Area</th>
-            <th>Nombre Empleador</th>
-            <th>Cargo</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Motivo Salida</th>
-            <th>Actividad</th>
-        </tr>
-        <tr>
-            <td>{{experience.area.name}}</td>
-            <td>{{experience.employer}}</td>
-            <td>{{experience.position}}</td>
-            <td>{{experience.start_date}}</td>
-            <td>{{experience.end_date}}</td>
-            <td>{{experience.reason_leave}}</td>
-            <td>{{experience.activities}}</td>
-        </tr>
-    </table>
-</div>
-<div class="title">
-    <h2>IDIOMAS</h2>
-</div>
-<div class="card" *ngFor="let language of professional.languages">
-    <table class="default">
-        <tr>
-            <th>Idioma</th>
-            <th>Nivel Escrito</th>
-            <th>Nivel hablado</th>
-            <th>Nivel de Escritura</th>
-        </tr>
-        <tr>
-            <td>{{language.idiom.name}}</td>
-            <td>{{language.written_level.name}}</td>
-            <td>{{language.spoken_level.name}}</td>
-            <td>{{language.read_level.name}}</td>
-        </tr>
-    </table>
-</div>
-<div class="title">
-    <h2>REFERENCIAS PERSONALES</h2>
-</div>
-<div class="card" *ngFor="let reference of professional.references">
-    <table class="default">
-        <tr>
-            <th>Istitución</th>
-            <th>cargo</th>
-            <th>Nombre de Contacto</th>
-            <th>Número de Contacto</th>
-            <th>Correo Electrónico</th>
-        </tr>
-        <tr>
-            <td>{{reference.institution.name}}</td>
-            <td>{{reference.position}}</td>
-            <td>{{reference.contact_name}}</td>
-            <td>{{reference.contact_phone}}</td>
-            <td>{{reference.contact_email}}</td>
-        </tr>
-    </table>
-</div> -->
+ <app-skeleton *ngIf="flagSkeletonListReferences"></app-skeleton>
+ <div class="card">
+     <p-table #dt [value]="professional.references" [columns]="colsReference" [rowHover]="true" dataKey="id"
+         styleClass="p-datatable-customers">
+         <ng-template pTemplate="caption">
+             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                 <h5 class="p-m-0">REFERENCIAS PERSONALES</h5>
+             </div>
+         </ng-template>
+         <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                     {{col.header}}
+                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                 </th>
+             </tr>
+         </ng-template>
+         <ng-template pTemplate="body" let-Reference>
+             <tr>
+                 <td>
+                     {{Reference.institution.name}}
+                 </td>
+                 <td>
+                     {{Reference.position}}
+                 </td>
+                 <td>
+                     {{Reference.contact_name}}
+                 </td>
+                 <td>
+                     {{Reference.contact_phone}}
+                 </td>
+                 <td>
+                     {{Reference.contact_email}}
+                 </td>
+             </tr>
+         </ng-template>
+     </p-table>
+ </div>
