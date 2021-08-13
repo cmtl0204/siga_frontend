@@ -1,0 +1,20 @@
+<div class="card">
+  <h5>Estudiante</h5>
+  <p-tabView>
+    <p-tabPanel header="Información laboral" leftIcon="pi pi-list" tooltip="">
+      <app-student-form
+        [formStudentInformationIn]="formStudentInformation"
+      ></app-student-form>
+    </p-tabPanel>
+    <p-tabPanel
+      header="Subir Requerimientos"
+      leftIcon="pi pi-cloud-upload"
+      tooltip=""
+    >
+      <app-requirement></app-requirement>
+    </p-tabPanel>
+    <p-tabPanel header="Solicitud" leftIcon="pi pi-cloud-upload" tooltip="">
+      <app-inscription></app-inscription>
+    </p-tabPanel>
+  </p-tabView>
+</div>

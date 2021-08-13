@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
+import { File } from 'src/app/models/app/file';
+import { AppHttpService } from './app-http.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,71 +12,62 @@ import {Router} from '@angular/router';
 export class AppService {
     private headers: HttpHeaders;
 
-    constructor(private _http: HttpClient) {
+    constructor(private httpClient: HttpClient, private appHttpService:AppHttpService ) {
 
     }
 
     get(url: string) {
-        this.headers = new HttpHeaders()
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .append('Content-Type', 'application/json')
-            .append('Accept', 'application/json');
-        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_APP + url;
-        return this._http.get(url, {headers: this.headers});
+        return this.httpClient.get(url, {headers: this.headers});
     }
 
     post(url: string, data: any) {
-        this.headers = new HttpHeaders()
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .append('Content-Type', 'application/json')
-            .append('Accept', 'application/json');
-        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_APP + url;
-        return this._http.post(url, data, {headers: this.headers});
+        return this.httpClient.post(url, data, {headers: this.headers});
     }
 
     update(url: string, data: any) {
-        this.headers = new HttpHeaders()
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .append('Content-Type', 'application/json')
-            .append('Accept', 'application/json');
-        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_APP + url;
-        return this._http.put(url, data, {headers: this.headers});
+        return this.httpClient.put(url, data, {headers: this.headers});
     }
 
     delete(url: string) {
-        this.headers = new HttpHeaders()
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .append('Content-Type', 'application/json')
-            .append('Accept', 'application/json');
-        // .append('Authorization', 'Bearer ' + localStorage.getItem('accessToken').replace('"', ''));
         url = environment.API_URL_APP + url;
-        return this._http.delete(url, {headers: this.headers});
+        return this.httpClient.delete(url, {headers: this.headers});
     }
 
-    uploadFiles(data: FormData,params = new HttpParams()) {
+    uploadFiles(data: FormData, params = new HttpParams()) {
         const url = environment.API_URL_APP + 'files';
-        return this._http.post(url, data, {params});
+        return this.httpClient.post(url, data, {params});
     }
 
-    uploadImages(data: FormData,params = new HttpParams()) {
+    uploadImages(data: FormData, params = new HttpParams()) {
         const url = environment.API_URL_APP + 'images';
-        return this._http.post(url, data, {params});
+        return this.httpClient.post(url, data, {params});
     }
 
     getCatalogues(params = new HttpParams()) {
         const url = environment.API_URL_APP + 'catalogues';
-        return this._http.get(url, {params});
+        return this.httpClient.get(url, {params});
     }
 
     getLocations(params = new HttpParams()) {
         const url = environment.API_URL_APP + 'locations';
-        return this._http.get(url, {params});
+        return this.httpClient.get(url, {params});
     }
+
     getCountries(params = new HttpParams()) {
         const url = environment.API_URL_APP + 'countries';
-        return this._http.get(url, {params});
+        return this.httpClient.get(url, {params});
     }
+    downloadFile(file: File) {
+        const params = new HttpParams().append('full_path', file.full_path);
+        this.appHttpService.getFile(params).subscribe(response => {
+            const binaryData = [];
+            binaryData.push(response);
+            const filePath = URL.createObjectURL(new Blob(binaryData, {type: response['type']}));
+            const downloadLink = document.createElement('a');
+            downloadLink.href = filePath;
+            downloadLink.setAttribute('download', file.full_name);
+        })}
 }

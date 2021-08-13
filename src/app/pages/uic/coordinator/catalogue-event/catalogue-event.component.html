@@ -1,0 +1,33 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <app-catalogue-event-list
+      *ngIf="!catalogueEventDialog"
+      [catalogueEventsIn]="catalogueEvents"
+      [catalogueEventsEndIn]="catalogueEventsEnd"
+      [flagCatalogueEvents]="flagCatalogueEvents"
+      [formCatalogueEventIn]="formCatalogueEvent"
+      (catalogueEventsOut)="catalogueEvents = $event"
+      (catalogueEventsEndOut)="catalogueEventsEnd = $event"
+      (displayOut)="catalogueEventDialog = $event"
+      (formCatalogueEventOut)="formCatalogueEvent = $event"
+    >
+    </app-catalogue-event-list>
+
+    <p-dialog
+      [(visible)]="catalogueEventDialog"
+      [style]="{ width: '700px' }"
+      header="Evento"
+      [modal]="true"
+      styleClass="p-fluid"
+      (onHide)="catalogueEventDialog = false"
+    >
+      <app-catalogue-event-form
+        [catalogueEventsIn]="catalogueEvents"
+        [formCatalogueEventIn]="formCatalogueEvent"
+        (catalogueEventsOut)="catalogueEvents = $event"
+        (displayOut)="catalogueEventDialog = $event"
+      >
+      </app-catalogue-event-form>
+    </p-dialog>
+  </div>
+</div>

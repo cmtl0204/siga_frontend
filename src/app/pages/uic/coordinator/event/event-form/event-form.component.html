@@ -1,0 +1,194 @@
+<!-- {{ formEventIn.value | json }} -->
+
+<div class="p-fluid">
+  <form [formGroup]="formEventIn" (ngSubmit)="onSubmit($event)">
+    <div class="p-field">
+      <label for="planning">
+        <i class="p-error">*</i> Convocatoria:
+        <i
+          *ngIf="planningField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            planningField.invalid &&
+            (planningField.touched || planningField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-dropdown
+        id="planning"
+        [options]="plannings"
+        formControlName="planning"
+        optionLabel="career_planning"
+        [filter]="true"
+        filterBy="career_planning"
+        [showClear]="true"
+        placeholder="Selecciona la convocatoria"
+        [disabled]="disabledFormIn">
+      </p-dropdown>
+
+    </div>
+    <!-- <div class="p-field " *ngIf="planningField.value">
+      <label for="planning">
+        <i class="p-error">*</i> Fecha Inicio y Fin de la Convocatoria:
+        <i
+          *ngIf="planningField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            planningField.invalid &&
+            (planningField.touched || planningField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <input pInputText disabled value="{{ planningField.value.start_date }} / {{ planningField.value.end_date }}"/>
+    </div> -->
+
+    <div class="p-field">
+      <label for="name">
+        <i class="p-error">*</i> Evento:
+        <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
+        <i
+          *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-dropdown
+        id="name"
+        [options]="events"
+        formControlName="name"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Selecciona el evento"
+      >
+      
+        <ng-template pTemplate="selectedEvent">
+          <div class="country-item country-item-value" *ngIf="selectedEvent">
+            <div>{{ selectedEvent.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-selectedEv pTemplate="selectedEvent">
+          <div class="country-item">
+            <div>{{ selectedEv.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
+    <div class="p-grid" *ngIf="planningField.value">
+      <div class="p-field p-lg-6">
+        <label for="startDate">
+          <i class="p-error">*</i> Fecha Inicio del Evento:
+          <div *ngIf="planningField.value" style="display: inline;">
+            <i
+            *ngIf="startDateField.value >= planningField.value.start_date && startDateField.value <= planningField.value.end_date"
+            class="pi pi-check-circle icon-valid"
+            ></i>
+            <i
+            *ngIf="startDateField.value < planningField.value.start_date || startDateField.value > planningField.value.end_date"
+            class="pi pi-times-circle icon-invalid"
+            ></i>
+          </div>
+        </label>
+
+        <input type="date"  
+        id="startDate"
+        name="startDate"
+        formControlName="start_date"
+        [min]="planningField.value.start_date" 
+        [max]="planningField.value.end_date"
+        class="input-date"
+        >
+        <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+
+        <div *ngIf="startDateField.errors && startDateField.touched">
+          <small
+            *ngIf="startDateField.hasError('required')"
+            id="start_date-help-1"
+            class="p-error"
+          >
+            {{ messageService.fieldRequired }}
+          </small>
+        </div>
+      </div>
+      <div class="p-field p-lg-6">
+        <label for="endDate">
+          <i class="p-error">*</i> Fecha Fin del Evento:
+          <div style="display: inline;">
+            <i
+            *ngIf="endDateField.value <= planningField.value.end_date && endDateField.value >= planningField.value.start_date"
+            class="pi pi-check-circle icon-valid"
+            ></i>
+            <i
+            *ngIf="endDateField.value > planningField.value.end_date || endDateField.value < planningField.value.start_date"
+            class="pi pi-times-circle icon-invalid"
+            ></i>
+          </div>
+          
+        </label>
+        <input type="date" id="endDate"
+        name="endDate"
+        formControlName="end_date"
+        [min]="planningField.value.start_date" 
+        [max]="planningField.value.end_date"
+        class="input-date"
+        >
+        <!-- <p-calendar      
+        id="endDate"
+        name="endDate"
+        formControlName="end_date" 
+        [showIcon]="true" inputId="icon" 
+        [minDate]="startDateField.value" 
+        [maxDate]="endDateField.value"
+        >
+      </p-calendar> -->
+
+
+        <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+        <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->
+        <div *ngIf="endDateField.errors && endDateField.touched">
+          <small
+            *ngIf="endDateField.hasError('required')"
+            id="end_date-help-1"
+            class="p-error"
+          >
+            {{ messageService.fieldRequired }}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          id="btnSaveExit"
+          label="Guardar y Salir"
+          class="p-button-success p-button-raised"
+          icon="pi pi-save"
+        ></button>
+      </div>
+      <div *ngIf="!idField.value" class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="button"
+          id="btnSaveContinue"
+          label="Guardar y Crear Nueva"
+          class="p-button-raised"
+          icon="pi pi-arrow-right"
+          (click)="onSubmit($event, true)"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
