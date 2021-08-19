@@ -154,6 +154,7 @@ export class ExperienceFormComponent implements OnInit {
         }
         this.experiencesOut.emit(this.experiencesIn);
     }
+    
 
     clickIsWorking(e) {
         const isWorking = e.checked;
@@ -167,6 +168,18 @@ export class ExperienceFormComponent implements OnInit {
         if (isDisability) {
             this.isDisability = true;
             this.isDisability = false;
+        }
+    }
+    validate(event){
+        console.log(event);
+        if(this.isWorkingField.value==true){
+        this.endDateField.setValidators(null);
+        this.reasonLeaveField.setValidators(null);
+        console.log(true);
+    }else{
+        this.endDateField.setValidators(Validators.required);
+        this.reasonLeaveField.setValidators(Validators.required);
+        console.log(false);
         }
     }
 }

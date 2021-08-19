@@ -27,7 +27,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Experiencias Personales</h5>
+                <h5 class="p-m-0">Experiencias Profesionales</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" (click)="searchExperiences($event,search.value)"></i>
                     <input #search pInputText type="text" (keyup)="searchExperiences($event,$event.target.value)"
@@ -41,7 +41,7 @@
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
                 <th pSortableColumn="employer">
-                Empleador
+                    Empleador
                     <p-sortIcon field="employere"></p-sortIcon>
                 </th>
                 <th pSortableColumn="position">

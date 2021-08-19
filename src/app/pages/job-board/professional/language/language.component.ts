@@ -40,7 +40,7 @@ export class LanguageComponent implements OnInit {
   buildFormLanguage() {
     this.formLanguage = this.formBuilder.group({
       id: [null],
-      idiom: [null, Validators.required],
+      idiom: [null,],
       written_level: [null, Validators.required],
       spoken_level: [null, Validators.required],
       read_level: [null, Validators.required],

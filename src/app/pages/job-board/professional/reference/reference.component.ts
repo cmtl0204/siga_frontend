@@ -60,7 +60,7 @@ export class ReferenceComponent implements OnInit {
             response => {
                 this.flagReferences = false;
                 this.references = response['data'];
-                console.log(this.references)
+                //console.log(this.references)
                 this.paginator = response as Paginator;
             }, error => {
                 this.flagReferences = false;
