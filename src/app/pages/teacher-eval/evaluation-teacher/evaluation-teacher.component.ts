@@ -125,7 +125,7 @@ totalpreguntas: number;
   }
 
   onTestWebServicePairs() {
-    this.teacherEvalService.getHeteroevaluation(1).subscribe(result => {
+    this.teacherEvalService.getEvaluationTeacher(1).subscribe(result => {
       this.pregunta = result.data;
       this.getInicializarModelo();
     });
@@ -193,7 +193,7 @@ totalpreguntas: number;
     }
     console.log(data);
     if (isValidateRadio) {
-      this.teacherEvalService.postHeteroevaluation(this.id, data ).subscribe(result => {
+      this.teacherEvalService.postEvaluationTeacher(this.id, data ).subscribe(result => {
         this.showSuccess();
       }, error => {
       });
@@ -228,7 +228,7 @@ showSuccess() {
     
   });
 
-  /*this.router.navigate(['teacher-eval/evaluation'])
+  /*this.router.navigate(['teacher-eval/teacher-list-evaluation'])
   .then(() => {
     window.location.reload();
   });*/

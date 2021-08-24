@@ -20,17 +20,22 @@
 <p-table [value]="student.maestros">
     <ng-template pTemplate="header">
         <tr>
+            <th style="width: 4%">N°</th>
             <th>LISTA DOCENTES</th>
-            <th>TIPO DE EVALUACIÓN </th>
+            <th>COEVALUACIÓN COORDINADORES DE CARRERA </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body"  >
         <tr  *ngFor="let maestro of teachers" ngModel=[teacher] ngDefaultControl>
+            <td class="w-55">{{maestro.id}}</td>
             <td>{{maestro.name}}</td>
            <td><a (click)="seleccionar(maestro.id)"  class="button"> Evaluar </a></td>          
         </tr>
     </ng-template>
     
 </p-table>
+
+  
+    
 
   

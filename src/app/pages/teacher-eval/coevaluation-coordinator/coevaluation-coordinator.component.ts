@@ -229,15 +229,13 @@ showSuccess() {
     detail: 'La Evaluación ha sido registrada correctamente' 
     
   });
-
-  /*this.router.navigate(['teacher-eval/evaluation'])
+  /*this.router.navigate(['teacher-eval/teacher-list-coordinator'])
   .then(() => {
     window.location.reload();
   });*/
-    window.location.reload();
-  
 
-  
+  window.location.reload();
+ 
 }
 
 

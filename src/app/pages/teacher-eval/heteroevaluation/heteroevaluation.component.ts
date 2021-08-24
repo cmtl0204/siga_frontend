@@ -53,7 +53,7 @@ totalpreguntas: number;
     this.questions = [];
 
   }
- // navegacion entre componentes 
+ // navegacion de componnetes 
   home(){
     this.router.navigate(['teacher-eval/evaluation']);
    }
@@ -225,14 +225,13 @@ showSuccess() {
     
   });
 
-  /*this.router.navigate(['teacher-eval/evaluation'])
+  /*this.router.navigate(['teacher-eval/teacher-list-heteroevaluation'])
   .then(() => {
     window.location.reload();
   });*/
-    window.location.reload();
-  
 
-  
+  window.location.reload();
+ 
 }
 
 
