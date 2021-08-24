@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Teacher } from '../../models/app/teacher';
+import { Evaluation } from 'src/app/models/teacher-eval/evaluation';
 import { Observable } from 'rxjs';
 import { URL_API } from '../../../environments/environment';
-import { Teacher } from '../../models/app/teacher';
+
+
 
 
 @Injectable({
@@ -12,48 +15,40 @@ import { Teacher } from '../../models/app/teacher';
 })
 
 export class TeacherEvalService {
+  urlAvatar: string;
+  private headers  : HttpHeaders;
+  constructor(private httpClient: HttpClient, private router: Router) { 
+    this.urlAvatar = environment.STORAGE_URL;
 
-
-  constructor(protected http: HttpClient) { }
+  }
   removeLogin(){
     localStorage.removeItem('teacher');
+    localStorage.removeItem('evaluation');
+    localStorage.removeItem('typeEvaluation');
+
   }
 
-
-
-  // urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/show/";
-  //urlvs: string = "http://siga_backend.test/v1/teacher-eval/question/index?evaluation_type_id=4&per_page=3&page=3";
-
-
-  urlvs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=18&page=1";
-  urlguardar: string = URL_API + "teacher-eval/evaluation/create";
-  
-  getInit(param: any): Observable<any> {   
-    const params = {
-      per_page:'18',
-      page:'1'
-    }
-    return this.http.get(this.urlvs, { params: params })
-  }
-
-  postEvaluationAdd(param: any): Observable<any> {
-    return this.http.post(this.urlguardar, param);   
-   }
-
-  //pairs evaluatiosn
-  urlpairs: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=20&page=1";
-  urlenviar: string = URL_API + "teacher-eval/evaluation/create";
-  getPairEvaluations(param: any): Observable<any> {   
-    const params = {
-      per_page:'25',
-      page:'1'
-    }
-    return this.http.get(this.urlpairs, { params: params })
+  setUrlAvatar(url: string) {
+    this.urlAvatar = environment.STORAGE_URL + url;
   }
   
-  postPairEvaluations(id:string ,param: any): Observable<any> {
-   return this.http.post(`${this.urlenviar}/${id}`, param);   
+  getTeacher(): Teacher{
+    return localStorage.getItem('teacher') ? JSON.parse(localStorage.getItem('teacher')) : null;
   }
+  getEvaluation() : Evaluation{
+    return localStorage.getItem('evaluation') ? JSON.parse(localStorage.getItem('evaluation')) : null;
+  }
+
+
+  setTeacher(teachers) {
+    localStorage.setItem('teacher', JSON.stringify(teachers));
+  }
+
+  setEvaluation(evaluations) {
+    localStorage.setItem('evaluation', JSON.stringify(evaluations));
+  }
+
+
 
   //heteroevaluation
 urlhet: string = URL_API + "teacher-eval/question/index?evaluation_type_id=1&per_page=18&page=1";
@@ -63,11 +58,11 @@ getHeteroevaluation(param: any): Observable<any> {
     per_page:'18',
     page:'1'
   }
-  return this.http.get(this.urlhet, { params: params })
+  return this.httpClient.get(this.urlhet, { params: params })
 }
 
 postHeteroevaluation(id:string ,param: any): Observable<any> {
- return this.http.post(`${this.urlheteroevaluation}/${id}`, param);   
+ return this.httpClient.post(`${this.urlheteroevaluation}/${id}`, param);   
 }
 
  //coevaluation-coordinator-area
@@ -78,11 +73,11 @@ postHeteroevaluation(id:string ,param: any): Observable<any> {
      per_page:'29',
      page:'1'
    }
-   return this.http.get(this.urlcoevar, { params: params })
+   return this.httpClient.get(this.urlcoevar, { params: params })
  }
  
  postCoevaluationArea(id:string ,param: any): Observable<any> {
-  return this.http.post(`${this.urlcoevaluation}/${id}`, param);   
+  return this.httpClient.post(`${this.urlcoevaluation}/${id}`, param);   
  }
 
 //coevaluation-coordinator
@@ -93,11 +88,11 @@ getCoevaluationCoordinator(param: any): Observable<any> {
     per_page:'47',
     page:'1'
   }
-  return this.http.get(this.urlcoecor, { params: params })
+  return this.httpClient.get(this.urlcoecor, { params: params })
 }
 
 postCoevaluationCoordinator(id:string ,param: any): Observable<any> {
- return this.http.post(`${this.urlcoordinator}/${id}`, param);   
+ return this.httpClient.post(`${this.urlcoordinator}/${id}`, param);   
 }
 
 //evaluation-teacher
@@ -108,11 +103,11 @@ getEvaluationTeacher(param: any): Observable<any> {
     per_page:'65',
     page:'1'
   }
-  return this.http.get(this.urltch, { params: params })
+  return this.httpClient.get(this.urltch, { params: params })
 }
 
 postEvaluationTeacher(id:string ,param: any): Observable<any> {
- return this.http.post(`${this.urlteacher}/${id}`, param);   
+ return this.httpClient.post(`${this.urlteacher}/${id}`, param);   
 }
 
 }

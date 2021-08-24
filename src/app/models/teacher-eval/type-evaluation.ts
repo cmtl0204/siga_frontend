@@ -2,11 +2,13 @@ import { Status } from "../app/status";
 import { Teacher } from "../app/teacher";
 
 
-export interface EvaluationType {
+export interface TypeEvaluation {
     id?: number,
-    /*name: string,
+    name: string,
     code: string,
     percentage: string,
     global_percentage: string,
-    status? : Status*/
+    status? : Status
+    
 }
+

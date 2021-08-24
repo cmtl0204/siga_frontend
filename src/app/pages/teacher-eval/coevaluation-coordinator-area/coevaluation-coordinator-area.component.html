@@ -1,13 +1,12 @@
-<div class="p-shadow-24">
-    <div style="background-color:white;" class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col">
-        <h1>COEVALUACION - COORDINADORES DE ÁREA, UNIDAD O DESIGNADOS POR EL OCS 2021-1</h1>
-        <P>INSTRUCCIONES:  Lea detenidamente cada uno de las preguntas que se mostrarán a continuación y seleccione su respuesta
-             según el rango de ponderación del 1 al 4, tomando en cuenta que el rango mínimo es 1 y el máximo 4; en lo posible 
-             responda a las preguntas de esta encuesta en base a las evidencias que le proporcionen las instancias correspondientes, 
-             a fin de garantizar una evaluación objetiva.</P>
-      </div>
-    </div>
+<div class="p-grid">
+  <div class="p-col-12 p-md-12 p-lg-12">
+    <h1>COEVALUACION - COORDINADORES DE ÁREA, UNIDAD O DESIGNADOS POR EL OCS 2021-1</h1>
+    <br>
+    <P>INSTRUCCIONES:  Lea detenidamente cada uno de las preguntas que se mostrarán a continuación y seleccione su respuesta
+         según el rango de ponderación del 1 al 4, tomando en cuenta que el rango mínimo es 1 y el máximo 4; en lo posible 
+         responda a las preguntas de esta encuesta en base a las evidencias que le proporcionen las instancias correspondientes, 
+         a fin de garantizar una evaluación objetiva.</P>
+  </div>
   </div>
   <p-toast></p-toast>
   <p-toast position="top-left" key="tl"></p-toast>
@@ -41,7 +40,7 @@
   </form>
   
   <center>
-    <button pButton type="button" routerLink="/teacher-eval/teacher-list" style="margin-left: 10px" label="Regresar"
+    <button pButton type="button" (click)="coevaluation()"  style="margin-left: 10px" label="Regresar"
       icon="pi pi-times"></button>
     <button (click)="confirm()" type="submit"  pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
     </center>

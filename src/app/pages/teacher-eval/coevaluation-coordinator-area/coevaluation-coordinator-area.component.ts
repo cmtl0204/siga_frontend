@@ -44,12 +44,21 @@ totalpreguntas: number;
     private teacherEvalHttpService: TeacherEvalHttpService,
     private confirmationService: ConfirmationService,
     private activeRouter: ActivatedRoute,
+    private router: Router,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 29};
     this.questions = [];
-
   }
+
+ // ruta de inicio al componente principal
+ home(){
+  this.router.navigate(['teacher-eval/evaluation']);
+ }
+
+ coevaluation(){
+  this.router.navigate(['teacher-eval/teacher-list-coevaluation']);
+ }
+
   city: string;
   selectedCategory: any = null;
   evaluacion: any[] = [{ name: '1', key: this.getRandom(), checked: true }, 
@@ -153,7 +162,7 @@ totalpreguntas: number;
     console.log("resultado de la regla de 3 =", porcentajeEvaluacion);
  
     this.evaluationType = {
-      id: 1
+      id: 2
     }
 
     this.schoolPeriod = {
@@ -167,7 +176,7 @@ totalpreguntas: number;
     this.evaluations = {
       id: 1,
       result: porcentajeEvaluacion,
-      percentage: 0.35,
+      percentage: 0.20,
     }
 
     let data = {
@@ -205,13 +214,32 @@ validateModal(value) {
   }
 }
 showSuccess() {
-  this.messageService.add({ severity: 'success', summary: 'Datos Guardados ', detail: 'La Evaluación ha sido registrada correctamente' });
+  this.messageService.add({ 
+    severity: 'success', 
+    summary: 'Datos Guardados ', 
+    detail: 'La Evaluación ha sido registrada correctamente' 
+    
+  });
+
+  /*this.router.navigate(['teacher-eval/evaluation'])
+  .then(() => {
+    window.location.reload();
+  });*/
+    window.location.reload();
+  
+
+  
 }
 
+
 showError() {
-  this.messageService.add({ severity: 'error', summary: 'Error ', detail: 'Todos los datos son obligatorios' });
+  this.messageService.add({
+     severity: 'error',
+      summary: 'Error ',
+       detail: 'Todos los datos son obligatorios' });
 }
-}
+
+ }
 
 
 

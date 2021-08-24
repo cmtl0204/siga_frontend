@@ -1,16 +1,14 @@
-<p>evaluation-teacher works!</p>
-<div class="p-shadow-24">
-    <div style="background-color:white;" class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col">
-        <h1>EVALUACIÓN DOCENTES POR COORDINADORES DE CARRERAS - 2021- 1</h1>
-        <P>ISr.(a) Coordinador (a), lea detenidamente cada uno de las preguntas que se mostrarán a 
-            continuación y seleccione su respuesta según el rango de ponderación del 1 al 5, tomando en 
-            cuenta que el rango mínimo es 1 y el máximo 5; en lo posible responda a las preguntas de esta 
-            encuesta en base a las evidencias que le proporcionen las instancias correspondientes, a fin de 
-            garantizar una evaluación objetiva. Referente al periodo 
-            académico 2021-1 de Junio 2021- Octubre 2021</P>
-      </div>
-    </div>
+<div class="p-grid">
+  <div class="p-col-12 p-md-12 p-lg-12">
+    <h1>EVALUACIÓN DOCENTES POR COORDINADORES DE CARRERAS - 2021- 1</h1>
+    <br>
+    <P>ISr.(a) Coordinador (a), lea detenidamente cada uno de las preguntas que se mostrarán a 
+      continuación y seleccione su respuesta según el rango de ponderación del 1 al 5, tomando en 
+      cuenta que el rango mínimo es 1 y el máximo 5; en lo posible responda a las preguntas de esta 
+      encuesta en base a las evidencias que le proporcionen las instancias correspondientes, a fin de 
+      garantizar una evaluación objetiva. Referente al periodo 
+      académico 2021-1 de Junio 2021- Octubre 2021</P>
+  </div>
   </div>
   <p-toast></p-toast>
   <p-toast position="top-left" key="tl"></p-toast>
@@ -44,7 +42,7 @@
   </form>
   
   <center>
-    <button pButton type="button" routerLink="/teacher-eval/teacher-list" style="margin-left: 10px" label="Regresar"
+    <button pButton type="button" (click)="evaluation()" style="margin-left: 10px" label="Regresar"
       icon="pi pi-times"></button>
     <button (click)="confirm()" type="submit"  pButton icon="pi pi-check" style="margin-left: 10px" label="Guardar"></button>
     </center>
@@ -54,6 +52,6 @@
     </ng-template>
     <ng-template pTemplate="footer">
       <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
- <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()"></button>
+ <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept(); getCheckSelect()" ></button>
     </ng-template>
   </p-confirmDialog>

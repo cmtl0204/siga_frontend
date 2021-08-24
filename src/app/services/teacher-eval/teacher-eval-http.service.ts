@@ -14,15 +14,13 @@ import {AuthService} from '../auth/auth.service';
 })
 
 export class TeacherEvalHttpService {
-    API_URL_TEACHER_EVAL: string = environment.API_URL_TEACHEREVAL;
-    auth: User;
+  
     private headers : HttpHeaders;
 
-    constructor(private httpClient: HttpClient,
-                private authService: AuthService,
-                private router: Router,
-                private messageService: MessageService) {
-    }
+    constructor(
+    
+    private httpClient: HttpClient
+    ) { }
 
     login(userCredentials: any, params = new HttpParams()) {
         const url = URL + 'oauth/token';
@@ -91,18 +89,8 @@ export class TeacherEvalHttpService {
         return this.httpClient.get(url, {params});
     }
 
-    logoutAll(params = new HttpParams()) {
-        const url = environment.API_URL_AUTHENTICATION + 'auth/logout-all';
-        return this.httpClient.get(url, {params}).subscribe(response => {
-            this.authService.removeLogin();
-            this.router.navigate(['/auth/login']);
-        }, error => {
-            this.messageService.error(error);
-        });
-    }
-
     get(url: string, params = new HttpParams()) {
-        url = this.API_URL_TEACHER_EVAL + url;
+        url = environment.API_URL_TEACHEREVAL + url;
         return this.httpClient.get(url, {params});
     }
 
@@ -125,10 +113,10 @@ export class TeacherEvalHttpService {
         const url = environment.API_URL_APP + 'catalogues';
         return this.httpClient.post(url, {params});
     }
-    getEvaluationTypes(params = new HttpParams() ){
+   /* getEvaluationTypes(params = new HttpParams() ){
         const url = environment.API_URL_TEACHEREVAL + 'evaluationType/get';
         return this.httpClient.post(url, {params});
-    }
+    }*/
 
     uploadAvatar(data: FormData, params = new HttpParams()) {
         const url = environment.API_URL_AUTHENTICATION + 'users/avatars';
@@ -143,6 +131,20 @@ export class TeacherEvalHttpService {
         url = environment.API_URL_TEACHEREVAL + url;
         return this.httpClient.get(url, {headers: this.headers});
     }
+    getEvaluation(id: string) {
+        const url = environment.API_URL_TEACHEREVAL + 'evaluation/gestion';
+        return this.httpClient.get(`${url}/${id}`);
+      }
+     /* getTypeEvaluation(id: string) {
+        const url = environment.API_URL_TEACHEREVAL + 'typeEvaluation';
+        return this.httpClient.get(`${url}/${id}`);
+      }*/
+      getTypeEvaluation(url : string ){
+        url = environment.API_URL_TEACHEREVAL + url;
+        return this.httpClient.get(url, {headers: this.headers});
+    }
+
+    
 }
 
 

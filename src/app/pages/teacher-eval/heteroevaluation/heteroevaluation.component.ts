@@ -18,6 +18,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-heteroevaluation',
   templateUrl: './heteroevaluation.component.html',
@@ -45,12 +46,22 @@ totalpreguntas: number;
     private teacherEvalHttpService: TeacherEvalHttpService,
     private confirmationService: ConfirmationService,
     private activeRouter: ActivatedRoute,
+    private router: Router,
 
   ) {
-    this.paginator = { current_page: 1, per_page: 18};
+    
     this.questions = [];
 
   }
+ // navegacion entre componentes 
+  home(){
+    this.router.navigate(['teacher-eval/evaluation']);
+   }
+
+   heteroevaluation(){
+    this.router.navigate(['teacher-eval/teacher-list-heteroevaluation']);
+   }
+
   city: string;
   selectedCategory: any = null;
   evaluacion: any[] = [{ name: '1', key: this.getRandom(), checked: true }, 
@@ -168,7 +179,7 @@ totalpreguntas: number;
     this.evaluations = {
       id: 1,
       result: porcentajeEvaluacion,
-      percentage: 0.35,
+      percentage: 0.20,
     }
 
     let data = {
@@ -205,14 +216,34 @@ validateModal(value) {
     }
   }
 }
+
 showSuccess() {
-  this.messageService.add({ severity: 'success', summary: 'Datos Guardados ', detail: 'La Evaluación ha sido registrada correctamente' });
+  this.messageService.add({ 
+    severity: 'success', 
+    summary: 'Datos Guardados ', 
+    detail: 'La Evaluación ha sido registrada correctamente' 
+    
+  });
+
+  /*this.router.navigate(['teacher-eval/evaluation'])
+  .then(() => {
+    window.location.reload();
+  });*/
+    window.location.reload();
+  
+
+  
 }
 
+
 showError() {
-  this.messageService.add({ severity: 'error', summary: 'Error ', detail: 'Todos los datos son obligatorios' });
+  this.messageService.add({
+     severity: 'error',
+      summary: 'Error ',
+       detail: 'Todos los datos son obligatorios' });
 }
-}
+
+ }
 
 
 
