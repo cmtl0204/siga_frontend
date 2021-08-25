@@ -16,15 +16,15 @@ import {AuthGuard} from './shared/guards/auth.guard';
                 children: [
                     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
                     {
+                        path: 'teacher-eval',
+                        loadChildren: () => import('./pages/teacher-eval/teacher-eval.module').then(m => m.TeacherEvalModule)
+                    },
+
+                    {
                         path: 'dashboard',
                         loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
-                        canActivate: [AuthGuard]
+                      
                     },
-                    {
-                        path: 'user',
-                        loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
-                        canActivate: [AuthGuard]
-                    }
                 ]
             },
             {

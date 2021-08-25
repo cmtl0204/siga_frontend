@@ -6,10 +6,11 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SettingsService {
     ajustes: Ajustes = {
-        urlLogoMenu: 'assets/layout/images/logo-menu.png',
-        urlLogoFooter: 'assets/layout/images/logo-footer.png',
-        urlLogoTopBar: 'assets/layout/images/logo-topbar.png',
+        urlLogoMenu: '../../assets/layout/images/logo-menu.png',
+        urlLogoFooter: '../../assets/layout/images/logo-footer.png',
+        urlLogoTopBar: '../../assets/layout/images/logo-topbar.png',
     };
+
 
     constructor(private http: HttpClient) {
         this.cargarAjustes();

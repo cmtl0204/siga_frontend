@@ -1,0 +1,15 @@
+{
+    "nombreEstudiante": "",
+    "maestros": [
+        {
+            "nombreMaestro": "",
+            "asignatura": [
+                {
+                    "nombreAsignatura": ""
+                }
+                
+            ]
+        }
+    ]
+}
+       
