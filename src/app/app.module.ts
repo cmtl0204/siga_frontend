@@ -36,8 +36,6 @@ import {InterceptorService} from './interceptors/interceptor.service';
 import {SharedModule} from './pages/shared/shared.module';
 import {PasswordModule} from 'primeng/password';
 import { TeacherEvalComponent } from './pages/teacher-eval/teacher-eval.component';
-import { SelfEvalTeacherComponent } from './pages/teacher-eval/self-eval-teacher/self-eval-teacher.component';
-import { SelfEvalCoordinadorComponent } from './pages/teacher-eval/self-eval-coordinador/self-eval-coordinador.component';
 
 @NgModule({
     imports: [
@@ -68,8 +66,6 @@ import { SelfEvalCoordinadorComponent } from './pages/teacher-eval/self-eval-coo
         AppRightPanelComponent,
         AppTopBarComponent,
         TeacherEvalComponent,
-        SelfEvalTeacherComponent,
-        SelfEvalCoordinadorComponent,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},

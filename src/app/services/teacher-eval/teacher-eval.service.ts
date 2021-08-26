@@ -45,10 +45,23 @@ export class TeacherEvalService {
     localStorage.setItem('evaluation', JSON.stringify(evaluations));
   }
 
+//self-eval
+urlself: string = URL_API + "teacher-eval/question/index?evaluation_type_id=2&per_page=18&page=1";
+urlselfEvalCoor: string = URL_API + "teacher-eval/evaluation/create";
+getSelfevaluation(param: any): Observable<any> {   
+  const params = {
+    per_page:'18',
+    page:'1'
+  }
+  return this.httpClient.get(this.urlself, { params: params })
+}
 
+postSelfevaluation(id:string ,param: any): Observable<any> {
+ return this.httpClient.post(`${this.urlselfEvalCoor}/${id}`, param);   
+}
 
   //evaluation-teacher
-urltch: string = URL_API + "teacher-eval/question/index?evaluation_type_id=4&per_page=65&page=1";
+urltch: string = URL_API + "teacher-eval/question/index?evaluation_type_id=2&per_page=65&page=1";
 urlteacher: string = URL_API + "teacher-eval/evaluation/create";
 getEvaluationTeacher(param: any): Observable<any> {   
   const params = {

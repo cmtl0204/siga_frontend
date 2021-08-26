@@ -22,17 +22,18 @@ const routes: Routes = [
 // rutas de formularios de evaluacion docente 
  
   {
-    path: 'selfevaluation-teahcer/:id',
+    path: 'self-eval-teahcer/:id',
     component: SelfEvalTeacherComponent
   },
   {
-    path: 'selfevaluation-coordinador/:id',
+    path: 'self-eval-coordinador/:id',
     component: SelfEvalCoordinadorComponent
   },
   {
     path: 'evaluation-teacher/:id',
     component: EvaluationTeacherComponent
   },
+  
 
 
   // rutas de evaluacion y resultado
