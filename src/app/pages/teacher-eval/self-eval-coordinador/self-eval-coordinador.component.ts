@@ -183,7 +183,6 @@ totalpreguntas: number;
       evaluation: this.evaluations
     }
     console.log(data);
-    
     this.confirmationService.confirm({
       message: '¿Estas seguro de guardar la evaluación?',
       accept: () => {
@@ -195,21 +194,10 @@ totalpreguntas: number;
         } else{
           this.showError();
         }
+        this.autovaluation()
       }
   });
-  this.autovaluation();
   }
-
-  //confirm() {
-  //  this.confirmationService.confirm({
-  //      message: '¿Estas seguro de guardar la evaluación?',
-  //      accept: () => {
-  //       let data = {
-  //         } 
-  //      }
-  //  });
-  //  this.autovaluation();
-//}
 validateModal(value) {
   for (let i = 0; i < this.modelo.length; i++) {
     if (value == i) {
