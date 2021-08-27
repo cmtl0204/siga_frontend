@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Col} from '../../../../../models/setting/col';
-import {Paginator} from '../../../../../models/setting/paginator';
-import {MessageService} from '../../../../../pages/shared/services/message.service';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
-import {Offer} from 'src/app/models/job-board/offer';
-import {Professional} from '../../../../../models/job-board/professional';
-import {HttpParams} from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Col } from '../../../../../models/setting/col';
+import { Paginator } from '../../../../../models/setting/paginator';
+import { MessageService } from '../../../../../pages/shared/services/message.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
+import { Offer } from 'src/app/models/job-board/offer';
+import { Professional } from '../../../../../models/job-board/professional';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-offer-list',
@@ -32,10 +32,10 @@ export class OfferListComponent implements OnInit {
     flagProfessionals: boolean;
 
     constructor(private messageService: MessageService,
-                private spinnerService: NgxSpinnerService,
-                private jobBoardHttpService: JobBoardHttpService,
-                private formBuilder: FormBuilder) {
-        this.paginator = {current_page: 1, per_page: 10};
+        private spinnerService: NgxSpinnerService,
+        private jobBoardHttpService: JobBoardHttpService,
+        private formBuilder: FormBuilder) {
+        this.paginator = { current_page: 1, per_page: 10 };
     }
 
     ngOnInit(): void {
@@ -52,11 +52,11 @@ export class OfferListComponent implements OnInit {
 
     loadColsOffer() {
         this.colsOffer = [
-            {field: 'position', header: 'Cargo'},
-            {field: 'status', header: 'Estado'},
-            {field: 'vacancies', header: 'Vacantes'},
-            {field: 'start_date', header: 'Fecha Inicio'},
-            {field: 'end_date', header: 'Fecha Fin'},
+            { field: 'position', header: 'Cargo' },
+            { field: 'status', header: 'Estado' },
+            { field: 'vacancies', header: 'Vacantes' },
+            { field: 'start_date', header: 'Fecha Inicio' },
+            { field: 'end_date', header: 'Fecha Fin' },
         ];
     }
 
@@ -108,7 +108,7 @@ export class OfferListComponent implements OnInit {
     }
 
     resetPaginatorOffers() {
-        this.paginatorIn = {current_page: 1, per_page: 10};
+        this.paginatorIn = { current_page: 1, per_page: 10 };
     }
 
     deleteOffer(offer: Offer) {
@@ -116,7 +116,7 @@ export class OfferListComponent implements OnInit {
             .then((result) => {
                 if (result.isConfirmed) {
                     this.spinnerService.show();
-                    this.jobBoardHttpService.delete('offer/delete', {ids: offer.id})
+                    this.jobBoardHttpService.delete('offer/delete', { ids: offer.id })
                         .subscribe(response => {
                             this.spinnerService.hide();
                             this.messageService.success(response);

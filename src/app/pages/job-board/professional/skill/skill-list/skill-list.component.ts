@@ -7,7 +7,6 @@ import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
-import { File } from '../../../../../models/app/file';
 
 @Component({
     selector: 'app-skill-list',
@@ -26,9 +25,6 @@ export class SkillListComponent implements OnInit {
     @Output() paginatorOut = new EventEmitter<Paginator>();
     selectedSkills: any[];
     selectedSkill: Skill;
-    dialogUploadFiles: boolean;
-    dialogViewFiles: boolean;
-    files: File[];
     paginatorFiles: Paginator;
     colsSkill: Col[];
 
@@ -88,11 +84,10 @@ export class SkillListComponent implements OnInit {
     openViewFilesSkill() {
         this.getFiles(this.paginatorFiles);
     }
-    pageChange(event) {
+    paginateSkill(event) {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
     }
-
 
     getFiles(paginator: Paginator) {
         const params = new HttpParams()
@@ -102,20 +97,11 @@ export class SkillListComponent implements OnInit {
         this.spinnerService.show();
         this.jobBoardHttpService.getFiles('skill/file', params).subscribe(response => {
             this.spinnerService.hide();
-            this.files = response['data'];
             this.paginatorFiles = response as Paginator;
-            this.dialogViewFiles = true;
         }, error => {
             this.spinnerService.hide();
-            this.files = [];
-            this.dialogViewFiles = true;
             this.messageService.error(error);
         });
-    }
-
-    paginateSkill(event) {
-        this.paginatorIn.current_page = event.page + 1;
-        this.paginatorOut.emit(this.paginatorIn);
     }
 
     deleteSkills(skill = null) {
@@ -167,16 +153,4 @@ export class SkillListComponent implements OnInit {
         });
     }
 
-    searchFiles(search) {
-        let params = new HttpParams().append('id', this.selectedSkill.id.toString());
-        params = search.length > 0 ? params.append('search', search) : params;
-        this.spinnerService.show();
-        this.jobBoardHttpService.get('skill/file', params).subscribe(response => {
-            this.files = response['data'];
-            this.spinnerService.hide();
-        }, error => {
-            this.spinnerService.hide();
-            this.messageService.error(error);
-        });
-    }
 }

@@ -1,6 +1,6 @@
 <!-- {{formExperienceIn.value|json}} -->
- <!-- <p-toast></p-toast> -->
- <p-card>
+<!-- <p-toast></p-toast> -->
+<p-card>
     <div class="p-fluid">
         <form [formGroup]="formExperienceIn" (ngSubmit)="onSubmit()">
             <div class="p-formgrid p-grid">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-                <div class="p-formgrid p-grid">
+            <div class="p-formgrid p-grid">
                 <div class="p-field p-xl-12 p-lg-6 p-md-6 p-sm-15">
                     <label for="employer">
                         <i class="p-error">*</i>Nombre Empleador:
@@ -91,15 +91,14 @@
                     <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
                         class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <app-date formControlName="start_date" id="start_date">
-                </app-date>
+                <p-calendar formControlName="start_date" id="start_date" [showIcon]="true"></p-calendar>
                 <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
                     <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
                         {{messageService.fieldRequired}}
                     </small>
                 </div>
             </div>
-           
+
             <div *ngIf="isWorkingField.value==false" class="p-field">
                 <label for="end_date">
                     <i class="p-error">*</i> Fecha se Salida:
@@ -107,15 +106,14 @@
                     <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
                         class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <app-date formControlName="end_date" id="end_date">
-                </app-date>
+                <p-calendar formControlName="start_date" id="start_date" [showIcon]="true"></p-calendar>
                 <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
                     <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
                         {{messageService.fieldRequired}}
                     </small>
                 </div>
             </div>
-          
+
             <div *ngIf="isWorkingField.value==false" class="p-field">
                 <label for="reason_leave">
                     <i class="p-error">*</i>Motivo de salida:

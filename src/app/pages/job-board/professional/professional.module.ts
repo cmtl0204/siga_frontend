@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { SkeletonModule } from 'primeng/skeleton';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CalendarModule } from 'primeng/calendar';
 
 // My Components
 import { TooltipModule } from 'primeng/tooltip';
@@ -57,7 +58,7 @@ import { LanguageListComponent } from './language/language-list/language-list.co
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileFormComponent } from './profile/profile-form/profile-form.component';
 import { CheckboxModule } from 'primeng/checkbox';
-import {InputMaskModule} from 'primeng/inputmask';
+import { InputMaskModule } from 'primeng/inputmask';
 @NgModule({
     imports: [
         CommonModule,
@@ -94,6 +95,7 @@ import {InputMaskModule} from 'primeng/inputmask';
         CheckboxModule,
         InputSwitchModule,
         InputMaskModule,
+        CalendarModule,
     ],
     declarations: [
         ProfessionalComponent,

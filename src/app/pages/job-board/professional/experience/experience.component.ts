@@ -41,7 +41,7 @@ export class ExperienceComponent implements OnInit {
             area: [null, Validators.required],
             employer: [null, Validators.required],
             position: [null, [Validators.required, Validators.minLength(3)]],
-            start_date: [null, Validators.required],
+            start_date: [null],
             end_date: [null],
             reason_leave: [null],
             activities: this.formBuilder.array([this.formBuilder.control(null, Validators.required)]),
