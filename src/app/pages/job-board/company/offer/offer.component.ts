@@ -58,6 +58,7 @@ export class OfferComponent implements OnInit {
             training_hours: [null, Validators.required],
             location: [null],
             status: [null, Validators.required],
+            range_dates: [null, Validators.required],
             start_date: [null, Validators.required],
             end_date: [{value: null, disabled: true}],
             activities: this.formBuilder.array([this.formBuilder.control(null, Validators.required)]),

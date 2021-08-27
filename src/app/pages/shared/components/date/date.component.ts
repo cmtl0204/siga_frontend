@@ -52,8 +52,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
             day: [null, Validators.required],
         });
 
-        console.log(this.minDate);
         if (this.minDate) {
+            console.log('this.minDate');
             this.formDate.setValidators(DateValidators.min(this.minDate.toDateString()));
         }
     }

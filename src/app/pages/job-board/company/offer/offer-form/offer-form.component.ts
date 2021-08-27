@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from '../../../../../pages/shared/services/message.service';
-import {MessageService as MessagePnService} from 'primeng/api';
 
 import {NgxSpinnerService} from 'ngx-spinner';
 import {JobBoardHttpService} from '../../../../../services/job-board/job-board-http.service';
@@ -117,6 +116,10 @@ export class OfferFormComponent implements OnInit {
 
     get requirementsField() {
         return this.formOfferIn.get('requirements') as FormArray;
+    }
+
+    get rangeDatesField() {
+        return this.formOfferIn.get('range_dates');
     }
 
     get startDateField() {
@@ -278,7 +281,14 @@ export class OfferFormComponent implements OnInit {
         console.log(event);
     }
 
-    selectDates(event) {
-        console.log(event);
+    selectDates() {
+        console.log(this.rangeDatesField?.value[0]);
+        if (this.rangeDatesField?.value[0]) {
+            this.startDateField.setValue(format(this.rangeDatesField?.value[0], 'yyyy-MM-dd'));
+        }
+        if (this.rangeDatesField.value[1]) {
+            this.endDateField.setValue(format(this.rangeDatesField.value[1], 'yyyy-MM-dd'));
+        }
+
     }
 }
