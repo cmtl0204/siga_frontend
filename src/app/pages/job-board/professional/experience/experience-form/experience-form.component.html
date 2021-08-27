@@ -91,15 +91,16 @@
                     <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
                         class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <app-date formControlName="start_date" id="start_date">
-                </app-date>
+                <p-calendar formControlName="start_date" id="start_date" [showIcon]="true" ></p-calendar>
+                <!-- <app-date formControlName="start_date" id="start_date">
+                </app-date> -->
                 <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
                     <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
                         {{messageService.fieldRequired}}
                     </small>
                 </div>
             </div>
-           
+           {{isWorkingField.value|json}}
             <div *ngIf="isWorkingField.value==false" class="p-field">
                 <label for="end_date">
                     <i class="p-error">*</i> Fecha se Salida:
@@ -107,8 +108,12 @@
                     <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
                         class="pi pi-times-circle icon-invalid"></i>
                 </label>
-                <app-date formControlName="end_date" id="end_date">
-                </app-date>
+                
+                <p-calendar formControlName="end_date" id="end_date" [showIcon]="true" >
+                </p-calendar>
+
+                <!-- <app-date formControlName="end_date" id="end_date">
+                </app-date> -->
                 <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
                     <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
                         {{messageService.fieldRequired}}

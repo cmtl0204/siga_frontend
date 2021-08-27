@@ -242,4 +242,14 @@ export class ProfileFormComponent implements OnInit {
         }
       
     }
+    // validate(event){
+    //     console.log(event);
+    //     if(this.isFamiliarDisabilityField.value==true){
+    //     this.identificationFamiliarDisabilityField.setValidators(null);
+    //     console.log(true);
+    // }else{
+    //     this.identificationFamiliarDisabilityField.setValidators(Validators.required);
+    //     console.log(false);
+    //     }
+    // }
 }

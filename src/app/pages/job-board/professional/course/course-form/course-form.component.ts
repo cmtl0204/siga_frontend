@@ -129,6 +129,7 @@ export class CourseFormComponent implements OnInit {
     getAreas() {
         this.appHttpService.getCatalogues('COURSE_AREA').subscribe(response => {
             this.areas = response['data'];
+            console.log(this.areas);
         }, error => {
             this.messageService.error(error);
         });

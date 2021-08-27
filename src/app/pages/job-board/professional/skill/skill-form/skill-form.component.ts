@@ -68,6 +68,7 @@ export class SkillFormComponent implements OnInit {
     getTypes() {
         this.appHttpService.getCatalogues('SKILL_TYPE').subscribe(response => {
             this.types = response['data'];
+            console.log(this.types)
         }, error => {
             this.messageService.error(error);
         });
@@ -120,28 +121,7 @@ export class SkillFormComponent implements OnInit {
         this.skillsOut.emit(this.skillsIn);
     }
 
-    // Filters
-    filterType(event) {
-        const filtered: any[] = [];
-        const query = event.query;
-        for (const type of this.types) {
-            if (type.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                filtered.push(type);
-            }
-        }
-        if (filtered.length === 0) {
-            this.messagePnService.clear();
-            this.messagePnService.add({
-                severity: 'error',
-                summary: 'Por favor seleccione un tipo del listado',
-                detail: 'En el caso de no existir comuníquese con el administrador!',
-                life: 5000
-            });
-            this.typeField.setValue(null);
-        }
-        this.filteredTypes = filtered;
-    }
-
+  
     // Reset Forms
     resetFormSkill() {
         this.formSkillIn.reset();

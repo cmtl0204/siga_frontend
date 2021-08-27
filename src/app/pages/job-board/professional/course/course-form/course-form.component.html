@@ -1,4 +1,4 @@
-<!-- {{formCourseIn.value|json}} -->
+ {{formCourseIn.value|json}} 
 <p-toast></p-toast>
 <p-card>
   <div class="p-fluid">
@@ -131,7 +131,7 @@
             <i *ngIf="hoursField.invalid && (hoursField.touched || hoursField.dirty)"
               class="pi pi-times-circle icon-invalid"></i>
           </label>
-          <input id="hours" formControlName="hours" pInputText>
+          <input id="hours" formControlName="hours" type="number" pInputText>
           <div *ngIf="hoursField.errors && (hoursField.touched ||hoursField.dirty)">
             <small *ngIf="hoursField.errors?.required" id="hours-help-1" class="p-error">
               {{messageService.fieldRequired}}
@@ -149,14 +149,18 @@
           <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
             class="pi pi-times-circle icon-invalid"></i>
         </label>
-        <app-date formControlName="start_date" id="start_date">
-        </app-date>
+        <p-calendar formControlName="start_date" id="start_date" [showIcon]="true" ></p-calendar>
+
+        <!-- <app-date formControlName="start_date" id="start_date">
+        </app-date> -->
         <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
           <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
             {{messageService.fieldRequired}}
           </small>
         </div>
       </div>
+
+  
       <div class="p-field">
         <label for="end_date">
           <i class="p-error">*</i> Fecha Final:
@@ -164,8 +168,9 @@
           <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
             class="pi pi-times-circle icon-invalid"></i>
         </label>
-        <app-date formControlName="end_date" id="end_date">
-        </app-date>
+        <p-calendar formControlName="end_date" id="end_date" [showIcon]="true" ></p-calendar>
+        <!-- <app-date formControlName="end_date" id="end_date">
+        </app-date> -->
         <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">
           <small *ngIf="endDateField.errors?.required" id="end_date-help-1" class="p-error">
             {{messageService.fieldRequired}}

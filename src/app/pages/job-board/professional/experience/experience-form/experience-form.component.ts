@@ -20,8 +20,8 @@ export class ExperienceFormComponent implements OnInit {
     @Output() displayOut = new EventEmitter<boolean>();
     filteredAreas: any[];
     areas: Catalogue[];
-    isWorking: boolean = true;
-    isDisability: boolean = true;
+    isWorking: boolean = false;
+    isDisability: boolean = false;
     selectedValues: string[] = [];
     value: boolean;
 
@@ -33,6 +33,7 @@ export class ExperienceFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+       // console.log(this.formExperienceIn);
         this.getAreas();
     }
 
@@ -159,15 +160,16 @@ export class ExperienceFormComponent implements OnInit {
     clickIsWorking(e) {
         const isWorking = e.checked;
         if (isWorking) {
+             this.isWorking = false;
             this.isWorking = true;
-            this.isWorking = false;
+           
         }
     }
     clickIsDisability(e) {
         const isDisability = e.checked;
         if (isDisability) {
-            this.isDisability = true;
             this.isDisability = false;
+            this.isDisability = true;
         }
     }
     validate(event){
