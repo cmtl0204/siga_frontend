@@ -32,12 +32,11 @@ export class ExperienceListComponent implements OnInit {
     colsExperience: Col[];
     isWorking: boolean;
 
-
     constructor(private messageService: MessageService,
         private spinnerService: NgxSpinnerService,
         private jobBoardHttpService: JobBoardHttpService) {
         this.resetPaginatorExperiences();
-        //this.resetPaginatorFiles();
+        this.resetPaginator();
     }
     resetPaginator() {
         this.paginatorFiles = { current_page: 1, per_page: 5 };
@@ -48,19 +47,20 @@ export class ExperienceListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.loadColsExperience();
+        this.loadColsExperience();
     }
 
-    // loadColsExperience() {
-    //     this.colsExperience = [
-    //         { field: 'type', header: 'Tipo' },
-    //         { field: 'description', header: 'Descripción' },
-    //     ];
-    // }
-    // pageChange(event) {
-    //     this.paginatorIn.current_page = event.page + 1;
-    //     this.paginatorOut.emit(this.paginatorIn);
-    // }
+    loadColsExperience() {
+        this.colsExperience = [
+            { field: 'area', header: 'Área' },
+            { field: 'employer', header: 'Empleador' },
+            { field: 'position', header: 'Cargo' },
+            { field: 'start_date', header: 'Fecha de Inicio' },
+            { field: 'activities', header: 'Actividades' },
+            { field: 'is_working', header: 'Está Trabajando' },
+            { field: 'is_disability', header: 'Es Discapacitado' },
+        ];
+    }
 
     // Search experiences in backend
     searchExperiences(event, search) {
@@ -84,6 +84,7 @@ export class ExperienceListComponent implements OnInit {
     }
 
     openEditFormExperience(experience: Experience) {
+        console.log('experience');
         this.formExperienceIn.patchValue(experience);
         this.formExperienceOut.emit(this.formExperienceIn);
         this.displayOut.emit(true);

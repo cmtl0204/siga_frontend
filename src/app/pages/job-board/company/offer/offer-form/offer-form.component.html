@@ -103,8 +103,6 @@
                 </div>
                 <div class="p-formgrid p-grid">
                     <div class="p-lg-6 p-md-6 p-sm-12">
-                        telefono
-                        {{contactPhoneField.value}}
                         <div class="p-field">
                             <label for="contact_phone"> Teléfono convencional:</label>
                             <p-inputMask id="contact_phone" formControlName="contact_phone"
@@ -121,14 +119,16 @@
                 </div>
                 <div class="p-field">
                     {{startDateField.value|json}}
-                    <label for="start_date">
+                    <label for="range_dates">
                         <i class="p-error">*</i> Fecha de inicio de la publicacón:
                         <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
                         <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
                            class="pi pi-times-circle icon-invalid"></i>
                     </label>
-                    <app-date id="start_date" formControlName="start_date">
-                    </app-date>
+<!--                    <app-date id="start_date" formControlName="start_date">-->
+<!--                    </app-date>-->
+                    <p-calendar id="range_dates" formControlName="range_dates" selectionMode="range" [readonlyInput]="true" inputId="range_dates"
+                                [touchUI]="true" (onSelect)="selectDates($event)"></p-calendar>
                     <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
                         <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
                             {{messageService.fieldRequired}}
@@ -136,9 +136,10 @@
                     </div>
                 </div>
                 <div class="p-field">
-                    <label for="end_date">Fecha de fin de la publicacón: </label>
-                    <app-date id="end_date" formControlName="end_date" [minDate]="startDateField.value">
-                    </app-date>
+                    {{endDateField.value|json}}
+<!--                    <label for="end_date">Fecha de fin de la publicacón: </label>-->
+<!--                    <app-date id="end_date" formControlName="end_date" [minDate]="startDateField.value">-->
+<!--                    </app-date>-->
                 </div>
                 <div formArrayName="activities">
                     <div class="p-field">

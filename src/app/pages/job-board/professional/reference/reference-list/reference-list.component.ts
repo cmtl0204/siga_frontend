@@ -7,7 +7,6 @@ import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
-import { File } from '../../../../../models/app/file';
 @Component({
     selector: 'app-reference-list',
     templateUrl: './reference-list.component.html',
@@ -25,9 +24,6 @@ export class ReferenceListComponent implements OnInit {
     @Output() paginatorOut = new EventEmitter<Paginator>();
     selectedReferences: any[];
     selectedReference: Reference;
-    dialogUploadFiles: boolean;
-    dialogViewFiles: boolean;
-    files: File[];
     paginatorFiles: Paginator;
     colsReference: Col[];
 
@@ -35,21 +31,24 @@ export class ReferenceListComponent implements OnInit {
         private spinnerService: NgxSpinnerService,
         private jobBoardHttpService: JobBoardHttpService) {
         this.resetPaginatorReferences();
-        // this.resetPaginatorFiles();
-    }
-    resetPaginator() {
-        this.paginatorFiles = { current_page: 1, per_page: 5 };
     }
 
     resetPaginatorReferences() {
         this.paginatorIn = { current_page: 1, per_page: 5 };
     }
 
-    // resetPaginatorFiles() {
-    //     this.paginatorFiles = {current_page: 1, per_page: 5};
-    //  }
-
     ngOnInit(): void {
+        this.loadColsReference();
+    }
+
+    loadColsReference() {
+        this.colsReference = [
+            { field: 'institution', header: 'Institución' },
+            { field: 'position', header: 'Cargo' },
+            { field: 'contact_name', header: 'Nombre de Contacto' },
+            { field: 'contact_phone', header: 'Número de Contacto' },
+            { field: 'contact_email', header: 'Correo de Contacto' },
+        ];
     }
 
     // Search references in backend
@@ -79,39 +78,11 @@ export class ReferenceListComponent implements OnInit {
         this.displayOut.emit(true);
     }
 
-    openUploadFilesReference() {
-        this.dialogUploadFiles = true;
-    }
-
     selectReference(reference: Reference) {
         this.selectedReference = reference;
     }
 
-    openViewFilesReference() {
-        this.getFiles(this.paginatorFiles);
-    }
-
-    getFiles(paginator: Paginator = null) {
-        let params = new HttpParams().append('id', this.selectedReference.id.toString());
-        if (paginator) {
-            params = params.append('page', paginator.current_page.toString())
-                .append('per_page', paginator.per_page.toString());
-        }
-        this.spinnerService.show();
-        this.jobBoardHttpService.getFiles('reference/file', params).subscribe(response => {
-            this.spinnerService.hide();
-            this.files = response['data'];
-            this.paginatorFiles = response as Paginator;
-            this.dialogViewFiles = true;
-        }, error => {
-            this.spinnerService.hide();
-            this.files = [];
-            this.dialogViewFiles = true;
-            this.messageService.error(error);
-        });
-    }
-
-    pageChange(event) {
+    paginateReference(event) {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
     }
@@ -149,7 +120,6 @@ export class ReferenceListComponent implements OnInit {
     }
 
     upload(event, id) {
-        console.log(event);
         const formData = new FormData();
         for (const file of event) {
             formData.append('files[]', file);
@@ -159,20 +129,6 @@ export class ReferenceListComponent implements OnInit {
         this.jobBoardHttpService.uploadFiles('reference/file', formData).subscribe(response => {
             this.spinnerService.hide();
             this.messageService.success(response);
-            this.getFiles(this.paginatorFiles);
-        }, error => {
-            this.spinnerService.hide();
-            this.messageService.error(error);
-        });
-    }
-
-    searchFiles(search) {
-        let params = new HttpParams().append('id', this.selectedReference.id.toString());
-        params = search.length > 0 ? params.append('search', search) : params;
-        this.spinnerService.show();
-        this.jobBoardHttpService.get('reference/file', params).subscribe(response => {
-            this.files = response['data'];
-            this.spinnerService.hide();
         }, error => {
             this.spinnerService.hide();
             this.messageService.error(error);

@@ -3,7 +3,7 @@ import { Professional } from './../../../../../models/job-board/professional';
 import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
-import { FormArray, FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/auth/user';
 import { Catalogue } from 'src/app/models/app/catalogue';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
@@ -33,7 +33,7 @@ export class ProfileFormComponent implements OnInit {
     isFamiliarCatastrophicIllness: boolean = false;
     selectedValues: string[] = [];
     value: boolean;
-    
+
 
 
     constructor(
@@ -137,7 +137,6 @@ export class ProfileFormComponent implements OnInit {
         }
     }
 
-
     updateProfessional(professional: Professional) {
 
         this.spinnerService.show();
@@ -152,24 +151,24 @@ export class ProfileFormComponent implements OnInit {
                 this.messageService.error(error);
             });
     }
-    
-     getProfessional() {
-         this.spinnerService.show();
-         this.jobBoardHttpService.get('professional/show')
-             .subscribe(response => {
-                 this.spinnerService.hide();
-                 this.formProfessionalIn.patchValue(response['data']);
-                 // console.log(response);
-             }, error => {
-                 this.spinnerService.hide();
-                 this.messageService.error(error);
-             });
-         console.log(this.formProfessionalIn);
-     }
 
-     markAllAsTouchedFormProfessional() {
-         this.formProfessionalIn.markAllAsTouched();
-     }
+    getProfessional() {
+        this.spinnerService.show();
+        this.jobBoardHttpService.get('professional/show')
+            .subscribe(response => {
+                this.spinnerService.hide();
+                this.formProfessionalIn.patchValue(response['data']);
+                // console.log(response);
+            }, error => {
+                this.spinnerService.hide();
+                this.messageService.error(error);
+            });
+        console.log(this.formProfessionalIn);
+    }
+
+    markAllAsTouchedFormProfessional() {
+        this.formProfessionalIn.markAllAsTouched();
+    }
 
     // Types of catalogues
     getSexs() {
@@ -240,7 +239,7 @@ export class ProfileFormComponent implements OnInit {
             this.isFamiliarCatastrophicIllness = true;
             this.isFamiliarCatastrophicIllness = false;
         }
-      
+
     }
     // validate(event){
     //     console.log(event);

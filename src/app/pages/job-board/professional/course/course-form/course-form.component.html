@@ -11,19 +11,23 @@
             <i *ngIf="areaField.invalid && (areaField.touched || areaField.dirty)"
               class="pi pi-times-circle icon-invalid"></i>
           </label>
-          <p-dropdown id="area" [options]="areas" formControlName="area" optionLabel="name" [filter]="true"
-            filterBy="name" placeholder="Seleccione...">
-            <ng-template pTemplate="selectedarea">
-              <div class="country-area country-area-value" *ngIf="areaField.value">
-                <div>{{area.name}}</div>
-              </div>
-            </ng-template>
-            <ng-template let-area pTemplate="area">
-              <div class="country-area">
-                <div>{{area.name}}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
+          <p-dropdown id="area" [options]="areas"
+          formControlName="area"
+          optionLabel="name"
+          [filter]="true" filterBy="name"
+          placeholder="Seleccione...">
+  <ng-template pTemplate="selectedItem">
+      <div class="country-item country-item-value"
+           *ngIf="areaField.value">
+          <div>{{areaField.value.name}}</div>
+      </div>
+  </ng-template>
+  <ng-template let-item pTemplate="item">
+      <div class="country-item">
+          <div>{{item.name}}</div>
+      </div>
+  </ng-template>
+</p-dropdown>
         </div>
         <div class="p-field p-xl-6 p-lg-6 p-md-6 p-sm-12">
           <label for="name">
@@ -149,9 +153,9 @@
           <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
             class="pi pi-times-circle icon-invalid"></i>
         </label>
-        <p-calendar formControlName="start_date" id="start_date" [showIcon]="true" ></p-calendar>
+        <p-calendar #calendar formControlName="start_date"   [showIcon]="true" dateFormat="yy-mm-dd" ></p-calendar>
 
-        <!-- <app-date formControlName="start_date" id="start_date">
+              <!-- <app-date formControlName="start_date" id="start_date">
         </app-date> -->
         <div *ngIf="startDateField.errors && (startDateField.touched || startDateField.dirty)">
           <small *ngIf="startDateField.errors?.required" id="start_date-help-1" class="p-error">
@@ -168,7 +172,8 @@
           <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
             class="pi pi-times-circle icon-invalid"></i>
         </label>
-        <p-calendar formControlName="end_date" id="end_date" [showIcon]="true" ></p-calendar>
+        <p-calendar #calendar formControlName="end_date"   [showIcon]="true" dateFormat="yy-mm-dd" ></p-calendar>
+
         <!-- <app-date formControlName="end_date" id="end_date">
         </app-date> -->
         <div *ngIf="endDateField.errors && (endDateField.touched || endDateField.dirty)">

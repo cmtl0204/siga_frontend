@@ -8,12 +8,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { HttpParams } from '@angular/common/http';
 import { File } from "../../../../../models/app/file";
-
 @Component({
     selector: 'app-language-list',
     templateUrl: './language-list.component.html',
     styleUrls: ['./language-list.component.scss']
 })
+
 export class LanguageListComponent implements OnInit {
     @Input() flagSkeletonLanguages: boolean;
     @Input() languagesIn: Language[];
@@ -25,6 +25,7 @@ export class LanguageListComponent implements OnInit {
     @Output() displayOut = new EventEmitter<boolean>();
     @Output() paginatorOut = new EventEmitter<Paginator>();
     selectedLanguages: any[];
+    colsLanguage: Col[];
     selectedLanguage: Language;
     dialogUploadFiles: boolean;
     dialogViewFiles: boolean;
@@ -50,6 +51,16 @@ export class LanguageListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadColsLanguage();
+    }
+
+    loadColsLanguage() {
+        this.colsLanguage = [
+            { field: 'idiom', header: 'Idioma' },
+            { field: 'written_level', header: 'Nivel de Escrito' },
+            { field: 'spoken_level', header: 'Nivel de Hablado' },
+            { field: 'read_level', header: 'Nivel de Lectura' },
+        ];
     }
 
     // Search languages in backend
@@ -111,7 +122,7 @@ export class LanguageListComponent implements OnInit {
         });
     }
 
-    pageChange(event) {
+    paginateLanguage(event) {
         this.paginatorIn.current_page = event.page + 1;
         this.paginatorOut.emit(this.paginatorIn);
     }
@@ -124,7 +135,6 @@ export class LanguageListComponent implements OnInit {
                         this.selectedLanguages = [];
                         this.selectedLanguages.push(language);
                     }
-
                     const ids = this.selectedLanguages.map(element => element.id);
                     this.spinnerService.show();
                     this.jobBoardHttpService.delete('language/delete', ids)
@@ -139,7 +149,6 @@ export class LanguageListComponent implements OnInit {
                         });
                 }
             });
-
     }
 
     removeLanguages(ids) {

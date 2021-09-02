@@ -58,7 +58,7 @@ import { LanguageListComponent } from './language/language-list/language-list.co
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileFormComponent } from './profile/profile-form/profile-form.component';
 import { CheckboxModule } from 'primeng/checkbox';
-import {InputMaskModule} from 'primeng/inputmask';
+import { InputMaskModule } from 'primeng/inputmask';
 @NgModule({
     imports: [
         CommonModule,
@@ -96,6 +96,8 @@ import {InputMaskModule} from 'primeng/inputmask';
         InputSwitchModule,
         InputMaskModule,
         CalendarModule,
+        FormsModule,
+
     ],
     declarations: [
         ProfessionalComponent,

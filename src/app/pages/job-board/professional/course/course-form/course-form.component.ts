@@ -8,6 +8,7 @@ import { AppHttpService } from '../../../../../services/app/app-http.service';
 import { Catalogue } from '../../../../../models/app/catalogue';
 import { MessageService as MessagePnService } from 'primeng/api';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-course-form',
@@ -27,7 +28,9 @@ export class CourseFormComponent implements OnInit {
     filteredCertificationTypes: any[];
     certificationTypes: Catalogue[];
     filteredAreas: any[];
-    areas: Catalogue[];
+    areas: Catalogue[]=[];
+    start_date: Date;
+    es: any;
 
     constructor(private formBuilder: FormBuilder,
         public messageService: MessageService,
@@ -36,6 +39,9 @@ export class CourseFormComponent implements OnInit {
         private appHttpService: AppHttpService,
         private sharedService: SharedService,
         private jobBoardHttpService: JobBoardHttpService) {
+            this.es = new FormGroup({
+                start_date: new FormControl('')
+            });
     }
 
     ngOnInit(): void {
@@ -105,6 +111,7 @@ export class CourseFormComponent implements OnInit {
     getTypes() {
         this.appHttpService.getCatalogues('COURSE_TYPE').subscribe(response => {
             this.types = response['data'];
+            console.log(this.types);
         }, error => {
             this.messageService.error(error);
         });
@@ -121,6 +128,7 @@ export class CourseFormComponent implements OnInit {
     getCertificationTypes() {
         this.appHttpService.getCatalogues('COURSE_CERTIFICATION_TYPE').subscribe(response => {
             this.certificationTypes = response['data'];
+            console.log(this.certificationTypes);
         }, error => {
             this.messageService.error(error);
         });

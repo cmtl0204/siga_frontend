@@ -6,6 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
 import { Catalogue } from '../../../../../models/app/catalogue';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
     selector: 'app-experience-form',
@@ -24,13 +26,19 @@ export class ExperienceFormComponent implements OnInit {
     isDisability: boolean = false;
     selectedValues: string[] = [];
     value: boolean;
+    start_date: Date;
+    es: any;
 
     constructor(private formBuilder: FormBuilder,
         public messageService: MessageService,
         private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
-        private jobBoardHttpService: JobBoardHttpService) {
+        private jobBoardHttpService: JobBoardHttpService) {  
+             this.es = new FormGroup({
+                start_date: new FormControl('')
+          });
     }
+    
 
     ngOnInit(): void {
        // console.log(this.formExperienceIn);

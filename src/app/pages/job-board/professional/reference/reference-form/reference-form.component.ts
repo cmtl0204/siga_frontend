@@ -1,14 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Reference } from '../../../../../models/job-board/reference';
-import {MessageService as MessagePnService} from 'primeng/api';
-import {MessageService} from '../../../../shared/services/message.service';
+import { MessageService } from '../../../../shared/services/message.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JobBoardHttpService } from '../../../../../services/job-board/job-board-http.service';
 import { AppHttpService } from '../../../../../services/app/app-http.service';
-import { HttpParams } from '@angular/common/http';
 import { Catalogue } from '../../../../../models/app/catalogue';
-import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
     selector: 'app-reference-form',
@@ -25,12 +22,9 @@ export class ReferenceFormComponent implements OnInit {
     filteredInstitutions: any[];
     institutions: Catalogue[];
 
-    constructor(private formBuilder: FormBuilder,
-        private messageService: MessageService,
-        private messagePnService: MessagePnService,
-         private spinnerService: NgxSpinnerService,
+    constructor(private messageService: MessageService,
+        private spinnerService: NgxSpinnerService,
         private appHttpService: AppHttpService,
-        private sharedService: SharedService,
         private jobBoardHttpService: JobBoardHttpService) {
     }
 
@@ -39,12 +33,12 @@ export class ReferenceFormComponent implements OnInit {
     }
 
     // Fields of Form
-    
+
     get idField() {
         return this.formReferenceIn.get('id');
     }
 
-  
+
     get institutionField() {
         return this.formReferenceIn.get('institution');
     }
@@ -78,7 +72,7 @@ export class ReferenceFormComponent implements OnInit {
             this.markAllAsTouchedFormReference();
         }
     }
-  
+
     // catalogues
     getInstitutions() {
         this.appHttpService.getCatalogues('REFERENCE_INSTITUTION').subscribe(response => {
@@ -87,11 +81,11 @@ export class ReferenceFormComponent implements OnInit {
             this.messageService.error(error);
         });
     }
-    
+
     // Save in backend
     storeReference(reference: Reference, flag = false) {
         this.spinnerService.show();
-        this.jobBoardHttpService.store('references', {reference}).subscribe(response => {
+        this.jobBoardHttpService.store('references', { reference }).subscribe(response => {
             this.spinnerService.hide();
             this.messageService.success(response);
             this.saveReference(response['data']);
@@ -110,7 +104,7 @@ export class ReferenceFormComponent implements OnInit {
     // Save in backend
     updateReference(reference: Reference) {
         this.spinnerService.show();
-        this.jobBoardHttpService.update('references/' + reference.id, {reference})
+        this.jobBoardHttpService.update('references/' + reference.id, { reference })
             .subscribe(response => {
                 this.spinnerService.hide();
                 this.messageService.success(response);
@@ -134,10 +128,10 @@ export class ReferenceFormComponent implements OnInit {
         this.referencesOut.emit(this.referencesIn);
     }
 
-   
 
-     // Reset Forms
-     resetFormReference() {
+
+    // Reset Forms
+    resetFormReference() {
         this.formReferenceIn.reset();
     }
 
